@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>VBI_Pipeline.GainCalibration &#8212; VBI_Pipeline v0.2.0</title>
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" type="text/css" />
+    <link rel="stylesheet" href="../../_static/dkist.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <link rel="shortcut icon" href="../../_static/favico.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="col-md-3 navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="http://nso.edu"><img src="../../_static/img/NSOlogo.gif">
+        </a>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav hidden">
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">VBI Pipeline Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../walkthrough.html">Data Reduction Walkthrough</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../config_file.html">Configuration File Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../API.html">Reference/API</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+          </ul>
+          
+            <ul class="nav navbar-nav navbar-left">
+              <li><a href="http://dkist.nso.edu/">DKIST</a></li>
+              <li><a href="http://docs.cadair.com/devdocs">DC Developer Guide</a></li>
+              <li><a href="http://docs.cadair.com/datarate">DKIST Data Rate</a></li>
+              <li><a href="http://docs.cadair.com/datamodel">DKIST Data Model</a></li>
+            </ul>
+          
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-3"><div id="side-logo" >
+            <a href="http://dkist.nso.edu">
+                <img src="../../_static/img/DKISTLogo-Medium.jpg">
+            </a>
+        </div><div id="sidebar" class="bs-sidenav" role="complementary">
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">VBI Pipeline Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../walkthrough.html">Data Reduction Walkthrough</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../config_file.html">Configuration File Format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../API.html">Reference/API</a></li>
+</ul>
+
+            
+        </div>
+    </div>
+
+    <div class="col-md-9 content">
+      
+  <h1>Source code for VBI_Pipeline.GainCalibration</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">VBI_Pipeline</span> <span class="k">import</span> <span class="n">generic</span><span class="p">,</span> <span class="n">Data</span>
+<span class="kn">from</span> <span class="nn">VBI_Pipeline.tag</span> <span class="k">import</span> <span class="n">tag</span>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api/VBI_Pipeline.GainCalibration.main.html#VBI_Pipeline.GainCalibration.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">gain_dir</span><span class="p">,</span> <span class="n">outname</span><span class="p">,</span> <span class="n">dark_cal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">low_acceptance_threshold</span><span class="o">=</span><span class="mf">0.682</span><span class="p">,</span> <span class="n">high_acceptance_threshold</span><span class="o">=</span><span class="mf">0.318</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Run a raw data through the Gain Calibration pipeline</span>
+
+<span class="sd">    If a Dark Calibration is specified then it will be used to dark correct the data.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    gain_dir : str</span>
+<span class="sd">        Location of directory containing the raw data to use</span>
+
+<span class="sd">    outname : str</span>
+<span class="sd">        Where to save the final Gain Calibration FITS file</span>
+
+<span class="sd">    dark_cal : Data.FitsData</span>
+<span class="sd">        A valid Dark Calibration</span>
+
+<span class="sd">    [low|high]_acceptance_parameter : float</span>
+<span class="sd">        If the fraction of pixels in the final object that are less than 1 stddev away from the mean is outside the</span>
+<span class="sd">        range (0.682 - low_acceptance parameter, 0.682 + high_acceptance_parameter) an error will be thrown.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Data.FitsData</span>
+<span class="sd">        A processed Gain Calibration</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">gainData</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">GainData</span><span class="p">(</span><span class="n">gain_dir</span><span class="p">)</span>
+
+    <span class="n">validate_gain_task_data</span><span class="p">(</span><span class="n">gainData</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">dark_cal</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: doing Dark Correction&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
+        <span class="n">generic</span><span class="o">.</span><span class="n">dark_correction</span><span class="p">(</span><span class="n">gainData</span><span class="p">,</span> <span class="n">dark_cal</span><span class="p">)</span>
+
+    <span class="c1"># This array is (x,y,N) where N corresponds to the camera position</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: averaging data&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
+    <span class="n">avgData</span> <span class="o">=</span> <span class="n">generic</span><span class="o">.</span><span class="n">average_FitsData</span><span class="p">(</span><span class="n">gainData</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: normalizing data&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
+    <span class="n">normalize_gain</span><span class="p">(</span><span class="n">avgData</span><span class="p">)</span>
+
+    <span class="n">validate_gain_calibration</span><span class="p">(</span><span class="n">avgData</span><span class="p">,</span> <span class="n">low_acceptance_threshold</span><span class="p">,</span> <span class="n">high_acceptance_threshold</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: generating Gain Calibration&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
+    <span class="n">gain_calibration</span> <span class="o">=</span> <span class="n">generate_gain_calibration</span><span class="p">(</span><span class="n">avgData</span><span class="p">,</span> <span class="n">outname</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">gain_calibration</span></div>
+
+
+<div class="viewcode-block" id="validate_gain_task_data"><a class="viewcode-back" href="../../api/VBI_Pipeline.GainCalibration.validate_gain_task_data.html#VBI_Pipeline.GainCalibration.validate_gain_task_data">[docs]</a><span class="k">def</span> <span class="nf">validate_gain_task_data</span><span class="p">(</span><span class="n">gainData</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="normalize_gain"><a class="viewcode-back" href="../../api/VBI_Pipeline.GainCalibration.normalize_gain.html#VBI_Pipeline.GainCalibration.normalize_gain">[docs]</a><span class="k">def</span> <span class="nf">normalize_gain</span><span class="p">(</span><span class="n">avgData</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Normalize the gain images to a mean of 1.</span>
+
+<span class="sd">    NOTE: Each camera position is normalized to the mean of the ENTIRE field.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">total_pix</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">total_flux</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">avgData</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">:</span>
+        <span class="n">total_pix</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">data</span><span class="p">))</span>
+        <span class="n">total_flux</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">total_flux</span> <span class="o">/</span> <span class="n">total_pix</span>
+
+    <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">avgData</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">:</span>
+        <span class="n">h</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">data</span> <span class="o">/</span> <span class="n">mean</span></div>
+
+
+<div class="viewcode-block" id="validate_gain_calibration"><a class="viewcode-back" href="../../api/VBI_Pipeline.GainCalibration.validate_gain_calibration.html#VBI_Pipeline.GainCalibration.validate_gain_calibration">[docs]</a><span class="k">def</span> <span class="nf">validate_gain_calibration</span><span class="p">(</span><span class="n">avgData</span><span class="p">,</span> <span class="n">low_acceptance_threshold</span><span class="p">,</span> <span class="n">high_acceptance_threshold</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Verify that the gain frame for each camera has an acceptable number of pixels that deviate significantly from the</span>
+<span class="sd">    mean.</span>
+
+<span class="sd">    &quot;Good&quot; pixels are defined as those that are within 1 standard deviation of the mean. If the fractional number of</span>
+<span class="sd">    good pixels is less than 0.682 - low_acceptance_threshold or greater than 0.682 + high_acceptance_threshold then</span>
+<span class="sd">    the corresponding frame is considered bad.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    avgData : Data.FitsData</span>
+<span class="sd">        The data object to test. Each data HDU will be tested separately.</span>
+
+<span class="sd">    low_acceptance_threshold : float</span>
+<span class="sd">        If the fraction of good pixels is less than 0.682 - low_acceptance_threshold the frame is bad.</span>
+
+<span class="sd">    high_acceptance_threshold : float</span>
+<span class="sd">        If the fraction of good pixels is more than 0.682 + high_acceptance_threshold the frame is bad.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">avgData</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">):</span>
+
+        <span class="n">std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">data</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">std</span><span class="p">))</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">-</span> <span class="n">Z</span><span class="o">.</span><span class="n">size</span> <span class="o">/</span> <span class="n">h</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">size</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mf">0.682</span> <span class="o">-</span> <span class="n">low_acceptance_threshold</span> <span class="o">&lt;=</span> <span class="n">g</span> <span class="o">&lt;=</span> <span class="mf">0.682</span> <span class="o">+</span> <span class="n">high_acceptance_threshold</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Gain Calibration hdu </span><span class="si">{}</span><span class="s1"> is out of spec&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+
+    <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="generate_gain_calibration"><a class="viewcode-back" href="../../api/VBI_Pipeline.GainCalibration.generate_gain_calibration.html#VBI_Pipeline.GainCalibration.generate_gain_calibration">[docs]</a><span class="k">def</span> <span class="nf">generate_gain_calibration</span><span class="p">(</span><span class="n">avgData</span><span class="p">,</span> <span class="n">outname</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simply write the calibration to a file&quot;&quot;&quot;</span>
+    <span class="n">avgData</span><span class="o">.</span><span class="n">ref_file</span> <span class="o">=</span> <span class="s1">&#39;GainCalibration&#39;</span>
+    <span class="n">avgData</span><span class="o">.</span><span class="n">write_out</span><span class="p">(</span><span class="n">outname</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">avgData</span></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <div class="left-footer">
+         &copy; 2018, Arthur Eigenbrot
+       <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+    </div>
+   
+    <div class="right-footer">
+      Last updated on 07 Jun 2018.
+    </div>
+    <div class="centre-footer">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4
+    </div>
+  </div>
+</footer>
+  </body>
+</html>
