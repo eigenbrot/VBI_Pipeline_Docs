@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>VBI_Pipeline.TargetCalibration &#8212; VBI_Pipeline v0.7.1</title>
+    <title>VBI_Pipeline.TargetCalibration &#8212; VBI_Pipeline v0.7.2</title>
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
@@ -152,7 +152,7 @@
 
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api/VBI_Pipeline.TargetCalibration.main.html#VBI_Pipeline.TargetCalibration.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">grid_dir</span><span class="p">,</span> <span class="n">outname</span><span class="p">,</span> <span class="n">dark_cal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gain_cal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gauss_sigma</span><span class="o">=</span><span class="mf">30.</span><span class="p">,</span> <span class="n">dmax</span><span class="o">=</span><span class="mf">15.</span><span class="p">,</span> <span class="n">rho_min_dist</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-         <span class="n">refidx</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">rho_smooth</span><span class="o">=</span><span class="mf">10.</span><span class="p">,</span> <span class="n">binary_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">sigclip</span><span class="o">=</span><span class="mf">3.</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+         <span class="n">refidx</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">rho_smooth</span><span class="o">=</span><span class="mf">10.</span><span class="p">,</span> <span class="n">binary_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">sigclip</span><span class="o">=</span><span class="mf">3.</span><span class="p">,</span> <span class="n">bimode_choice</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Compute a TargetCalibration (i.e., wcs sub-pixel offsets) given an input linegrid image.</span>
 
 <span class="sd">    Pre-processing by dark and gain Calibration products can be induced by specifying the corresponding FitsData</span>
@@ -200,6 +200,10 @@
 <span class="sd">    sigclip : float</span>
 <span class="sd">        Any pixels beyond sigclip standard deviations from the mean are excluded from the binary thresholding</span>
 <span class="sd">        calculation.</span>
+
+<span class="sd">    bimode_choice : list</span>
+<span class="sd">        List containing the automatic choice for potential bimodality in the (x, y) dimensions. Choice can be either</span>
+<span class="sd">        1 or 2; 1 always corresponds to the mode closest to the global median.</span>
 
 <span class="sd">    debug : bool</span>
 <span class="sd">        If True the code will stop at each hdu (i.e., camera position) and generate some diagnostic plots that show the</span>
@@ -255,7 +259,7 @@
 
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: generating target calibration&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
     <span class="n">target_calibration</span> <span class="o">=</span> <span class="n">generate_target_calibration</span><span class="p">(</span><span class="n">intersections</span><span class="p">,</span> <span class="n">pos_list</span><span class="p">,</span> <span class="n">refidx</span><span class="p">,</span> <span class="n">dmax</span><span class="p">,</span> <span class="n">proc_gridData</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                                                     <span class="n">output</span><span class="o">=</span><span class="n">outname</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="n">debug</span><span class="p">)</span>
+                                                     <span class="n">output</span><span class="o">=</span><span class="n">outname</span><span class="p">,</span> <span class="n">bimode_choice</span><span class="o">=</span><span class="n">bimode_choice</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="n">debug</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">target_calibration</span></div>
 
@@ -347,7 +351,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    lst</span>
 <span class="sd">        Each element of this list corresponds to a single input hdu and contains a numpy array of shape (2,</span>
-<span class="sd">        N) containing the (x,y) corrdinates for the N intersections found in that hdu.</span>
+<span class="sd">        N) containing the (x,y) coordinates for the N intersections found in that hdu.</span>
 
 <span class="sd">    lst</span>
 <span class="sd">        A list containing the camera positions (VBI__005) of each corresponding hdu</span>
@@ -376,8 +380,8 @@
 
 
 <div class="viewcode-block" id="generate_target_calibration"><a class="viewcode-back" href="../../api/VBI_Pipeline.TargetCalibration.generate_target_calibration.html#VBI_Pipeline.TargetCalibration.generate_target_calibration">[docs]</a><span class="k">def</span> <span class="nf">generate_target_calibration</span><span class="p">(</span><span class="n">intsects</span><span class="p">,</span> <span class="n">pos_list</span><span class="p">,</span> <span class="n">refidx</span><span class="p">,</span> <span class="n">dmax</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span>
-                                <span class="n">output</span><span class="o">=</span><span class="s1">&#39;Target_Calibration.fits&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Find overlapping intersetions and use them to compute sub-pixel offsets between pairs of hdus.</span>
+                                <span class="n">output</span><span class="o">=</span><span class="s1">&#39;Target_Calibration.fits&#39;</span><span class="p">,</span> <span class="n">bimode_choice</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Find overlapping intersections and use them to compute sub-pixel offsets between pairs of hdus.</span>
 
 <span class="sd">    The resulting offsets are then saved in the metadata (i.e., header) of a data-less Data.FitsData object.</span>
 
@@ -386,7 +390,7 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    intsects : tuple</span>
+<span class="sd">    intsects : list</span>
 <span class="sd">        Each element of this list corresponds to a single input hdu and contains a numpy array of shape (2,</span>
 <span class="sd">        N) containing the (x,y) WCS coordinates for the N intersections found in that hdu. Probably the output of</span>
 <span class="sd">        collect_intersections()</span>
@@ -408,6 +412,10 @@
 <span class="sd">        Location to save the resulting Target Calibration. It&#39;s a little strange that this is in this function</span>
 <span class="sd">        instead of main()</span>
 
+<span class="sd">    bimode_choice : list</span>
+<span class="sd">        List containing the automatic choice for potential bimodality in the (x, y) dimensions. Choice can be either</span>
+<span class="sd">        1 or 2; 1 always corresponds to the mode closest to the global median.</span>
+
 <span class="sd">    debug : bool</span>
 <span class="sd">        If true then generate a plot called &quot;overlap.pdf&quot; that shows all the intersections with those used to compute</span>
 <span class="sd">        the shifts circled in red.</span>
@@ -419,85 +427,45 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># We&#39;ll call out these two error conditions explicitly because they would both otherwise result in a generic</span>
     <span class="c1">#  IndexError. Here we add some specificity.</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pos_list</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">intsects</span><span class="p">):</span>
+    <span class="n">numpos</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">intsects</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pos_list</span><span class="p">)</span> <span class="o">!=</span> <span class="n">numpos</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">&#39;The lists of camera positions and intersections do not have the same length!&#39;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">refidx</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">intsects</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="n">refidx</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numpos</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">&#39;The reference position </span><span class="si">{}</span><span class="s1"> cannot be found in the intersection list&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">refidx</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">bimode_choice</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">list</span><span class="p">:</span>
+        <span class="n">bimode_choice</span> <span class="o">=</span> <span class="p">[[</span><span class="n">bimode_choice</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">numpos</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bimode_choice</span><span class="p">)</span> <span class="o">!=</span> <span class="n">numpos</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The list provided for bimode choice is the wrong length&#39;</span><span class="p">)</span>
 
     <span class="n">hdulist</span> <span class="o">=</span> <span class="p">[</span><span class="n">pyfits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">)]</span>
     <span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;VBI__004&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pos_list</span><span class="p">),</span> <span class="s1">&#39;Number of spatial steps&#39;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-        <span class="n">overlap_ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
-        <span class="n">diffhist_pp</span> <span class="o">=</span> <span class="n">PDF</span><span class="p">(</span><span class="s1">&#39;diffhist.pdf&#39;</span><span class="p">)</span>
-        <span class="n">colorlist</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;#e41a1c&#39;</span><span class="p">,</span><span class="s1">&#39;#377eb8&#39;</span><span class="p">,</span><span class="s1">&#39;#4daf4a&#39;</span><span class="p">,</span><span class="s1">&#39;#984ea3&#39;</span><span class="p">,</span><span class="s1">&#39;#ff7f00&#39;</span><span class="p">,</span><span class="s1">&#39;#ffff33&#39;</span><span class="p">,</span><span class="s1">&#39;#a65628&#39;</span><span class="p">,</span><span class="s1">&#39;#f781bf&#39;</span><span class="p">]</span>
+        <span class="c1"># This dict contains all of the data needed by gen_debug_plots</span>
+        <span class="n">debug</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;intsects&#39;</span><span class="p">:</span> <span class="n">intsects</span><span class="p">,</span>
+                 <span class="s1">&#39;pos_list&#39;</span><span class="p">:</span> <span class="n">pos_list</span><span class="p">,</span>
+                 <span class="s1">&#39;refidx&#39;</span><span class="p">:</span> <span class="n">refidx</span><span class="p">,</span>
+                 <span class="s1">&#39;dmax&#39;</span><span class="p">:</span> <span class="n">dmax</span><span class="p">,</span>
+                 <span class="s1">&#39;c_i&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">numpos</span><span class="p">,</span>
+                 <span class="s1">&#39;c_ref&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">numpos</span><span class="p">,</span>
+                 <span class="s1">&#39;min_i&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">numpos</span><span class="p">,</span>
+                 <span class="s1">&#39;min_ref&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">numpos</span><span class="p">}</span>
 
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">intsects</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numpos</span><span class="p">):</span>
         <span class="n">badshift</span> <span class="o">=</span> <span class="kc">False</span>
-
-        <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-            <span class="n">binary</span> <span class="o">=</span> <span class="n">pyfits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;binary</span><span class="si">{}</span><span class="s1">.fits&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">bdata</span> <span class="o">=</span> <span class="n">binary</span><span class="o">.</span><span class="n">data</span>
-            <span class="n">numx</span><span class="p">,</span> <span class="n">numy</span> <span class="o">=</span> <span class="n">bdata</span><span class="o">.</span><span class="n">shape</span>
-            <span class="n">bwx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">numx</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">binary</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;CRPIX1&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">bwy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">numy</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">binary</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;CRPIX2&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">overlap_ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">bdata</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gray</span><span class="p">,</span>
-                      <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="n">bwx</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">bwx</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">bwy</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">bwy</span><span class="o">.</span><span class="n">min</span><span class="p">()],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-            <span class="n">overlap_ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">intsects</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">intsects</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
-            <span class="k">del</span> <span class="n">bdata</span>
-            <span class="k">del</span> <span class="n">binary</span>
-
-            <span class="n">diffhist_fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">refidx</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: skipping reference frame </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">i</span><span class="p">))</span>
             <span class="n">shift_px</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
             <span class="n">std_px</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-            <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-                <span class="n">overlap_ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">intsects</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">intsects</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+            <span class="n">badshift</span> <span class="o">=</span> <span class="kc">False</span>
+
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">diff_x</span> <span class="o">=</span> <span class="n">intsects</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="p">:][:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">intsects</span><span class="p">[</span><span class="n">refidx</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="p">:][</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
-            <span class="n">diff_y</span> <span class="o">=</span> <span class="n">intsects</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">,</span> <span class="p">:][:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">intsects</span><span class="p">[</span><span class="n">refidx</span><span class="p">][</span><span class="mi">1</span><span class="p">,</span> <span class="p">:][</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
-            <span class="n">diff_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">diff_x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">diff_y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:}</span><span class="s1">: median distance: </span><span class="si">{:6.4f}</span><span class="s1"> px&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">diff_r</span><span class="p">)))</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:}</span><span class="s1">: stddev distance: </span><span class="si">{:6.4f}</span><span class="s1"> px&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">diff_r</span><span class="p">)))</span>
-
-            <span class="c1"># By taking the minimum along each dimension (corresponding to the i&#39;th and ref positions) we are ensuring</span>
-            <span class="c1">#  that no points are double counted, which might happen if points are within dmax of two reference points</span>
-            <span class="n">min_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">diff_r</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-            <span class="n">min_ref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">diff_r</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-            <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-                <span class="n">axi</span> <span class="o">=</span> <span class="n">diffhist_fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
-                <span class="n">n</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">axi</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">min_i</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s1">&#39;step&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-                <span class="n">nidx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-                <span class="n">axi</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="s1">&#39;[</span><span class="si">{:4.2f}</span><span class="s1">, </span><span class="si">{:4.2f}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">nidx</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">nidx</span><span class="o">+</span><span class="mi">1</span><span class="p">]),</span> <span class="n">transform</span><span class="o">=</span><span class="n">axi</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span>
-                         <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
-                <span class="n">axi</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;VBI__005 = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
-
-                <span class="n">axref</span> <span class="o">=</span> <span class="n">diffhist_fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span>
-                <span class="n">n</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">axref</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">min_ref</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s1">&#39;step&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-                <span class="n">nidx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-                <span class="n">axref</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="s1">&#39;[</span><span class="si">{:4.2f}</span><span class="s1">, </span><span class="si">{:4.2f}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">nidx</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">nidx</span><span class="o">+</span><span class="mi">1</span><span class="p">]),</span> <span class="n">transform</span><span class="o">=</span><span class="n">axref</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span>
-                           <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
-                <span class="n">axref</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;ref, VBI__005 = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">refidx</span><span class="p">))</span>
-                <span class="n">diffhist_pp</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">diffhist_fig</span><span class="p">)</span>
-
-            <span class="c1"># We now make sure that the identified pairs are the same in each frame. This is done by only selecting</span>
-            <span class="c1">#  intersections who&#39;s &#39;diff_r&#39; values are the same in both the reference and i&#39;th frame. It is possible</span>
-            <span class="c1">#  that one of the frames has intersections that are not in the other, but are still within dmax of</span>
-            <span class="c1">#  intersections in the other frame (especially if dmax is too large). Because they are unique points these</span>
-            <span class="c1">#  intersections would have avoided the double-counting cull above, but are identified and removed here.</span>
-            <span class="n">candidate_idx_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">min_i</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">dmax</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">candidate_idx_ref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">min_ref</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">dmax</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">i_candidates</span> <span class="o">=</span> <span class="n">min_i</span><span class="p">[</span><span class="n">candidate_idx_i</span><span class="p">]</span>
-            <span class="n">ref_candidates</span> <span class="o">=</span> <span class="n">min_ref</span><span class="p">[</span><span class="n">candidate_idx_ref</span><span class="p">]</span>
-            <span class="n">candidates</span> <span class="o">=</span> <span class="n">i_candidates</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">ref_candidates</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
-            <span class="n">cidx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">candidates</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-            <span class="n">idx_i</span> <span class="o">=</span> <span class="n">candidate_idx_i</span><span class="p">[</span><span class="n">cidx</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
-            <span class="n">idx_ref</span> <span class="o">=</span> <span class="n">candidate_idx_ref</span><span class="p">[</span><span class="n">cidx</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+            <span class="c1"># First, find the indices in intsects_* of the points that match b/t the ref frame and frame i.</span>
+            <span class="c1">#  idx_i identifies all points in intsects[i] that match intsects[refidx]</span>
+            <span class="n">idx_i</span><span class="p">,</span> <span class="n">idx_ref</span> <span class="o">=</span> <span class="n">find_match_idx</span><span class="p">(</span><span class="n">intsects</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">intsects</span><span class="p">[</span><span class="n">refidx</span><span class="p">],</span> <span class="n">dmax</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="n">debug</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">idx_i</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span> <span class="n">idx_ref</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Reference and position </span><span class="si">{}</span><span class="s1"> do not have the same number of overlaps. This should &#39;</span>
@@ -512,11 +480,33 @@
                 <span class="n">badshift</span> <span class="o">=</span> <span class="kc">True</span>
 
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">c_i</span> <span class="o">=</span> <span class="n">intsects</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span> <span class="n">idx_i</span><span class="p">]</span>
-                <span class="n">c_ref</span> <span class="o">=</span> <span class="n">intsects</span><span class="p">[</span><span class="n">refidx</span><span class="p">][:,</span> <span class="n">idx_ref</span><span class="p">]</span>
+                <span class="c1"># An acceptable set of matching points was found</span>
+                <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="c1"># This loop checks for a bimodal shift distribution, which can be caused if the shift is large</span>
+                    <span class="c1">#  enough that some intersections can be associated with one shift and other with a different shift.</span>
 
-                <span class="n">shift_px</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">c_i</span> <span class="o">-</span> <span class="n">c_ref</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-                <span class="n">std_px</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">c_i</span> <span class="o">-</span> <span class="n">c_ref</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">c_i</span> <span class="o">=</span> <span class="n">intsects</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span> <span class="n">idx_i</span><span class="p">]</span>
+                    <span class="n">c_ref</span> <span class="o">=</span> <span class="n">intsects</span><span class="p">[</span><span class="n">refidx</span><span class="p">][:,</span> <span class="n">idx_ref</span><span class="p">]</span>
+                    <span class="n">dists</span> <span class="o">=</span> <span class="n">c_i</span> <span class="o">-</span> <span class="n">c_ref</span>
+
+                    <span class="c1"># Here&#39;s where we actually check for bimodality</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: finding shifts for camera pos </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">pos_list</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+                    <span class="n">shift_px</span><span class="p">,</span> <span class="n">std_px</span><span class="p">,</span> <span class="n">ignore_idx</span> <span class="o">=</span> <span class="n">check_shifts</span><span class="p">(</span><span class="n">dists</span><span class="p">,</span> <span class="n">bimode_choice</span><span class="o">=</span><span class="n">bimode_choice</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+                    <span class="k">if</span> <span class="nb">any</span><span class="p">([</span><span class="n">b</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">ignore_idx</span><span class="p">]):</span>
+                        <span class="c1"># If there WAS bimodality the ignore_idx will be not empty and contain the indices of the mode</span>
+                        <span class="c1">#  that should be ignored</span>
+                        <span class="n">ignore_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;i_x&#39;</span><span class="p">:</span> <span class="n">idx_i</span><span class="p">[</span><span class="n">ignore_idx</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+                                       <span class="s1">&#39;i_y&#39;</span><span class="p">:</span> <span class="n">idx_i</span><span class="p">[</span><span class="n">ignore_idx</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+                                       <span class="s1">&#39;ref_x&#39;</span><span class="p">:</span> <span class="n">idx_ref</span><span class="p">[</span><span class="n">ignore_idx</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+                                       <span class="s1">&#39;ref_y&#39;</span><span class="p">:</span> <span class="n">idx_ref</span><span class="p">[</span><span class="n">ignore_idx</span><span class="p">[</span><span class="mi">1</span><span class="p">]]}</span>
+
+                        <span class="c1"># Now re-run find_match_idx but don&#39;t count matches from the ignored mode</span>
+                        <span class="n">idx_i</span><span class="p">,</span> <span class="n">idx_ref</span> <span class="o">=</span> <span class="n">find_match_idx</span><span class="p">(</span><span class="n">intsects</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">intsects</span><span class="p">[</span><span class="n">refidx</span><span class="p">],</span> <span class="n">dmax</span><span class="p">,</span>
+                                                        <span class="n">ignore_dict</span><span class="o">=</span><span class="n">ignore_dict</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="n">debug</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">break</span>
+
                 <span class="n">shift_wcs</span> <span class="o">=</span> <span class="n">shift_px</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;CDELT1&#39;</span><span class="p">],</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;CDELT2&#39;</span><span class="p">]])</span>
                 <span class="n">std_wcs</span> <span class="o">=</span> <span class="n">std_px</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;CDELT1&#39;</span><span class="p">],</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;CDELT2&#39;</span><span class="p">]])</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: camera pos </span><span class="si">{}</span><span class="s1"> num intersetions: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">pos_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">c_i</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
@@ -526,8 +516,8 @@
                 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: camera pos </span><span class="si">{}</span><span class="s1"> [x, y] stdev (px): </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">pos_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">std_px</span><span class="p">))</span>
 
                 <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-                    <span class="n">overlap_ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">c_i</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">c_i</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
-                    <span class="n">overlap_ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">c_i</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">c_ref</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">c_i</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">c_ref</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colorlist</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+                    <span class="n">debug</span><span class="p">[</span><span class="s1">&#39;c_i&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">c_i</span>
+                    <span class="n">debug</span><span class="p">[</span><span class="s1">&#39;c_ref&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">c_ref</span>
 
         <span class="n">ihdu</span> <span class="o">=</span> <span class="n">pyfits</span><span class="o">.</span><span class="n">ImageHDU</span><span class="p">()</span>
         <span class="n">ihdu</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;CSHIFT1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">shift_px</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -542,14 +532,265 @@
     <span class="n">target_calibration</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">FitsData</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-        <span class="n">diffhist_pp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="n">overlap_ax</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
-        <span class="n">overlap_ax</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;overlap.pdf&#39;</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">overlap_ax</span><span class="o">.</span><span class="n">figure</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+        <span class="n">gen_debug_plots</span><span class="p">(</span><span class="o">**</span><span class="n">debug</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">target_calibration</span></div>
+
+
+<div class="viewcode-block" id="find_match_idx"><a class="viewcode-back" href="../../api/VBI_Pipeline.TargetCalibration.find_match_idx.html#VBI_Pipeline.TargetCalibration.find_match_idx">[docs]</a><span class="k">def</span> <span class="nf">find_match_idx</span><span class="p">(</span><span class="n">intsects_i</span><span class="p">,</span> <span class="n">intsects_ref</span><span class="p">,</span> <span class="n">dmax</span><span class="p">,</span> <span class="n">ignore_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Identify intersections that are probably the same point and return their indices</span>
+
+<span class="sd">    The radial distances between ALL intersections are computed and any less than ``dmax`` are considered to be the same</span>
+<span class="sd">    points. Additionally, the algorithm ensures that a) only the minimum distance companion for each intersection is</span>
+<span class="sd">    used, and b) that no intersections are double counted.</span>
+
+<span class="sd">    The user can specify a set of match candidates to ignore via the ``ignore_dict`` keyword. This is useful if a</span>
+<span class="sd">    bimodal distribution of match offsets is suspected.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    intsects_i : `numpy.ndarray`</span>
+<span class="sd">        Array of shape (2, M) containing the (X, Y) locations of the M intersections in the candidate image</span>
+
+<span class="sd">    intsects_ref : `numpy.ndarray`</span>
+<span class="sd">        Array of shape (2, N) containing the (X, Y) locations of the N intersections in the reference image</span>
+
+<span class="sd">    dmax : float</span>
+<span class="sd">        Any match candidates with a radial distance greater than dmax are immediately excluded from consideration</span>
+
+<span class="sd">    ignore_dict : dict</span>
+<span class="sd">        A dictionary with keys `i_x`, `i_y`, `ref_x`, and `ref_y` whose values are index arrays containing the match</span>
+<span class="sd">        candidates to ignore. For each element, the match between (`i_x`, `i_y`) in the candidate frame and</span>
+<span class="sd">        (`ref_x`, `ref_y`) in the reference frame will be considered bad, regardless of how close the two intersections</span>
+<span class="sd">        are to each other.</span>
+
+<span class="sd">    debug : dict or None</span>
+<span class="sd">        If a dict is provided it will be updated with data useful to `gen_debug_plots`</span>
+
+<span class="sd">    i : int</span>
+<span class="sd">        The HDU index of the candidate frame. Only needed if ``debug`` is not None</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    `numpy.ndarray`</span>
+<span class="sd">        The array that slices all matching points from intsects_i</span>
+
+<span class="sd">    `numpy.ndarray`</span>
+<span class="sd">        The array that slices all matching points from intsects_ref</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">diff_x</span> <span class="o">=</span> <span class="n">intsects_i</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:][:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">intsects_ref</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:][</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="n">diff_y</span> <span class="o">=</span> <span class="n">intsects_i</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:][:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">intsects_ref</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:][</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="n">diff_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">diff_x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">diff_y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># Ignore any SPECIFIC MATCHES that have been previously been identified (by check_shifst()) as being incorrect.</span>
+    <span class="k">if</span> <span class="n">ignore_dict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">diff_r</span><span class="p">[</span><span class="n">ignore_dict</span><span class="p">[</span><span class="s1">&#39;i_x&#39;</span><span class="p">],</span> <span class="n">ignore_dict</span><span class="p">[</span><span class="s1">&#39;ref_x&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="n">diff_r</span><span class="p">[</span><span class="n">ignore_dict</span><span class="p">[</span><span class="s1">&#39;i_y&#39;</span><span class="p">],</span> <span class="n">ignore_dict</span><span class="p">[</span><span class="s1">&#39;ref_y&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:}</span><span class="s1">: median distance: </span><span class="si">{:6.4f}</span><span class="s1"> px&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmedian</span><span class="p">(</span><span class="n">diff_r</span><span class="p">)))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:}</span><span class="s1">: stddev distance: </span><span class="si">{:6.4f}</span><span class="s1"> px&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">diff_r</span><span class="p">)))</span>
+
+    <span class="c1"># By taking the minimum along each dimension (corresponding to the i&#39;th and ref positions) we are ensuring</span>
+    <span class="c1">#  that no points are double counted, which might happen if points are within dmax of two reference points</span>
+    <span class="n">min_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">diff_r</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">min_ref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">diff_r</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># We now make sure that the identified pairs are the same in each frame. This is done by only selecting</span>
+    <span class="c1">#  intersections who&#39;s &#39;diff_r&#39; values are the same in both the reference and i&#39;th frame. It is possible</span>
+    <span class="c1">#  that one of the frames has intersections that are not in the other, but are still within dmax of</span>
+    <span class="c1">#  intersections in the other frame (especially if dmax is too large). Because they are unique points these</span>
+    <span class="c1">#  intersections would have avoided the double-counting cull above, but are identified and removed here.</span>
+    <span class="n">candidate_idx_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">min_i</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">dmax</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">candidate_idx_ref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">min_ref</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">dmax</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">i_candidates</span> <span class="o">=</span> <span class="n">min_i</span><span class="p">[</span><span class="n">candidate_idx_i</span><span class="p">]</span>
+    <span class="n">ref_candidates</span> <span class="o">=</span> <span class="n">min_ref</span><span class="p">[</span><span class="n">candidate_idx_ref</span><span class="p">]</span>
+    <span class="n">candidates</span> <span class="o">=</span> <span class="n">i_candidates</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">ref_candidates</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="n">cidx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">candidates</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">idx_i</span> <span class="o">=</span> <span class="n">candidate_idx_i</span><span class="p">[</span><span class="n">cidx</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="n">idx_ref</span> <span class="o">=</span> <span class="n">candidate_idx_ref</span><span class="p">[</span><span class="n">cidx</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+        <span class="n">debug</span><span class="p">[</span><span class="s1">&#39;min_i&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">min_i</span>
+        <span class="n">debug</span><span class="p">[</span><span class="s1">&#39;min_ref&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">min_ref</span>
+
+    <span class="k">return</span> <span class="n">idx_i</span><span class="p">,</span> <span class="n">idx_ref</span></div>
+
+<div class="viewcode-block" id="check_shifts"><a class="viewcode-back" href="../../api/VBI_Pipeline.TargetCalibration.check_shifts.html#VBI_Pipeline.TargetCalibration.check_shifts">[docs]</a><span class="k">def</span> <span class="nf">check_shifts</span><span class="p">(</span><span class="n">dists</span><span class="p">,</span> <span class="n">bimode_choice</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given the distances between two sets of intersections, compute the actual shift values</span>
+
+<span class="sd">    The shifts are computed as the median of all distances.</span>
+
+<span class="sd">    Importantly, this function also checks for bimodality in the shift distribution. If detected then the user is</span>
+<span class="sd">    prompted to choose which mode to use. This choice can be made automatically via ``auto_choise``.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dists : `numpy.ndarray`</span>
+<span class="sd">        Shape (2, N) array containing (X, Y) distances of all N matching point pairs</span>
+
+<span class="sd">    bimode_choice : list</span>
+<span class="sd">        List containing the automatic choice for potential bimodality in the (x, y) dimensions. Choice can be either</span>
+<span class="sd">        1 or 2; 1 always corresponds to the mode closest to the global median.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    `numpy.ndarray`</span>
+<span class="sd">        Length 2 array containing the (X, Y) shifts</span>
+
+<span class="sd">    `numpy.ndarray`</span>
+<span class="sd">        Length 2 array containing the stddev of the (X, Y) shifts</span>
+
+<span class="sd">    list</span>
+<span class="sd">        List containing 2 `numpy.ndarray`s. If bimodality was detected each array contains indices of points not in the</span>
+<span class="sd">        selected mode. Otherwise the arrays are empty.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">med</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">dists</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">dists</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">shifts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">stds</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">bad_idx</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">dists</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">med</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">med</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">shift_options</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">dists</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="o">~</span><span class="n">idx</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">dists</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">idx</span><span class="p">])]</span>
+            <span class="n">std_options</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">dists</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="o">~</span><span class="n">idx</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">dists</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">idx</span><span class="p">])]</span>
+            <span class="n">idx_option</span> <span class="o">=</span> <span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="o">~</span><span class="n">idx</span><span class="p">]</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:}</span><span class="s1">: bimodality detected in dimension </span><span class="si">{}</span><span class="s1">: medians = [</span><span class="si">{:.2f}</span><span class="s1">, </span><span class="si">{:.2f}</span><span class="s1">], numpoints = [</span><span class="si">{:}</span><span class="s1">, </span><span class="si">{:}</span><span class="s1">]&#39;</span><span class="o">.</span>\
+                  <span class="nb">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">shift_options</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">shift_options</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">~</span><span class="n">idx</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">idx</span><span class="p">)))</span>
+
+            <span class="k">if</span> <span class="n">bimode_choice</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="n">choice</span> <span class="o">=</span> <span class="n">bimode_choice</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">+</span><span class="s1">&#39;*&#39;</span><span class="o">*</span><span class="mi">51</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Dimension </span><span class="si">{}</span><span class="s1"> appears bimodal. Please select a shift:&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;(a negative choice will force the shift to be exactly the median selected)&#39;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:10}{:&gt;10}{:&gt;10}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;choice #&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:10}{:&gt;10}{:&gt;10}</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">30</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;numpoints&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">~</span><span class="n">idx</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">idx</span><span class="p">)))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:10}{:10.4f}{:10.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">([</span><span class="s1">&#39;median&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">shift_options</span><span class="p">)))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:10}{:10.4f}{:10.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">([</span><span class="s1">&#39;stddev&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">std_options</span><span class="p">)))</span>
+
+                <span class="n">choice</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">while</span> <span class="n">choice</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]:</span>
+                    <span class="n">choice</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;&gt; &#39;</span><span class="p">)</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">choice</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">choice</span><span class="p">)</span>
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="k">pass</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="si">{}</span><span class="s1">: chose mode </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">choice</span><span class="p">))</span>
+            <span class="n">shifts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">shift_options</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">choice</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">stds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">std_options</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">choice</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">choice</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">bad_idx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx_option</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">choice</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">shifts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">med</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">stds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">std</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">shifts</span><span class="p">,</span> <span class="n">stds</span><span class="p">,</span> <span class="n">bad_idx</span></div>
+
+<div class="viewcode-block" id="gen_debug_plots"><a class="viewcode-back" href="../../api/VBI_Pipeline.TargetCalibration.gen_debug_plots.html#VBI_Pipeline.TargetCalibration.gen_debug_plots">[docs]</a><span class="k">def</span> <span class="nf">gen_debug_plots</span><span class="p">(</span><span class="n">intsects</span><span class="p">,</span> <span class="n">pos_list</span><span class="p">,</span> <span class="n">refidx</span><span class="p">,</span> <span class="n">dmax</span><span class="p">,</span> <span class="n">c_i</span><span class="p">,</span> <span class="n">c_ref</span><span class="p">,</span> <span class="n">min_i</span><span class="p">,</span> <span class="n">min_ref</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generate 2 debug plots associated with the calculation of the camera shifts:</span>
+
+<span class="sd">    1. &quot;overlap.pdf&quot; - A plot showing all grid images and all found intersections (yellow). The reference intersections</span>
+<span class="sd">    are identified with green dots and all matching candidate intersections have red dots. Colored lines connecting</span>
+<span class="sd">    these dots show the intersections identified as being the same. Each candidate image is given a different color.</span>
+
+<span class="sd">    2. &quot;diffhist.pdf&quot; - A set of histograms for each candidate image. Each histogram shows the distribution of radial</span>
+<span class="sd">    distances between ALL intersections in the reference and candidate images. ``dmax`` is marked with a vertical line.</span>
+
+<span class="sd">    NOTE: For this function to work ALL intermediate functions in this module need to have been run with ``debug=True``.</span>
+<span class="sd">    This ensures that all needed files exist.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    intsects : list</span>
+<span class="sd">        Each element of this list corresponds to a single input hdu and contains a numpy array of shape (2, N)</span>
+<span class="sd">        containing the (x,y) WCS coordinates for the N intersections found in that hdu. Probably the output of</span>
+<span class="sd">        collect_intersections()</span>
+
+<span class="sd">    pos_list : list</span>
+<span class="sd">        A list containing the camera positions (VBI__005) of each corresponding hdu. Probably the output of</span>
+<span class="sd">        collect_intersections()</span>
+
+<span class="sd">    refidx : int</span>
+<span class="sd">        Index of the reference hdu to use. Index corresponds to the location in both intsects and pos_list</span>
+
+<span class="sd">    dmax : float</span>
+<span class="sd">        Any intersections with pixel locations less than dmax apart are considered to be the same intersection.</span>
+
+<span class="sd">    c_i : `numpy.ndarray`</span>
+<span class="sd">        (2, M) shape array containing (x, y) coordinates of all matching points in the candidate image.</span>
+
+<span class="sd">    c_ref : `numpy.ndarray`</span>
+<span class="sd">        (2, M) shape array containing (x, y) coordinates of all matching points in the reference image.</span>
+
+<span class="sd">    min_i : `numpy.ndarray`</span>
+<span class="sd">        1D array containing the radial distance of the closest intersection to all intersections in the candidate image</span>
+
+<span class="sd">    min_ref : `numpy.ndarray`</span>
+<span class="sd">        1D array containing the radial distance of the closest intersection to all intersections in the reference image</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Generating debug plots&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
+    <span class="n">overlap_ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+    <span class="n">diffhist_pp</span> <span class="o">=</span> <span class="n">PDF</span><span class="p">(</span><span class="s1">&#39;diffhist.pdf&#39;</span><span class="p">)</span>
+    <span class="n">colorlist</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;#e41a1c&#39;</span><span class="p">,</span><span class="s1">&#39;#377eb8&#39;</span><span class="p">,</span><span class="s1">&#39;#4daf4a&#39;</span><span class="p">,</span><span class="s1">&#39;#984ea3&#39;</span><span class="p">,</span><span class="s1">&#39;#ff7f00&#39;</span><span class="p">,</span><span class="s1">&#39;#ffff33&#39;</span><span class="p">,</span><span class="s1">&#39;#a65628&#39;</span><span class="p">,</span><span class="s1">&#39;#f781bf&#39;</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">intsects</span><span class="p">)):</span>
+        <span class="n">binary</span> <span class="o">=</span> <span class="n">pyfits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;binary</span><span class="si">{}</span><span class="s1">.fits&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">bdata</span> <span class="o">=</span> <span class="n">binary</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">numx</span><span class="p">,</span> <span class="n">numy</span> <span class="o">=</span> <span class="n">bdata</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">bwx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">numx</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">binary</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;CRPIX1&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">bwy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">numy</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">binary</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;CRPIX2&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">overlap_ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">bdata</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gray</span><span class="p">,</span>
+                          <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="n">bwx</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">bwx</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">bwy</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">bwy</span><span class="o">.</span><span class="n">min</span><span class="p">()],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">overlap_ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">intsects</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">intsects</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">refidx</span><span class="p">:</span>
+            <span class="n">overlap_ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">intsects</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">intsects</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pos_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span>
+                            <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+            <span class="n">overlap_ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">intsects</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">intsects</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">overlap_ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">intsects</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">intsects</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pos_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">colorlist</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span>
+                            <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+            <span class="n">overlap_ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">c_i</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">c_i</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+            <span class="n">overlap_ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">c_i</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">c_ref</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">c_i</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">c_ref</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colorlist</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
+        <span class="k">del</span> <span class="n">bdata</span>
+        <span class="k">del</span> <span class="n">binary</span>
+
+        <span class="c1">#####################</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">refidx</span><span class="p">:</span>
+            <span class="n">diffhist_fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+            <span class="n">axi</span> <span class="o">=</span> <span class="n">diffhist_fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
+            <span class="n">pidx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">min_i</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">dmax</span> <span class="o">*</span> <span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">n</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">axi</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">min_i</span><span class="p">[</span><span class="n">i</span><span class="p">])[</span><span class="n">pidx</span><span class="p">],</span> <span class="n">histtype</span><span class="o">=</span><span class="s1">&#39;step&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+            <span class="n">axi</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">dmax</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+            <span class="n">nidx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+            <span class="n">axi</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="s1">&#39;[</span><span class="si">{:4.2f}</span><span class="s1">, </span><span class="si">{:4.2f}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">nidx</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">nidx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">transform</span><span class="o">=</span><span class="n">axi</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span>
+                    <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+            <span class="n">axi</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;VBI__005 = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+
+            <span class="n">axref</span> <span class="o">=</span> <span class="n">diffhist_fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span>
+            <span class="n">pidx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">min_ref</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">dmax</span> <span class="o">*</span> <span class="mf">1.5</span><span class="p">)</span>
+            <span class="n">n</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">axref</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">min_ref</span><span class="p">[</span><span class="n">i</span><span class="p">])[</span><span class="n">pidx</span><span class="p">],</span> <span class="n">histtype</span><span class="o">=</span><span class="s1">&#39;step&#39;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+            <span class="n">axref</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">dmax</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+            <span class="n">nidx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+            <span class="n">axref</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="s1">&#39;[</span><span class="si">{:4.2f}</span><span class="s1">, </span><span class="si">{:4.2f}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">nidx</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">nidx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">transform</span><span class="o">=</span><span class="n">axref</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span>
+                       <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+            <span class="n">axref</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;ref, VBI__005 = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">refidx</span><span class="p">))</span>
+            <span class="n">diffhist_pp</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">diffhist_fig</span><span class="p">)</span>
+
+    <span class="n">overlap_ax</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+    <span class="n">overlap_ax</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;overlap.pdf&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">overlap_ax</span><span class="o">.</span><span class="n">figure</span><span class="p">)</span>
+    <span class="n">diffhist_pp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span></div>
 
 
 <span class="k">def</span> <span class="nf">gen2</span><span class="p">(</span><span class="n">intsects</span><span class="p">,</span> <span class="n">pos_list</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s1">&#39;Target_Calibration.fits&#39;</span><span class="p">,</span> <span class="n">dmax</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -1048,7 +1289,7 @@
     </div>
    
     <div class="right-footer">
-      Last updated on 08 May 2019.
+      Last updated on 20 May 2019.
     </div>
     <div class="centre-footer">
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5

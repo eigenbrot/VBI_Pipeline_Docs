@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>VBI_Pipeline.DarkCalibration &#8212; VBI_Pipeline v0.7.1</title>
+    <title>VBI_Pipeline.DarkCalibration &#8212; VBI_Pipeline v0.7.2</title>
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
@@ -223,7 +223,7 @@
     <span class="sd">&quot;&quot;&quot;Simply update the primary header with the number of darks used and write the output file&quot;&quot;&quot;</span>
 
     <span class="n">avgData</span><span class="o">.</span><span class="n">update_header</span><span class="p">(</span><span class="s1">&#39;NUMDARK&#39;</span><span class="p">,</span> <span class="n">numframes</span><span class="p">,</span> <span class="n">hdu</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">avgData</span><span class="o">.</span><span class="n">ref_file</span> <span class="o">=</span> <span class="s1">&#39;DarkCalibration&#39;</span>
+    <span class="n">avgData</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="s1">&#39;DarkCalibration&#39;</span>
 
     <span class="n">avgData</span><span class="o">.</span><span class="n">write_out</span><span class="p">(</span><span class="n">outname</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
@@ -289,7 +289,7 @@
     </div>
    
     <div class="right-footer">
-      Last updated on 08 May 2019.
+      Last updated on 20 May 2019.
     </div>
     <div class="centre-footer">
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5
