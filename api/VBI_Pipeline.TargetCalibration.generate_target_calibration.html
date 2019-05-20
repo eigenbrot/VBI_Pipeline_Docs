@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>generate_target_calibration &#8212; VBI_Pipeline v0.7.1</title>
+    <title>generate_target_calibration &#8212; VBI_Pipeline v0.7.2</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -24,7 +24,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="load_hough_pickle" href="VBI_Pipeline.TargetCalibration.load_hough_pickle.html" />
-    <link rel="prev" title="find_intersections" href="VBI_Pipeline.TargetCalibration.find_intersections.html" />
+    <link rel="prev" title="gen_debug_plots" href="VBI_Pipeline.TargetCalibration.gen_debug_plots.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -86,7 +86,7 @@
               
                 
   <li>
-    <a href="VBI_Pipeline.TargetCalibration.find_intersections.html" title="Previous Chapter: find_intersections"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; find_intersections</span>
+    <a href="VBI_Pipeline.TargetCalibration.gen_debug_plots.html" title="Previous Chapter: gen_debug_plots"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; gen_debug_plots</span>
     </a>
   </li>
   <li>
@@ -144,10 +144,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../API.html#module-VBI_Pipeline.GainCalibration">VBI_Pipeline.GainCalibration Module</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../API.html#module-VBI_Pipeline.TargetCalibration">VBI_Pipeline.TargetCalibration Module</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="../API.html#id6">Functions</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.check_shifts.html">check_shifts</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.collect_intersections.html">collect_intersections</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.command_line.html">command_line</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.do_single_frame.html">do_single_frame</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.find_intersections.html">find_intersections</a></li>
+<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.find_match_idx.html">find_match_idx</a></li>
+<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.gen_debug_plots.html">gen_debug_plots</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">generate_target_calibration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.load_hough_pickle.html">load_hough_pickle</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.main.html">main</a></li>
@@ -172,8 +175,8 @@
 <h1>generate_target_calibration<a class="headerlink" href="#generate-target-calibration" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="VBI_Pipeline.TargetCalibration.generate_target_calibration">
-<code class="descclassname">VBI_Pipeline.TargetCalibration.</code><code class="descname">generate_target_calibration</code><span class="sig-paren">(</span><em>intsects</em>, <em>pos_list</em>, <em>refidx</em>, <em>dmax</em>, <em>header</em>, <em>output='Target_Calibration.fits'</em>, <em>debug=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/TargetCalibration.html#generate_target_calibration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.TargetCalibration.generate_target_calibration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find overlapping intersetions and use them to compute sub-pixel offsets between pairs of hdus.</p>
+<code class="descclassname">VBI_Pipeline.TargetCalibration.</code><code class="descname">generate_target_calibration</code><span class="sig-paren">(</span><em>intsects</em>, <em>pos_list</em>, <em>refidx</em>, <em>dmax</em>, <em>header</em>, <em>output='Target_Calibration.fits'</em>, <em>bimode_choice=False</em>, <em>debug=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/TargetCalibration.html#generate_target_calibration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.TargetCalibration.generate_target_calibration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find overlapping intersections and use them to compute sub-pixel offsets between pairs of hdus.</p>
 <p>The resulting offsets are then saved in the metadata (i.e., header) of a data-less Data.FitsData object.</p>
 <p>As of right now this algorithm is a little dumb; it only finds the offsets relative to a single, reference hdu.
 In the future it should be possible to use the information from all hdus that overlap.</p>
@@ -181,7 +184,7 @@ In the future it should be possible to use the information from all hdus that ov
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>intsects</strong> : tuple</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>intsects</strong> : list</p>
 <blockquote>
 <div><p>Each element of this list corresponds to a single input hdu and contains a numpy array of shape (2,
 N) containing the (x,y) WCS coordinates for the N intersections found in that hdu. Probably the output of
@@ -208,6 +211,11 @@ collect_intersections()</p>
 <blockquote>
 <div><p>Location to save the resulting Target Calibration. It’s a little strange that this is in this function
 instead of main()</p>
+</div></blockquote>
+<p><strong>bimode_choice</strong> : list</p>
+<blockquote>
+<div><p>List containing the automatic choice for potential bimodality in the (x, y) dimensions. Choice can be either
+1 or 2; 1 always corresponds to the mode closest to the global median.</p>
 </div></blockquote>
 <p><strong>debug</strong> : bool</p>
 <blockquote>
@@ -241,7 +249,7 @@ the shifts circled in red.</p>
     </div>
    
     <div class="right-footer">
-      Last updated on 08 May 2019.
+      Last updated on 20 May 2019.
     </div>
     <div class="centre-footer">
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5

@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>VBI_Pipeline.GainCalibration &#8212; VBI_Pipeline v0.7.1</title>
+    <title>VBI_Pipeline.GainCalibration &#8212; VBI_Pipeline v0.7.2</title>
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
@@ -250,7 +250,7 @@
 
 <div class="viewcode-block" id="generate_gain_calibration"><a class="viewcode-back" href="../../api/VBI_Pipeline.GainCalibration.generate_gain_calibration.html#VBI_Pipeline.GainCalibration.generate_gain_calibration">[docs]</a><span class="k">def</span> <span class="nf">generate_gain_calibration</span><span class="p">(</span><span class="n">avgData</span><span class="p">,</span> <span class="n">outname</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Simply write the calibration to a file&quot;&quot;&quot;</span>
-    <span class="n">avgData</span><span class="o">.</span><span class="n">ref_file</span> <span class="o">=</span> <span class="s1">&#39;GainCalibration&#39;</span>
+    <span class="n">avgData</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="s1">&#39;GainCalibration&#39;</span>
     <span class="n">avgData</span><span class="o">.</span><span class="n">write_out</span><span class="p">(</span><span class="n">outname</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">avgData</span></div>
@@ -317,7 +317,7 @@
     </div>
    
     <div class="right-footer">
-      Last updated on 08 May 2019.
+      Last updated on 20 May 2019.
     </div>
     <div class="centre-footer">
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5
