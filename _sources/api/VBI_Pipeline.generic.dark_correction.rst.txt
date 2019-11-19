@@ -1,0 +1,6 @@
+dark_correction
+===============
+
+.. currentmodule:: VBI_Pipeline.generic
+
+.. autofunction:: dark_correction

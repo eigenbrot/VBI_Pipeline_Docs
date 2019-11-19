@@ -1,0 +1,6 @@
+conform_calibration
+===================
+
+.. currentmodule:: VBI_Pipeline.generic
+
+.. autofunction:: conform_calibration

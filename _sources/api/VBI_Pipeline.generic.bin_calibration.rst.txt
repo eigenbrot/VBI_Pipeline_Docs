@@ -1,0 +1,6 @@
+bin_calibration
+===============
+
+.. currentmodule:: VBI_Pipeline.generic
+
+.. autofunction:: bin_calibration

@@ -1,0 +1,6 @@
+get_all_obs_targets
+===================
+
+.. currentmodule:: VBI_Pipeline.VBIPipeline
+
+.. autofunction:: get_all_obs_targets

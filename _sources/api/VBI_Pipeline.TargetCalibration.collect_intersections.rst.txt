@@ -1,0 +1,6 @@
+collect_intersections
+=====================
+
+.. currentmodule:: VBI_Pipeline.TargetCalibration
+
+.. autofunction:: collect_intersections

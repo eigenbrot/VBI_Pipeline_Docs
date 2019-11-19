@@ -1,0 +1,39 @@
+Reference/API
+=============
+
+.. automodapi:: VBI_Pipeline.VBIPipeline
+   :headings: #^
+   :skip: tag
+   :skip: command_line
+   :skip: glob
+
+.. automodapi:: VBI_Pipeline.VBIStitch
+   :headings: #^
+   :skip: tag
+   :skip: command_line
+
+.. automodapi:: VBI_Pipeline.DarkCalibration
+   :headings: #^
+   :skip: tag
+
+.. automodapi:: VBI_Pipeline.GainCalibration
+   :headings: #^
+   :skip: tag
+
+.. automodapi:: VBI_Pipeline.TargetCalibration
+   :headings: #^
+   :skip: tag
+   :skip: gen2
+   :skip: intersections_to_ds9
+   :skip: plot_intersections
+   :skip: compare_gens
+
+.. automodapi:: VBI_Pipeline.Data
+   :headings: #^
+   :no-inheritance-diagram:
+   :skip: tag
+
+.. automodapi:: VBI_Pipeline.generic
+   :headings: #^
+   :no-inheritance-diagram:
+   :skip: tag

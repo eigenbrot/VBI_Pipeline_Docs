@@ -1,0 +1,48 @@
+VBI Pipeline Documentation
+===========================
+
+This package provides a pipeline that produces Level-1 Science Data for the VBI instrument on DKIST.
+
+Installation
+------------
+Let pip do the work:
+
+.. code-block:: console
+
+  $ pip install git+ssh://git@bitbucket.org:dkistdc/vbi-science-pipeline.git
+
+Usage
+-----
+In its current form the pipeline is a stand-alone program that relies on a user-editable configuration file.
+A completely blank file can be generated with:
+
+.. code-block:: console
+
+  $ vbi_pipeline -b config.ini
+
+The file ``config.ini`` is editable with any standard editor. A config file with sensible defaults can be made by
+swapping the `-b` flag with `-d`. Once this file has been correctly populated the data can be reduced with
+
+.. code-block:: console
+
+  $ vbi_pipeline config.ini
+
+To avoid potentially unnecessary interpolation the main pipeline does not stitch together the full VBI FOV. This can
+be done with the `vbi_stitch` command:
+
+.. code-block:: console
+
+  $ vbi_stitch INPUT OUTPUT
+
+More information on the format/options of the configuration file can be found in the :doc:`config_file`.
+
+.. toctree::
+  :maxdepth: 2
+  :glob:
+  :hidden:
+
+  self
+  walkthrough
+  config_file
+  IPA_access
+  API

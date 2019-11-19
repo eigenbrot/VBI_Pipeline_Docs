@@ -1,0 +1,6 @@
+extract_ROI
+===========
+
+.. currentmodule:: VBI_Pipeline.generic
+
+.. autofunction:: extract_ROI

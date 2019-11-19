@@ -1,0 +1,6 @@
+check_shifts
+============
+
+.. currentmodule:: VBI_Pipeline.TargetCalibration
+
+.. autofunction:: check_shifts

@@ -1,0 +1,128 @@
+Configuration File Format
+=========================
+
+The VBI Pipeline configuration file is in the standard INI format and contains a subset of the sections and options
+listed below. All options in *italics* are optional; if they are not provided by the user then default values will be
+loaded.
+
+Main
+----
+This section controls the top-level Science reduction. All of the ``*_cal`` options point to files that will not exist
+on the first run of the pipeline. Once these objects have been created a lot of time can be saved by reusing them for
+any other science runs that have the same setup. It is also possible to regenerate only a subset of the intermediate
+Calibration Objects by simply pointing the corresponding option to a file that doesn't exist.
+
+:raw_sci_dir: Path to a directory containing all of the Object (i.e., science) FITS files that will be reduced
+
+:data_set_id: A string that is used to refine the selection of data from ``raw_sci_dir``. Only files whose 'ID_004'
+    metadata matches this parameter will be used. If left blank then all data in the ``raw_sci_dir`` will be treated as
+    a single data set, which might produce some strange looking outputs. **Note** As a special case, if this option is
+    "all" then each data set found in the directory will be reduced separately.
+
+:output: Path to file in which to save the reduced output images. **Note:** In the cas where ``data_set_id = all`` this
+    option defines the prefix used when saving each separate data set. They will be saved as OUTPUT_ID004.fits.
+
+:dark_cal: The location of the processed DarkCalibration object. If this file does not exist it will be generated.
+
+:gain_cal: The location of the processed GainCalibration object. If this file does not exist it will be generated.
+
+:target_cal: The location of the processed TargetCalibration object. If this file does not exist it will  be generated.
+
+:flush: If 'True' then the VBI Pipeline will try to write intermediate data products and read them using memmap in an
+    attempt to save on memory usage. This results in a slight performance hit, but might be the only way you can get
+    a huge data set to process without running out of RAM.
+
+DarkCalibration
+---------------
+This section is only relevant if the file referenced by ``Main.dark_cal`` does not exist.
+
+:raw_dark_dir: Path to a directory containing the dark frames to use during reduction. Can be the same as
+    ``Main.raw_sci_dir``.
+
+:*low_acceptance_threshold*: **(float)** This sets the lower limit for the fraction of outlying pixels that are allowed
+    in a good DarkCalibration object. If the fraction of pixels in the object that are less than 1 stddev away
+    from the mean is less than 0.682 - low_acceptance parameter an error will be thrown.
+
+:*high_acceptance_threshold*: **(float)** This sets the lower limit for the fraction of outlying pixels that are allowed
+    in a good DarkCalibration object. If the fraction of pixels in the object that are less than 1 stddev away
+    from the mean is more than 0.682 + low_acceptance parameter an error will be thrown.
+
+GainCalibration
+---------------
+This section is only relevant if the file referenced by ``Main.gain_cal`` does not exist.
+
+:raw_gain_dir: Path to a directory containing the gain frames to use during reduction. Can be the same as
+    ``Main.raw_sci_dir``.
+
+:*low_acceptance_threshold*: **(float)** This sets the lower limit for the fraction of outlying pixels that are allowed
+    in a good GainCalibration object. If the fraction of pixels in the object that are less than 1 stddev away
+    from the mean is less than 0.682 - low_acceptance parameter an error will be thrown.
+
+:*high_acceptance_threshold*: **(float)** This sets the lower limit for the fraction of outlying pixels that are allowed
+    in a good GainCalibration object. If the fraction of pixels in the object that are less than 1 stddev away
+    from the mean is more than 0.682 + low_acceptance parameter an error will be thrown.
+
+TargetCalibration
+-----------------
+This section is only relevant if the file referenced by ``Main.target_cal`` does not exist.
+
+:raw_grid_dir: Path to a directory containing the observations of the GOS calibration grid. Can be the same as
+    ``Main.raw_sci_dir``.
+
+:*refidx*: **(int)** The camera position (0-indexed) to use as the reference position when computing the sub-pixel, WCS
+    shifts for all frames (i.e., TargetCalibration). Whatever position you choose should overlap with all other
+    positions.
+
+:*rho_smooth*: **(int)** The smoothing kernel (in pixels) to use when smoothing rho vectors in the Hough Transform. More
+    smoothing can help with dirty detectors or GOS line grids, but too much might reduce the accuracy of the
+    TargetCalibration.
+
+:*gauss_sigma*: **(float)** The smoothing kernel (in pixels) used to help identify grid lines. This number should be close
+    to the pixel width of the lines themselves.
+
+:*rho_min_dist*: **(float)** The minimum separation (in pixels) allowed between lines identified by the Hough Transform.
+    Unfortunately, the 'pixels' referenced here do NOT necessarily correspond to pixels on the image.
+
+:*dmax*: **(float)** The maximum radial distance (in pixels) between two grid intersections in different camera positions
+    where the intersections are called the same.
+
+:*binary_threshold*: **(float)** This is used to clean up the binary grid image that is passed to the Hough Transform.
+    If the percentage of pixels above the binary threshold is outside the range (binary_threshold, 1 - binary_threshold)
+    then some cleaning of outlying pixels is performed.
+
+:*sigclip*: **(float)** Another way to keep the binary image clean. Any pixels more than sigclip standard deviations away
+    from the image mean are ignored.
+
+:*bimode_choice*: **(list)** You'll hopefully never need this. Sometimes the camera offsets can be such that the distribution
+    of offsets between camera positions is bi-modal. If this option is not specified then the user is asked to manually select
+    which mode to use. For future runs you can specify a list of automatic choices so user input is not needed. The format
+    is a list of lists, one [x, y] list for each camera position. The [x, y] lists contain your choice of mode for the x and y
+    shift directions. The choice must be either 1 or 2; 1 always selects the mode closest to the global median and is almost always
+    the correct choice. Example (for VBI-RED, which has 4 camera positions): ``[[1,1], [2,1], [1,1], [1,2]]``. **NOTE:**
+    You can also specify a single number to select the same option for all camera positions. For example, set it to ``1`` if
+    you just want to always choose the strongest mode and not be bothered. **NOTE (pt2):** There are some secret options:
+    if you select either -1 or -2 then the shift will be exactly the selected median and the algorithm will not be re-run.
+    If you select 0 then the global median is used and the algorithm is not re-run.
+
+Example Config File
+-------------------
+
+.. code-block:: ini
+
+  [Main]
+  raw_sci_dir = ../
+  data_set_id = GOS target
+  output = SciTarget.fits
+  dark_cal = DarkCal.fits
+  gain_cal = GainCal.fits
+  target_cal = TargetCal.fits
+  flush = False
+
+  [DarkCalibration]
+  raw_dark_dir = ../
+
+  [GainCalibration]
+  raw_gain_dir = ../
+
+  [TargetCalibration]
+  raw_grid_dir = ../

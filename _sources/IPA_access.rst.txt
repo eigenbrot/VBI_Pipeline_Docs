@@ -1,0 +1,151 @@
+Instrument Partner Testing Access
+=================================
+
+As of version 0.7.1 the pipeline also provides command-line level access to the individual modules of the VBI Pipeline.
+These scripts are useful for testing and debugging each step of the VBI Pipeline individually. In each case they provide
+complete access to each step's `main()` function, with all optional parameters exposed as command line options. Unless
+set by the user the optional parameters fall back on the package defaults (the same as when running the main
+``vbi_pipeline`` program).
+
+The outputs of these scripts are suitable for use in the ``Main`` section of the standard configuration file.
+
+Dark Calibration
+----------------
+
+Usage
+*****
+
+.. code-block:: console
+
+  usage: vbi_dark [-h] [-f] [-L LOW_THRESH] [-H HIGH_THRESH] dark_dir output
+
+  Run the VBI Pipeline's Dark Calibration module. This is a direct hook into
+  DarkCalibration.main()and all kwargs are exposed as command line options
+
+  positional arguments:
+    dark_dir              Directory containing raw dark images
+    output                Location to save Dark Calibration FITS object
+
+  optional arguments:
+    -h, --help            show this help message and exit
+    -f, --force           Overwrite output
+    -L LOW_THRESH, --low-thresh LOW_THRESH
+                          Low acceptance threshold
+    -H HIGH_THRESH, --high-thresh HIGH_THRESH
+                          High acceptance threshold
+
+Example
+*******
+
+.. code-block:: console
+
+  $ vbi_dark ../input_data DC.fits
+
+Gain Calibration
+----------------
+
+Usage
+*****
+
+.. code-block:: console
+
+  usage: vbi_gain [-h] [-f] [-D DARK_CAL] [-L LOW_THRESH] [-H HIGH_THRESH]
+                  gain_dir output
+
+  Run the VBI Pipeline's Gain Calibration module. This is a direct hook into
+  GainCalibration.main()and all kwargs are exposed as command line options
+
+  positional arguments:
+    gain_dir              Directory containing raw dark images
+    output                Location to save Gain Calibration FITS object
+
+  optional arguments:
+    -h, --help            show this help message and exit
+    -f, --force           Overwrite output
+    -D DARK_CAL, --dark_cal DARK_CAL
+                          Location of Dark Calibration object FITS file. If none
+                          is provided thenno dark correction will be done.
+    -L LOW_THRESH, --low-thresh LOW_THRESH
+                          Low acceptance threshold
+    -H HIGH_THRESH, --high-thresh HIGH_THRESH
+                          High acceptance threshold
+
+Example
+*******
+
+.. code-block:: console
+
+  $ vbi_gain ../input_data GC.fits -D DC.fits
+
+Target Calibration
+------------------
+
+There are a lot of options here that should probably be left alone. Many of the defaults are critically important to
+a successful TargetCal run.
+
+.. warning::
+  Target Calibration will likely fail if you do not provide both Dark Calibration (``-D``) and Gain Calibration
+  (``-G``) objects.
+
+Usage
+*****
+
+.. code-block:: console
+
+  usage: vbi_target [-h] [-f] [-D DARK_CAL] [-G GAIN_CAL] [-g GAUSS_SIGMA]
+                    [-d DMAX] [-r RHO_MIN_DIST] [-i REFIDX] [-R RHO_SMOOTH]
+                    [-t BINARY_THRESHOLD] [-s SIGCLIP] [-p]
+                    grid_dir output
+
+  Run the VBI Pipeline's Target Calibration module. This is a direct hook into
+  TargetCalibration.main()and all kwargs are exposed as command line options
+
+  positional arguments:
+    grid_dir              Directory containing raw GOS grid images
+    output                Location to save Target Calibration FITS object
+
+  optional arguments:
+    -h, --help            show this help message and exit
+    -f, --force           Overwrite output
+    -D DARK_CAL, --dark-cal DARK_CAL
+                          Location of Dark Calibration object FITS file. If none
+                          is provided then no dark correction will be done.
+    -G GAIN_CAL, --gain-cal GAIN_CAL
+                          Location of Gain Calibration object FITS file. If none
+                          is provided then no gain correction will be done.
+    -g GAUSS_SIGMA, --gauss-sigma GAUSS_SIGMA
+                          Width of smoothing kernel used to construct a binary
+                          image from the input data. Should be slightly less
+                          than the pixel width of the grid lines.
+    -d DMAX, --dmax DMAX  Any intersections with pixel locations less than dmax
+                          apart are considered to be the same intersection.
+    -r RHO_MIN_DIST, --rho-min-dist RHO_MIN_DIST
+                          Minimum distance (in Hough space coordinates) allowed
+                          between peaks in rho. This parameter is highly
+                          dependent on the pixel scale of the grid lines.
+    -i REFIDX, --refidx REFIDX
+                          Index of the reference hdu to use. Index corresponds
+                          to the location in both intsects and pos_list
+    -R RHO_SMOOTH, --rho-smooth RHO_SMOOTH
+                          Sigma of smoothing kernel used to remove noise from
+                          the rho rss. Something b/t 5 and 10 is probably good.
+    -t BINARY_THRESHOLD, --binary-threshold BINARY_THRESHOLD
+                          Min percentage of pixels to be on one side of the Otsu
+                          threshold when constructing the binary image. If the
+                          percentage of pixels above the threshold is outside
+                          the range (binary_threshold, 1 - binary_threshold),
+                          then some cleaning of outlying pixels is performed.
+    -s SIGCLIP, --sigclip SIGCLIP
+                          Any pixels beyond sigclip standard deviations from the
+                          mean are excluded from the binary thresholding
+                          calculation.
+    -p, --debug           If True the code will stop at each hdu (i.e., camera
+                          position) and generate some diagnostic plots that show
+                          the computed lines and grid intersections.
+Example
+*******
+
+.. code-block:: console
+
+  $ vbi_target ../input_data TC.fits -D DC.fits -G GC.fits
+

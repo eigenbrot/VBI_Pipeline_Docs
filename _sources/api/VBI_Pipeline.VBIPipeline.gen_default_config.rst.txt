@@ -1,0 +1,6 @@
+gen_default_config
+==================
+
+.. currentmodule:: VBI_Pipeline.VBIPipeline
+
+.. autofunction:: gen_default_config

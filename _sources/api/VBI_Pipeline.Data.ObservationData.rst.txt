@@ -1,0 +1,17 @@
+ObservationData
+===============
+
+.. currentmodule:: VBI_Pipeline.Data
+
+.. autoclass:: ObservationData
+   :show-inheritance:
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+
+      ~ObservationData.task
+
+   .. rubric:: Attributes Documentation
+
+   .. autoattribute:: task

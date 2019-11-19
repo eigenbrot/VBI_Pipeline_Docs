@@ -1,0 +1,6 @@
+get_intermediate_kwargs
+=======================
+
+.. currentmodule:: VBI_Pipeline.VBIPipeline
+
+.. autofunction:: get_intermediate_kwargs

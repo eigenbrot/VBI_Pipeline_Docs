@@ -1,0 +1,6 @@
+average_data
+============
+
+.. currentmodule:: VBI_Pipeline.generic
+
+.. autofunction:: average_data

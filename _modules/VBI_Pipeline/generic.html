@@ -3,23 +3,18 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>VBI_Pipeline.generic &#8212; VBI_Pipeline v0.7.2</title>
+    <meta charset="utf-8" />
+    <title>VBI_Pipeline.generic &#8212; VBI_Pipeline v0.8.2</title>
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" />
-    <link rel="stylesheet" type="text/css" href="../../_static/dkist.css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" type="text/css" />
+    <link rel="stylesheet" href="../../_static/dkist.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/language_data.js"></script>
-    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../../_static/favico.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -27,6 +22,10 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
 
@@ -131,7 +130,7 @@
         </div>
     </div>
 
-    <div class="col-md-9 content">
+    <div class="body col-md-9 content" role="main">
       
   <h1>Source code for VBI_Pipeline.generic</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -176,7 +175,7 @@
 <span class="sd">        The averaged data</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">num_pos</span> <span class="o">=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;VBI__004&#39;</span><span class="p">]</span>
-    <span class="n">numx</span><span class="p">,</span> <span class="n">numy</span> <span class="o">=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">numx</span><span class="p">,</span> <span class="n">numy</span> <span class="o">=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
     <span class="n">hdulist</span> <span class="o">=</span> <span class="p">[</span><span class="n">pyfits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="n">fitsData</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
 
     <span class="k">if</span> <span class="n">preserve_camera_pos</span><span class="p">:</span>
@@ -188,15 +187,15 @@
                 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Averaging camera position </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">i</span><span class="p">))</span>
                 <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">pos_idx</span><span class="p">:</span>
                     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:  using data HDU </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">j</span><span class="p">))</span>
-                    <span class="n">output</span> <span class="o">+=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+                    <span class="n">output</span> <span class="o">+=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
                 <span class="n">hdulist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pyfits</span><span class="o">.</span><span class="n">ImageHDU</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">pos_idx</span><span class="p">),</span> <span class="n">header</span><span class="p">))</span>
 
     <span class="k">else</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Averaging all HDUs&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
         <span class="n">output</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">numx</span><span class="p">,</span> <span class="n">numy</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">:</span>
-            <span class="n">output</span> <span class="o">+=</span> <span class="n">h</span><span class="o">.</span><span class="n">data</span>
-        <span class="n">hdulist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pyfits</span><span class="o">.</span><span class="n">ImageHDU</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">fitsData</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">),</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">+=</span> <span class="n">d</span>
+        <span class="n">hdulist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pyfits</span><span class="o">.</span><span class="n">ImageHDU</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">),</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
 
     <span class="n">newData</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">FitsData</span><span class="p">()</span>
     <span class="n">newData</span><span class="o">.</span><span class="n">hdulist</span> <span class="o">=</span> <span class="n">hdulist</span>
@@ -233,12 +232,12 @@
         <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">&#39;Could not find a Dark HDU with VBI__005 = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pos</span><span class="p">))</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: using dark data HDU </span><span class="si">{}</span><span class="s1">:&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">dark_data_idx</span><span class="p">))</span>
-        <span class="n">dark_data</span> <span class="o">=</span> <span class="n">dark_calibration</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">[</span><span class="n">dark_data_idx</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">dark_data</span> <span class="o">=</span> <span class="n">dark_calibration</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">dark_data_idx</span><span class="p">]</span>
 
         <span class="n">data_idx</span> <span class="o">=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">find_data_keyword_idx</span><span class="p">(</span><span class="s1">&#39;VBI__005&#39;</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data_idx</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:  using data HDU </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">i</span><span class="p">))</span>
-            <span class="n">fitsData</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">-</span> <span class="n">dark_data</span></div>
+            <span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">dark_data</span></div>
 
 
 <div class="viewcode-block" id="gain_correction"><a class="viewcode-back" href="../../api/VBI_Pipeline.generic.gain_correction.html#VBI_Pipeline.generic.gain_correction">[docs]</a><span class="k">def</span> <span class="nf">gain_correction</span><span class="p">(</span><span class="n">fitsData</span><span class="p">,</span> <span class="n">gain_calibration</span><span class="p">):</span>
@@ -270,13 +269,13 @@
         <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">&#39;Could not find a Gain HDU with VBI__005 = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pos</span><span class="p">))</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: using gain data HDU </span><span class="si">{}</span><span class="s1">:&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">gain_data_idx</span><span class="p">))</span>
-        <span class="n">gain_data</span> <span class="o">=</span> <span class="n">gain_calibration</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">[</span><span class="n">gain_data_idx</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">gain_data</span> <span class="o">=</span> <span class="n">gain_calibration</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">gain_data_idx</span><span class="p">]</span>
 
         <span class="n">data_idx</span> <span class="o">=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">find_data_keyword_idx</span><span class="p">(</span><span class="s1">&#39;VBI__005&#39;</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data_idx</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:  using data HDU </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">i</span><span class="p">))</span>
-            <span class="n">fitsData</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">/</span> <span class="n">gain_data</span>
-            <span class="n">fitsData</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">fitsData</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">!=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.</span></div>
+            <span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">gain_data</span>
+            <span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="mf">0.</span></div>
 
 
 <div class="viewcode-block" id="conform_calibration"><a class="viewcode-back" href="../../api/VBI_Pipeline.generic.conform_calibration.html#VBI_Pipeline.generic.conform_calibration">[docs]</a><span class="k">def</span> <span class="nf">conform_calibration</span><span class="p">(</span><span class="n">Data</span><span class="p">,</span> <span class="n">xy_binning</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ROI_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ROI_max</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -290,10 +289,10 @@
 
 
 <div class="viewcode-block" id="bin_calibration"><a class="viewcode-back" href="../../api/VBI_Pipeline.generic.bin_calibration.html#VBI_Pipeline.generic.bin_calibration">[docs]</a><span class="k">def</span> <span class="nf">bin_calibration</span><span class="p">(</span><span class="n">Data</span><span class="p">,</span> <span class="n">x_binning</span><span class="p">,</span> <span class="n">y_binning</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Data</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Data</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Binning currently only supports arrays with exactly 2 dimensions&quot;</span><span class="p">)</span>
 
-    <span class="n">data</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">numx</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;numx&#39;</span><span class="p">]</span>
     <span class="n">numy</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;numy&#39;</span><span class="p">]</span>
     <span class="n">x_binning_old</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;x_bin&#39;</span><span class="p">]</span>
@@ -319,7 +318,7 @@
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y_step</span><span class="p">):</span>
         <span class="n">binned_data</span> <span class="o">+=</span> <span class="n">xbinned_data</span><span class="p">[:,</span> <span class="n">j</span><span class="p">::</span><span class="n">y_step</span><span class="p">]</span>
 
-    <span class="n">Data</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">binned_data</span>
+    <span class="n">Data</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">binned_data</span>
     <span class="n">Data</span><span class="o">.</span><span class="n">update_header</span><span class="p">(</span><span class="s1">&#39;numx&#39;</span><span class="p">,</span> <span class="n">numx</span> <span class="o">//</span> <span class="n">x_step</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">Data</span><span class="o">.</span><span class="n">update_header</span><span class="p">(</span><span class="s1">&#39;numy&#39;</span><span class="p">,</span> <span class="n">numy</span> <span class="o">//</span> <span class="n">y_step</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">Data</span><span class="o">.</span><span class="n">update_header</span><span class="p">(</span><span class="s1">&#39;x_bin&#39;</span><span class="p">,</span> <span class="n">x_binning</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -356,10 +355,10 @@
     </div>
    
     <div class="right-footer">
-      Last updated on 20 May 2019.
+      Last updated on 19 Nov 2019.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1
     </div>
   </div>
 </footer>

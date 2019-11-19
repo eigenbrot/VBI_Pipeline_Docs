@@ -1,0 +1,6 @@
+gain_correction
+===============
+
+.. currentmodule:: VBI_Pipeline.generic
+
+.. autofunction:: gain_correction

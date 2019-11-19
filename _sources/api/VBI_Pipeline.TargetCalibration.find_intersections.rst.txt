@@ -1,0 +1,6 @@
+find_intersections
+==================
+
+.. currentmodule:: VBI_Pipeline.TargetCalibration
+
+.. autofunction:: find_intersections

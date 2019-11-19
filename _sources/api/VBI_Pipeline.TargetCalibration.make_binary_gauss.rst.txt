@@ -1,0 +1,6 @@
+make_binary_gauss
+=================
+
+.. currentmodule:: VBI_Pipeline.TargetCalibration
+
+.. autofunction:: make_binary_gauss

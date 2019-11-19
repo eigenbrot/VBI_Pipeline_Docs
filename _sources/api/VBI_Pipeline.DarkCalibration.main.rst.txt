@@ -1,0 +1,6 @@
+main
+====
+
+.. currentmodule:: VBI_Pipeline.DarkCalibration
+
+.. autofunction:: main

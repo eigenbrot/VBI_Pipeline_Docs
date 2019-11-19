@@ -3,23 +3,18 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>get_intermediate_kwargs &#8212; VBI_Pipeline v0.7.2</title>
+    <meta charset="utf-8" />
+    <title>get_intermediate_kwargs &#8212; VBI_Pipeline v0.8.2</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" />
-    <link rel="stylesheet" type="text/css" href="../_static/dkist.css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" type="text/css" />
+    <link rel="stylesheet" href="../_static/dkist.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favico.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,6 +24,10 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
 
@@ -166,51 +165,39 @@
         </div>
     </div>
 
-    <div class="col-md-9 content">
+    <div class="body col-md-9 content" role="main">
       
   <div class="section" id="get-intermediate-kwargs">
 <h1>get_intermediate_kwargs<a class="headerlink" href="#get-intermediate-kwargs" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="VBI_Pipeline.VBIPipeline.get_intermediate_kwargs">
-<code class="descclassname">VBI_Pipeline.VBIPipeline.</code><code class="descname">get_intermediate_kwargs</code><span class="sig-paren">(</span><em>config</em>, <em>defaults</em>, <em>instrument</em>, <em>section</em>, <em>data_kwd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/VBIPipeline.html#get_intermediate_kwargs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.VBIPipeline.get_intermediate_kwargs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">VBI_Pipeline.VBIPipeline.</code><code class="sig-name descname">get_intermediate_kwargs</code><span class="sig-paren">(</span><em class="sig-param">config</em>, <em class="sig-param">defaults</em>, <em class="sig-param">instrument</em>, <em class="sig-param">section</em>, <em class="sig-param">data_kwd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/VBIPipeline.html#get_intermediate_kwargs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.VBIPipeline.get_intermediate_kwargs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given user-defined and default parameters, construct the kwarg dictionary for a call to a <a href="#id1"><span class="problematic" id="id2">*</span></a>Calibration module</p>
 <p>User-provided parameters take precedence over defaults.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>config</strong> : configparser.ConfigParser</p>
-<blockquote>
-<div><p>The object containing user-defined reduction options</p>
-</div></blockquote>
-<p><strong>defaults</strong> : configparser.ConfigParser</p>
-<blockquote>
-<div><p>Object containing all available reduction options. This is used to fill in any gaps in the user-defined options.</p>
-</div></blockquote>
-<p><strong>instrument</strong> : str</p>
-<blockquote>
-<div><p>Name of the instrument. Directly the ‘INSTRUME’ header keyword.</p>
-</div></blockquote>
-<p><strong>section</strong> : str</p>
-<blockquote>
-<div><p>Name of the section in the config object. This relates to the specific Calibration object being called.</p>
-</div></blockquote>
-<p><strong>data_kwd</strong> : str</p>
-<blockquote>
-<div><p>Name of the config option that points to the actual data to be used. This keyword is excluded from the output
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>config</strong><span class="classifier">configparser.ConfigParser</span></dt><dd><p>The object containing user-defined reduction options</p>
+</dd>
+<dt><strong>defaults</strong><span class="classifier">configparser.ConfigParser</span></dt><dd><p>Object containing all available reduction options. This is used to fill in any gaps in the user-defined options.</p>
+</dd>
+<dt><strong>instrument</strong><span class="classifier">str</span></dt><dd><p>Name of the instrument. Directly the ‘INSTRUME’ header keyword.</p>
+</dd>
+<dt><strong>section</strong><span class="classifier">str</span></dt><dd><p>Name of the section in the config object. This relates to the specific Calibration object being called.</p>
+</dd>
+<dt><strong>data_kwd</strong><span class="classifier">str</span></dt><dd><p>Name of the config option that points to the actual data to be used. This keyword is excluded from the output
 dictionary because it will already be in the main argument list.</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict</p>
-<blockquote class="last">
-<div><p>Dictionary containing the keyword arguments that have been loaded from config and defaults for the specified
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>dict</dt><dd><p>Dictionary containing the keyword arguments that have been loaded from config and defaults for the specified
 section</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -228,10 +215,10 @@ section</p>
     </div>
    
     <div class="right-footer">
-      Last updated on 20 May 2019.
+      Last updated on 19 Nov 2019.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1
     </div>
   </div>
 </footer>

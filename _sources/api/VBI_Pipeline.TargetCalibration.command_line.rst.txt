@@ -1,0 +1,6 @@
+command_line
+============
+
+.. currentmodule:: VBI_Pipeline.TargetCalibration
+
+.. autofunction:: command_line

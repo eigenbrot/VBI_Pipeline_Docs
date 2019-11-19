@@ -1,0 +1,6 @@
+run_science
+===========
+
+.. currentmodule:: VBI_Pipeline.VBIPipeline
+
+.. autofunction:: run_science

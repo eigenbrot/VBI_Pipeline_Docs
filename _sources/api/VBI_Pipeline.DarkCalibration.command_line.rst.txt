@@ -1,0 +1,6 @@
+command_line
+============
+
+.. currentmodule:: VBI_Pipeline.DarkCalibration
+
+.. autofunction:: command_line

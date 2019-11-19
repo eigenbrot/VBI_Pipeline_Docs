@@ -1,0 +1,6 @@
+validate_dark_calibration
+=========================
+
+.. currentmodule:: VBI_Pipeline.DarkCalibration
+
+.. autofunction:: validate_dark_calibration

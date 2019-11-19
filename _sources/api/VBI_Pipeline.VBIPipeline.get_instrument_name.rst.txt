@@ -1,0 +1,6 @@
+get_instrument_name
+===================
+
+.. currentmodule:: VBI_Pipeline.VBIPipeline
+
+.. autofunction:: get_instrument_name

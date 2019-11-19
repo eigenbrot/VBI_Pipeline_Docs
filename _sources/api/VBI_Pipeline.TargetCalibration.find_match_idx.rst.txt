@@ -1,0 +1,6 @@
+find_match_idx
+==============
+
+.. currentmodule:: VBI_Pipeline.TargetCalibration
+
+.. autofunction:: find_match_idx

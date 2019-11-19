@@ -1,0 +1,6 @@
+load_hough_pickle
+=================
+
+.. currentmodule:: VBI_Pipeline.TargetCalibration
+
+.. autofunction:: load_hough_pickle

@@ -1,0 +1,6 @@
+normalize_gain
+==============
+
+.. currentmodule:: VBI_Pipeline.GainCalibration
+
+.. autofunction:: normalize_gain

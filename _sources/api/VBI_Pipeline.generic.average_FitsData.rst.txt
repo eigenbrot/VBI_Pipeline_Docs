@@ -1,0 +1,6 @@
+average_FitsData
+================
+
+.. currentmodule:: VBI_Pipeline.generic
+
+.. autofunction:: average_FitsData

@@ -1,0 +1,6 @@
+gen_blank_config
+================
+
+.. currentmodule:: VBI_Pipeline.VBIPipeline
+
+.. autofunction:: gen_blank_config

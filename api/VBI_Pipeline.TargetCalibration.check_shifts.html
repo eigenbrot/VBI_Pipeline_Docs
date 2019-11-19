@@ -3,23 +3,18 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>check_shifts &#8212; VBI_Pipeline v0.7.2</title>
+    <meta charset="utf-8" />
+    <title>check_shifts &#8212; VBI_Pipeline v0.8.2</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" />
-    <link rel="stylesheet" type="text/css" href="../_static/dkist.css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" type="text/css" />
+    <link rel="stylesheet" href="../_static/dkist.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/language_data.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="shortcut icon" href="../_static/favico.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -29,6 +24,10 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
 
@@ -169,49 +168,39 @@
         </div>
     </div>
 
-    <div class="col-md-9 content">
+    <div class="body col-md-9 content" role="main">
       
   <div class="section" id="check-shifts">
 <h1>check_shifts<a class="headerlink" href="#check-shifts" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="VBI_Pipeline.TargetCalibration.check_shifts">
-<code class="descclassname">VBI_Pipeline.TargetCalibration.</code><code class="descname">check_shifts</code><span class="sig-paren">(</span><em>dists</em>, <em>bimode_choice=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/TargetCalibration.html#check_shifts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.TargetCalibration.check_shifts" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">VBI_Pipeline.TargetCalibration.</code><code class="sig-name descname">check_shifts</code><span class="sig-paren">(</span><em class="sig-param">dists</em>, <em class="sig-param">bimode_choice=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/TargetCalibration.html#check_shifts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.TargetCalibration.check_shifts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given the distances between two sets of intersections, compute the actual shift values</p>
 <p>The shifts are computed as the median of all distances.</p>
 <p>Importantly, this function also checks for bimodality in the shift distribution. If detected then the user is
 prompted to choose which mode to use. This choice can be made automatically via <code class="docutils literal notranslate"><span class="pre">auto_choise</span></code>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>dists</strong> : <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
-<blockquote>
-<div><p>Shape (2, N) array containing (X, Y) distances of all N matching point pairs</p>
-</div></blockquote>
-<p><strong>bimode_choice</strong> : list</p>
-<blockquote>
-<div><p>List containing the automatic choice for potential bimodality in the (x, y) dimensions. Choice can be either
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>dists</strong><span class="classifier"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>Shape (2, N) array containing (X, Y) distances of all N matching point pairs</p>
+</dd>
+<dt><strong>bimode_choice</strong><span class="classifier">list</span></dt><dd><p>List containing the automatic choice for potential bimodality in the (x, y) dimensions. Choice can be either
 1 or 2; 1 always corresponds to the mode closest to the global median.</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
-<blockquote>
-<div><p>Length 2 array containing the (X, Y) shifts</p>
-</div></blockquote>
-<p><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
-<blockquote>
-<div><p>Length 2 array containing the stddev of the (X, Y) shifts</p>
-</div></blockquote>
-<p>list</p>
-<blockquote class="last">
-<div><p>List containing 2 <a href="#id1"><span class="problematic" id="id2">`</span></a>numpy.ndarray`s. If bimodality was detected each array contains indices of points not in the
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></dt><dd><p>Length 2 array containing the (X, Y) shifts</p>
+</dd>
+<dt><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></dt><dd><p>Length 2 array containing the stddev of the (X, Y) shifts</p>
+</dd>
+<dt>list</dt><dd><p>List containing 2 <a href="#id1"><span class="problematic" id="id2">`</span></a>numpy.ndarray`s. If bimodality was detected each array contains indices of points not in the
 selected mode. Otherwise the arrays are empty.</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -229,10 +218,10 @@ selected mode. Otherwise the arrays are empty.</p>
     </div>
    
     <div class="right-footer">
-      Last updated on 20 May 2019.
+      Last updated on 19 Nov 2019.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1
     </div>
   </div>
 </footer>

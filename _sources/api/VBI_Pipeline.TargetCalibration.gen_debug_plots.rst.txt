@@ -1,0 +1,6 @@
+gen_debug_plots
+===============
+
+.. currentmodule:: VBI_Pipeline.TargetCalibration
+
+.. autofunction:: gen_debug_plots
