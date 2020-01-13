@@ -236,7 +236,7 @@ files.</p>
 <p>Depending on which camera you’re using this might take between 3 and 8 minutes. The VBI Pipeline produces a lot of
 status messages and it is usually a good idea to save these somewhere so you can see exactly what was done to the data
 at a later time (and find any error messages). To do this I usually run the pipeline as</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span><span class="nv">PYTHONUNBUFFERED</span><span class="o">=</span>yes cryo_pipeline config.ini <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> tee spool.txt
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span><span class="nv">PYTHONUNBUFFERED</span><span class="o">=</span>yes vbi_pipeline config.ini <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> tee spool.txt
 </pre></div>
 </div>
 <p>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">PYTHONUNBUFFERED=yes</span></code> is there because on most systems simply piping the python output will cause your terminal
@@ -281,12 +281,12 @@ to push different science objects through the same pipeline. All subsequent runs
 <footer class="footer">
   <div class="container">
     <div class="left-footer">
-         &copy; 2019, Arthur Eigenbrot
+         &copy; 2020, Arthur Eigenbrot
        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
     </div>
    
     <div class="right-footer">
-      Last updated on 19 Nov 2019.
+      Last updated on 13 Jan 2020.
     </div>
     <div class="centre-footer">
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1

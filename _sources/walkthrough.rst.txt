@@ -86,7 +86,7 @@ at a later time (and find any error messages). To do this I usually run the pipe
 
 .. code-block:: console
 
-  $PYTHONUNBUFFERED=yes cryo_pipeline config.ini 2>&1 | tee spool.txt
+  $PYTHONUNBUFFERED=yes vbi_pipeline config.ini 2>&1 | tee spool.txt
 
 The `PYTHONUNBUFFERED=yes` is there because on most systems simply piping the python output will cause your terminal
 (stdout) to update much less frequently than usual. This is due to how python decides to flush its buffer to stdout.

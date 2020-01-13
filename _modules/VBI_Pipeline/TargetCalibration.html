@@ -135,17 +135,17 @@
   <h1>Source code for VBI_Pipeline.TargetCalibration</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">pickle</span>
-<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="k">import</span> <span class="n">fits</span> <span class="k">as</span> <span class="n">pyfits</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span> <span class="k">as</span> <span class="n">pyfits</span>
 <span class="kn">import</span> <span class="nn">matplotlib</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">matplotlib.backends.backend_pdf</span> <span class="k">import</span> <span class="n">PdfPages</span> <span class="k">as</span> <span class="n">PDF</span>
+<span class="kn">from</span> <span class="nn">matplotlib.backends.backend_pdf</span> <span class="kn">import</span> <span class="n">PdfPages</span> <span class="k">as</span> <span class="n">PDF</span>
 <span class="kn">import</span> <span class="nn">peakutils</span> <span class="k">as</span> <span class="nn">pku</span>
 <span class="kn">import</span> <span class="nn">skimage.transform</span> <span class="k">as</span> <span class="nn">skit</span>
 <span class="kn">import</span> <span class="nn">skimage.filters</span> <span class="k">as</span> <span class="nn">skif</span>
 <span class="kn">import</span> <span class="nn">scipy.ndimage</span> <span class="k">as</span> <span class="nn">spnd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">VBI_Pipeline</span> <span class="k">import</span> <span class="n">Data</span><span class="p">,</span> <span class="n">generic</span><span class="p">,</span> <span class="n">FLUSH</span>
-<span class="kn">from</span> <span class="nn">VBI_Pipeline.tag</span> <span class="k">import</span> <span class="n">tag</span>
+<span class="kn">from</span> <span class="nn">VBI_Pipeline</span> <span class="kn">import</span> <span class="n">Data</span><span class="p">,</span> <span class="n">generic</span><span class="p">,</span> <span class="n">FLUSH</span>
+<span class="kn">from</span> <span class="nn">VBI_Pipeline.tag</span> <span class="kn">import</span> <span class="n">tag</span>
 
 <span class="n">matplotlib</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;classic&#39;</span><span class="p">)</span>
 
@@ -1203,7 +1203,7 @@
 
 
 <span class="k">def</span> <span class="nf">compare_gens</span><span class="p">(</span><span class="n">rdx_dir</span><span class="p">,</span> <span class="n">gauss_sigma</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">rho_min_dist</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">refidx</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">dmax</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">VBI_Pipeline</span> <span class="k">import</span> <span class="n">ScienceCalibration</span><span class="p">,</span> <span class="n">ApplyTargetCalibration</span>
+    <span class="kn">from</span> <span class="nn">VBI_Pipeline</span> <span class="kn">import</span> <span class="n">ScienceCalibration</span><span class="p">,</span> <span class="n">ApplyTargetCalibration</span>
 
     <span class="n">pGD1</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">FitsData</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/linegrid_proc.fits&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rdx_dir</span><span class="p">))</span>
     <span class="n">pGD2</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">FitsData</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/linegrid_proc.fits&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rdx_dir</span><span class="p">))</span>
@@ -1229,8 +1229,8 @@
     <span class="kn">import</span> <span class="nn">os</span>
     <span class="kn">import</span> <span class="nn">pkg_resources</span>
     <span class="kn">import</span> <span class="nn">sys</span>
-    <span class="kn">from</span> <span class="nn">configparser</span> <span class="k">import</span> <span class="n">ConfigParser</span>
-    <span class="kn">from</span> <span class="nn">VBI_Pipeline</span> <span class="k">import</span> <span class="n">VBIPipeline</span>
+    <span class="kn">from</span> <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
+    <span class="kn">from</span> <span class="nn">VBI_Pipeline</span> <span class="kn">import</span> <span class="n">VBIPipeline</span>
 
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Run the VBI Pipeline&#39;s Target Calibration module. This is a direct hook into TargetCalibration.main()&quot;</span>
@@ -1307,12 +1307,12 @@
 <footer class="footer">
   <div class="container">
     <div class="left-footer">
-         &copy; 2019, Arthur Eigenbrot
+         &copy; 2020, Arthur Eigenbrot
        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
     </div>
    
     <div class="right-footer">
-      Last updated on 19 Nov 2019.
+      Last updated on 13 Jan 2020.
     </div>
     <div class="centre-footer">
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1
