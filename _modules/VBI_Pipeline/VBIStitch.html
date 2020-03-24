@@ -4,17 +4,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>VBI_Pipeline.VBIStitch &#8212; VBI_Pipeline v0.8.2</title>
+    <title>VBI_Pipeline.VBIStitch &#8212; VBI_Pipeline v0.9.1</title>
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" type="text/css" />
     <link rel="stylesheet" href="../../_static/dkist.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
     <link rel="shortcut icon" href="../../_static/favico.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -137,7 +137,7 @@
 <span class="kn">from</span> <span class="nn">VBI_Pipeline</span> <span class="kn">import</span> <span class="n">Data</span><span class="p">,</span> <span class="n">ApplyTargetCalibration</span><span class="p">,</span> <span class="n">generic</span>
 <span class="kn">from</span> <span class="nn">VBI_Pipeline.tag</span> <span class="kn">import</span> <span class="n">tag</span>
 
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api/VBI_Pipeline.VBIStitch.main.html#VBI_Pipeline.VBIStitch.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">inputfile</span><span class="p">,</span> <span class="n">outputfile</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save_count</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api/VBI_Pipeline.VBIStitch.main.html#VBI_Pipeline.VBIStitch.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">inputfile</span><span class="p">,</span> <span class="n">outputfile</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save_count</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ref_pos</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
 
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outputfile</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">overwrite</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: ERROR: Specified output file </span><span class="si">{}</span><span class="s1"> exists. Use the -f flag to overwrite.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">outputfile</span><span class="p">))</span>
@@ -152,7 +152,7 @@
     <span class="n">avgData</span> <span class="o">=</span> <span class="n">generic</span><span class="o">.</span><span class="n">average_FitsData</span><span class="p">(</span><span class="n">sciData</span><span class="p">)</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Stitching final output&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
-    <span class="n">stitched</span> <span class="o">=</span> <span class="n">ApplyTargetCalibration</span><span class="o">.</span><span class="n">stitch_FitsData</span><span class="p">(</span><span class="n">avgData</span><span class="p">,</span> <span class="n">save_count</span><span class="o">=</span><span class="n">save_count</span><span class="p">)</span>
+    <span class="n">stitched</span> <span class="o">=</span> <span class="n">ApplyTargetCalibration</span><span class="o">.</span><span class="n">stitch_FitsData</span><span class="p">(</span><span class="n">avgData</span><span class="p">,</span> <span class="n">save_count</span><span class="o">=</span><span class="n">save_count</span><span class="p">,</span> <span class="n">ref_pos</span><span class="o">=</span><span class="n">ref_pos</span><span class="p">)</span>
     <span class="n">stitched</span><span class="o">.</span><span class="n">write_out</span><span class="p">(</span><span class="n">outputfile</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">)</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Created stitched file </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">outputfile</span><span class="p">))</span>
@@ -165,6 +165,8 @@
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;Stitch together a set of VBI camera positions into a single image of the entire field.&#39;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;input_file&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;FitsData image set with correct WCS header values&#39;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;output_file&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Path to output file&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-r&#39;</span><span class="p">,</span> <span class="s1">&#39;--ref-pos&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Camera position to use for WCS reference. Don&#39;t set this unless you&quot;</span>
+                                                <span class="s2">&quot; really know you need to.&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-f&#39;</span><span class="p">,</span> <span class="s1">&#39;--force&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Overwrite the output file if it already exists&#39;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="s1">&#39;--savecount&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Save the pixel count values in a second HDU&#39;</span><span class="p">)</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
@@ -174,9 +176,9 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">output</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">output_file</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Calling main() with:</span><span class="se">\n</span><span class="s1"> inputfile = </span><span class="si">{}</span><span class="se">\n</span><span class="s1"> outputfile = </span><span class="si">{}</span><span class="se">\n</span><span class="s1"> overwrite = </span><span class="si">{}</span><span class="se">\n</span><span class="s1"> save_count = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span>\
-          <span class="nb">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">force</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">savecount</span><span class="p">))</span>
-    <span class="n">main</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">force</span><span class="p">,</span> <span class="n">save_count</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">savecount</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Calling main() with:</span><span class="se">\n</span><span class="s1"> inputfile = </span><span class="si">{}</span><span class="se">\n</span><span class="s1"> outputfile = </span><span class="si">{}</span><span class="se">\n</span><span class="s1"> reference pos = </span><span class="si">{}</span><span class="se">\n</span><span class="s1"> overwrite = </span><span class="si">{}</span><span class="se">\n</span><span class="s1"> save_count = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span>\
+          <span class="nb">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">ref_pos</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">force</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">savecount</span><span class="p">))</span>
+    <span class="n">main</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">force</span><span class="p">,</span> <span class="n">save_count</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">savecount</span><span class="p">,</span> <span class="n">ref_pos</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">ref_pos</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -191,10 +193,10 @@
     </div>
    
     <div class="right-footer">
-      Last updated on 13 Jan 2020.
+      Last updated on 24 Mar 2020.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4
     </div>
   </div>
 </footer>

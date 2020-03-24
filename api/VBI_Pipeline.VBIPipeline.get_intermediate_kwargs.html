@@ -4,17 +4,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>get_intermediate_kwargs &#8212; VBI_Pipeline v0.8.2</title>
+    <title>get_intermediate_kwargs &#8212; VBI_Pipeline v0.9.1</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" type="text/css" />
     <link rel="stylesheet" href="../_static/dkist.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
     <link rel="shortcut icon" href="../_static/favico.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -171,15 +171,13 @@
 <h1>get_intermediate_kwargs<a class="headerlink" href="#get-intermediate-kwargs" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="VBI_Pipeline.VBIPipeline.get_intermediate_kwargs">
-<code class="sig-prename descclassname">VBI_Pipeline.VBIPipeline.</code><code class="sig-name descname">get_intermediate_kwargs</code><span class="sig-paren">(</span><em class="sig-param">config</em>, <em class="sig-param">defaults</em>, <em class="sig-param">instrument</em>, <em class="sig-param">section</em>, <em class="sig-param">data_kwd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/VBIPipeline.html#get_intermediate_kwargs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.VBIPipeline.get_intermediate_kwargs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">VBI_Pipeline.VBIPipeline.</code><code class="sig-name descname">get_intermediate_kwargs</code><span class="sig-paren">(</span><em class="sig-param">config</em>, <em class="sig-param">instrument</em>, <em class="sig-param">section</em>, <em class="sig-param">data_kwd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/VBIPipeline.html#get_intermediate_kwargs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.VBIPipeline.get_intermediate_kwargs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given user-defined and default parameters, construct the kwarg dictionary for a call to a <a href="#id1"><span class="problematic" id="id2">*</span></a>Calibration module</p>
 <p>User-provided parameters take precedence over defaults.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>config</strong><span class="classifier">configparser.ConfigParser</span></dt><dd><p>The object containing user-defined reduction options</p>
-</dd>
-<dt><strong>defaults</strong><span class="classifier">configparser.ConfigParser</span></dt><dd><p>Object containing all available reduction options. This is used to fill in any gaps in the user-defined options.</p>
 </dd>
 <dt><strong>instrument</strong><span class="classifier">str</span></dt><dd><p>Name of the instrument. Directly the ‘INSTRUME’ header keyword.</p>
 </dd>
@@ -215,10 +213,10 @@ section</p>
     </div>
    
     <div class="right-footer">
-      Last updated on 13 Jan 2020.
+      Last updated on 24 Mar 2020.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4
     </div>
   </div>
 </footer>

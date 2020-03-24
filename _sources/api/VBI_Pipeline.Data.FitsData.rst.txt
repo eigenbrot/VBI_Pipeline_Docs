@@ -13,6 +13,8 @@ FitsData
       ~FitsData.data
       ~FitsData.hdulist
       ~FitsData.headers
+      ~FitsData.num_steps
+      ~FitsData.unique_step_list
 
    .. rubric:: Methods Summary
 
@@ -33,6 +35,8 @@ FitsData
    .. autoattribute:: data
    .. autoattribute:: hdulist
    .. autoattribute:: headers
+   .. autoattribute:: num_steps
+   .. autoattribute:: unique_step_list
 
    .. rubric:: Methods Documentation
 

@@ -4,17 +4,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>DarkData &#8212; VBI_Pipeline v0.8.2</title>
+    <title>DarkData &#8212; VBI_Pipeline v0.9.1</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" type="text/css" />
     <link rel="stylesheet" href="../_static/dkist.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
     <link rel="shortcut icon" href="../_static/favico.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -168,7 +168,7 @@
 <h1>DarkData<a class="headerlink" href="#darkdata" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="VBI_Pipeline.Data.DarkData">
-<em class="property">class </em><code class="sig-prename descclassname">VBI_Pipeline.Data.</code><code class="sig-name descname">DarkData</code><span class="sig-paren">(</span><em class="sig-param">data_dir=None</em>, <em class="sig-param">dataset_ID=''</em><span class="sig-paren">)</span><a class="headerlink" href="#VBI_Pipeline.Data.DarkData" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">VBI_Pipeline.Data.</code><code class="sig-name descname">DarkData</code><span class="sig-paren">(</span><em class="sig-param">data_dir=None</em>, <em class="sig-param">dataset_ID=''</em>, <em class="sig-param">suffix='.fits'</em><span class="sig-paren">)</span><a class="headerlink" href="#VBI_Pipeline.Data.DarkData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">VBI_Pipeline.Data._TaskData</span></code></p>
 <p>DarkData is an extension of <code class="xref py py-obj docutils literal notranslate"><span class="pre">FitData</span></code> designed to only hold data from the Dark InstrumentProgramTask
 (DKIST004). It inherits all of the functionality of <a class="reference internal" href="VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData" title="VBI_Pipeline.Data.FitsData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FitsData</span></code></a> and defines an extra method that loads
@@ -209,10 +209,10 @@ data from a directory, provided it’s DKIST004 value is ‘Dark’.</p>
     </div>
    
     <div class="right-footer">
-      Last updated on 13 Jan 2020.
+      Last updated on 24 Mar 2020.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4
     </div>
   </div>
 </footer>

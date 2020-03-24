@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>GainData &#8212; VBI_Pipeline v0.9.1</title>
+    <title>fwhm &#8212; VBI_Pipeline v0.9.1</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -18,8 +18,8 @@
     <link rel="shortcut icon" href="../_static/favico.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ObservationData" href="VBI_Pipeline.Data.ObservationData.html" />
-    <link rel="prev" title="FitsData" href="VBI_Pipeline.Data.FitsData.html" />
+    <link rel="next" title="gen_debug_plots" href="VBI_Pipeline.TargetCalibration.gen_debug_plots.html" />
+    <link rel="prev" title="find_match_idx" href="VBI_Pipeline.TargetCalibration.find_match_idx.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -75,7 +75,7 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">GainData</a></li>
+<li><a class="reference internal" href="#">fwhm</a></li>
 </ul>
 </ul>
 </li>
@@ -85,11 +85,11 @@
               
                 
   <li>
-    <a href="VBI_Pipeline.Data.FitsData.html" title="Previous Chapter: FitsData"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; FitsData</span>
+    <a href="VBI_Pipeline.TargetCalibration.find_match_idx.html" title="Previous Chapter: find_match_idx"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; find_match_idx</span>
     </a>
   </li>
   <li>
-    <a href="VBI_Pipeline.Data.ObservationData.html" title="Next Chapter: ObservationData"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">ObservationData &raquo;</span>
+    <a href="VBI_Pipeline.TargetCalibration.gen_debug_plots.html" title="Next Chapter: gen_debug_plots"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">gen_debug_plots &raquo;</span>
     </a>
   </li>
               
@@ -141,18 +141,25 @@
 <li class="toctree-l2"><a class="reference internal" href="../API.html#module-VBI_Pipeline.VBIStitch">VBI_Pipeline.VBIStitch Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../API.html#module-VBI_Pipeline.DarkCalibration">VBI_Pipeline.DarkCalibration Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../API.html#module-VBI_Pipeline.GainCalibration">VBI_Pipeline.GainCalibration Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../API.html#module-VBI_Pipeline.TargetCalibration">VBI_Pipeline.TargetCalibration Module</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../API.html#module-VBI_Pipeline.Data">VBI_Pipeline.Data Module</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="../API.html#classes">Classes</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.Data.AlignmentData.html">AlignmentData</a></li>
-<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.Data.DarkData.html">DarkData</a></li>
-<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.Data.FitsData.html">FitsData</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">GainData</a></li>
-<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.Data.ObservationData.html">ObservationData</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../API.html#module-VBI_Pipeline.TargetCalibration">VBI_Pipeline.TargetCalibration Module</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../API.html#id6">Functions</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.analyze_hough.html">analyze_hough</a></li>
+<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.check_shifts.html">check_shifts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.collect_intersections.html">collect_intersections</a></li>
+<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.command_line.html">command_line</a></li>
+<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.find_intersections.html">find_intersections</a></li>
+<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.find_match_idx.html">find_match_idx</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">fwhm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.gen_debug_plots.html">gen_debug_plots</a></li>
+<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.generate_target_calibration.html">generate_target_calibration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.load_hough_pickle.html">load_hough_pickle</a></li>
+<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.main.html">main</a></li>
+<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.make_binary_gauss.html">make_binary_gauss</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../API.html#module-VBI_Pipeline.Data">VBI_Pipeline.Data Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../API.html#module-VBI_Pipeline.generic">VBI_Pipeline.generic Module</a></li>
 </ul>
 </li>
@@ -164,34 +171,14 @@
 
     <div class="body col-md-9 content" role="main">
       
-  <div class="section" id="gaindata">
-<h1>GainData<a class="headerlink" href="#gaindata" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
-<dt id="VBI_Pipeline.Data.GainData">
-<em class="property">class </em><code class="sig-prename descclassname">VBI_Pipeline.Data.</code><code class="sig-name descname">GainData</code><span class="sig-paren">(</span><em class="sig-param">data_dir=None</em>, <em class="sig-param">dataset_ID=''</em>, <em class="sig-param">suffix='.fits'</em><span class="sig-paren">)</span><a class="headerlink" href="#VBI_Pipeline.Data.GainData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">VBI_Pipeline.Data._TaskData</span></code></p>
-<p>GainData is an extension of <code class="xref py py-obj docutils literal notranslate"><span class="pre">FitData</span></code> designed to only hold data from the Gain InstrumentProgramTask
-(DKIST004). It inherits all of the functionality of <a class="reference internal" href="VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData" title="VBI_Pipeline.Data.FitsData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FitsData</span></code></a> and defines an extra method that loads
-data from a directory, provided it’s DKIST004 value is ‘Gain’.</p>
-<p>Initialize the empty object and maybe load some data.</p>
-<p class="rubric">Attributes Summary</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#VBI_Pipeline.Data.GainData.task" title="VBI_Pipeline.Data.GainData.task"><code class="xref py py-obj docutils literal notranslate"><span class="pre">task</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Attributes Documentation</p>
-<dl class="attribute">
-<dt id="VBI_Pipeline.Data.GainData.task">
-<code class="sig-name descname">task</code><em class="property"> = 'Gain'</em><a class="headerlink" href="#VBI_Pipeline.Data.GainData.task" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+  <div class="section" id="fwhm">
+<h1>fwhm<a class="headerlink" href="#fwhm" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="VBI_Pipeline.TargetCalibration.fwhm">
+<code class="sig-prename descclassname">VBI_Pipeline.TargetCalibration.</code><code class="sig-name descname">fwhm</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/TargetCalibration.html#fwhm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.TargetCalibration.fwhm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple function to fit Hough peaks that have flat tops or are otherwise non-gaussian.</p>
+<p>Very simple: just return the center of the line defined by the FWHM</p>
+<p>Should work well on Gaussian peaks, too.</p>
 </dd></dl>
 
 </div>

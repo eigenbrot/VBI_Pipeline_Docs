@@ -4,17 +4,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>VBI_Pipeline.GainCalibration &#8212; VBI_Pipeline v0.8.2</title>
+    <title>VBI_Pipeline.GainCalibration &#8212; VBI_Pipeline v0.9.1</title>
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" type="text/css" />
     <link rel="stylesheet" href="../../_static/dkist.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
     <link rel="shortcut icon" href="../../_static/favico.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -136,9 +136,10 @@
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">VBI_Pipeline</span> <span class="kn">import</span> <span class="n">generic</span><span class="p">,</span> <span class="n">Data</span>
 <span class="kn">from</span> <span class="nn">VBI_Pipeline.tag</span> <span class="kn">import</span> <span class="n">tag</span>
+<span class="kn">from</span> <span class="nn">VBI_Pipeline.data</span> <span class="kn">import</span> <span class="n">S122</span>
 
-
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api/VBI_Pipeline.GainCalibration.main.html#VBI_Pipeline.GainCalibration.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">gain_dir</span><span class="p">,</span> <span class="n">outname</span><span class="p">,</span> <span class="n">dark_cal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">low_acceptance_threshold</span><span class="o">=</span><span class="mf">0.682</span><span class="p">,</span> <span class="n">high_acceptance_threshold</span><span class="o">=</span><span class="mf">0.318</span><span class="p">):</span>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api/VBI_Pipeline.GainCalibration.main.html#VBI_Pipeline.GainCalibration.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">gain_dir</span><span class="p">,</span> <span class="n">outname</span><span class="p">,</span> <span class="n">dark_cal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">low_acceptance_threshold</span><span class="o">=</span><span class="mf">0.682</span><span class="p">,</span> <span class="n">high_acceptance_threshold</span><span class="o">=</span><span class="mf">0.318</span><span class="p">,</span>
+         <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.fits&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Run a raw data through the Gain Calibration pipeline</span>
 
 <span class="sd">    If a Dark Calibration is specified then it will be used to dark correct the data.</span>
@@ -158,13 +159,16 @@
 <span class="sd">        If the fraction of pixels in the final object that are less than 1 stddev away from the mean is outside the</span>
 <span class="sd">        range (0.682 - low_acceptance parameter, 0.682 + high_acceptance_parameter) an error will be thrown.</span>
 
+<span class="sd">    suffix : str</span>
+<span class="sd">        Only look for data with this suffix</span>
+
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    Data.FitsData</span>
 <span class="sd">        A processed Gain Calibration</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">gainData</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">GainData</span><span class="p">(</span><span class="n">gain_dir</span><span class="p">)</span>
+    <span class="n">gainData</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">GainData</span><span class="p">(</span><span class="n">gain_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="n">suffix</span><span class="p">)</span>
 
     <span class="n">validate_gain_task_data</span><span class="p">(</span><span class="n">gainData</span><span class="p">)</span>
 
@@ -259,8 +263,11 @@
     <span class="kn">import</span> <span class="nn">os</span>
     <span class="kn">import</span> <span class="nn">pkg_resources</span>
     <span class="kn">import</span> <span class="nn">sys</span>
-    <span class="kn">from</span> <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
+    <span class="kn">from</span> <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span><span class="p">,</span> <span class="n">ExtendedInterpolation</span>
     <span class="kn">from</span> <span class="nn">VBI_Pipeline</span> <span class="kn">import</span> <span class="n">VBIPipeline</span>
+
+    <span class="n">defaults</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">(</span><span class="n">interpolation</span><span class="o">=</span><span class="n">ExtendedInterpolation</span><span class="p">())</span>
+    <span class="n">defaults</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;data/defaults.ini&#39;</span><span class="p">))</span>
 
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Run the VBI Pipeline&#39;s Gain Calibration module. This is a direct hook into GainCalibration.main()&quot;</span>
@@ -272,6 +279,8 @@
                                              <span class="s1">&#39;no dark correction will be done.&#39;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-L&#39;</span><span class="p">,</span> <span class="s1">&#39;--low-thresh&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Low acceptance threshold&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-H&#39;</span><span class="p">,</span> <span class="s1">&#39;--high-thresh&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;High acceptance threshold&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-S&#39;</span><span class="p">,</span> <span class="s1">&#39;--suffix&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Only load files with this extension. Default is &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">defaults</span><span class="p">[</span><span class="s1">&#39;common&#39;</span><span class="p">][</span><span class="s1">&#39;suffix&#39;</span><span class="p">]),</span>
+                        <span class="n">default</span><span class="o">=</span><span class="n">defaults</span><span class="p">[</span><span class="s1">&#39;common&#39;</span><span class="p">][</span><span class="s1">&#39;suffix&#39;</span><span class="p">])</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">force</span><span class="p">:</span>
@@ -282,20 +291,22 @@
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> does not appear to be a valid directory&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gain_dir</span><span class="p">))</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;suffix&#39;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">suffix</span><span class="p">}</span>
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">low_thresh</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;low_acceptance_threshold&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">low_thresh</span>
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">high_thresh</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;high_acceptance_threshold&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">high_thresh</span>
 
-    <span class="n">gainData</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">GainData</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gain_dir</span><span class="p">)</span>
-    <span class="n">instrument</span> <span class="o">=</span> <span class="n">gainData</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;INSTRUME&#39;</span><span class="p">]</span>
+    <span class="n">gainData</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">GainData</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gain_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">suffix</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">gainData</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s1">&#39;Could not find any observation images in </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gain_dir</span><span class="p">))</span>
+
+    <span class="n">instrument</span> <span class="o">=</span> <span class="n">gainData</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">S122</span><span class="p">[</span><span class="s1">&#39;Instrument&#39;</span><span class="p">]]</span>
     <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
     <span class="n">config</span><span class="p">[</span><span class="s1">&#39;GainCalibration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span>
-    <span class="n">defaults</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
-    <span class="n">defaults</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;data/defaults.ini&#39;</span><span class="p">))</span>
 
-    <span class="n">runkw</span> <span class="o">=</span> <span class="n">VBIPipeline</span><span class="o">.</span><span class="n">get_intermediate_kwargs</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">defaults</span><span class="p">,</span> <span class="n">instrument</span><span class="p">,</span> <span class="s1">&#39;GainCalibration&#39;</span><span class="p">,</span> <span class="s1">&#39;gain_dir&#39;</span><span class="p">)</span>
+    <span class="n">runkw</span> <span class="o">=</span> <span class="n">VBIPipeline</span><span class="o">.</span><span class="n">get_intermediate_kwargs</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">instrument</span><span class="p">,</span> <span class="s1">&#39;GainCalibration&#39;</span><span class="p">,</span> <span class="s1">&#39;gain_dir&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">dark_cal</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">runkw</span><span class="p">[</span><span class="s1">&#39;dark_cal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">FitsData</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">dark_cal</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Calling GainCalibration.main</span><span class="se">\n\t</span><span class="s1">with args [</span><span class="si">{}</span><span class="s1">, </span><span class="si">{}</span><span class="s1">]</span><span class="se">\n\t</span><span class="s1">and kwargs </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">gain_dir</span><span class="p">,</span>
@@ -316,10 +327,10 @@
     </div>
    
     <div class="right-footer">
-      Last updated on 13 Jan 2020.
+      Last updated on 24 Mar 2020.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4
     </div>
   </div>
 </footer>

@@ -14,13 +14,13 @@ Calibration Objects by simply pointing the corresponding option to a file that d
 
 :raw_sci_dir: Path to a directory containing all of the Object (i.e., science) FITS files that will be reduced
 
-:data_set_id: A string that is used to refine the selection of data from ``raw_sci_dir``. Only files whose 'ID_004'
+:data_set_id: A string that is used to refine the selection of data from ``raw_sci_dir``. Only files whose 'ID_003'
     metadata matches this parameter will be used. If left blank then all data in the ``raw_sci_dir`` will be treated as
     a single data set, which might produce some strange looking outputs. **Note** As a special case, if this option is
     "all" then each data set found in the directory will be reduced separately.
 
 :output: Path to file in which to save the reduced output images. **Note:** In the cas where ``data_set_id = all`` this
-    option defines the prefix used when saving each separate data set. They will be saved as OUTPUT_ID004.fits.
+    option defines the prefix used when saving each separate data set. They will be saved as OUTPUT_ID003.fits.
 
 :dark_cal: The location of the processed DarkCalibration object. If this file does not exist it will be generated.
 
@@ -28,9 +28,14 @@ Calibration Objects by simply pointing the corresponding option to a file that d
 
 :target_cal: The location of the processed TargetCalibration object. If this file does not exist it will  be generated.
 
-:flush: If 'True' then the VBI Pipeline will try to write intermediate data products and read them using memmap in an
-    attempt to save on memory usage. This results in a slight performance hit, but might be the only way you can get
-    a huge data set to process without running out of RAM.
+:*final_average*: **(bool)** If 'True' then average all exposures from the same spatial position in the final data.
+    In this case the output file will have a single HDU for each unique spatial position present. Default is False.
+
+:flush: **(bool)** If 'True' then the VBI Pipeline will try to write intermediate data products and read them using
+    memmap in an attempt to save on memory usage. This results in a slight performance hit, but might be the only way
+    you can get a huge data set to process without running out of RAM.
+
+:*sci_suffix*: The file suffix for Science data files. Default is "FITS".
 
 DarkCalibration
 ---------------
@@ -47,6 +52,8 @@ This section is only relevant if the file referenced by ``Main.dark_cal`` does n
     in a good DarkCalibration object. If the fraction of pixels in the object that are less than 1 stddev away
     from the mean is more than 0.682 + low_acceptance parameter an error will be thrown.
 
+:*suffix*: File suffix of raw Dark data files. Default is "FITS"
+
 GainCalibration
 ---------------
 This section is only relevant if the file referenced by ``Main.gain_cal`` does not exist.
@@ -61,6 +68,8 @@ This section is only relevant if the file referenced by ``Main.gain_cal`` does n
 :*high_acceptance_threshold*: **(float)** This sets the lower limit for the fraction of outlying pixels that are allowed
     in a good GainCalibration object. If the fraction of pixels in the object that are less than 1 stddev away
     from the mean is more than 0.682 + low_acceptance parameter an error will be thrown.
+
+:*suffix*: File suffix of raw Gain data files. Default is "FITS"
 
 TargetCalibration
 -----------------
@@ -93,6 +102,12 @@ This section is only relevant if the file referenced by ``Main.target_cal`` does
 :*sigclip*: **(float)** Another way to keep the binary image clean. Any pixels more than sigclip standard deviations away
     from the image mean are ignored.
 
+:*peak_threshold*: **(float)** Relative cutoff for detecting peaks in the Hough transform [0 - 1]. Larger numbers will
+    exclude shorter lines, but can help if spurious lines are being detected.
+
+:*theta_window*: **(float)** Size of region (in radians) around the peak angles to include when looking for peaks in
+    the Hough rho dimension. Smaller numbers can improve the centering of rho peaks. Default is pi/360.
+
 :*bimode_choice*: **(list)** You'll hopefully never need this. Sometimes the camera offsets can be such that the distribution
     of offsets between camera positions is bi-modal. If this option is not specified then the user is asked to manually select
     which mode to use. For future runs you can specify a list of automatic choices so user input is not needed. The format
@@ -103,6 +118,8 @@ This section is only relevant if the file referenced by ``Main.target_cal`` does
     you just want to always choose the strongest mode and not be bothered. **NOTE (pt2):** There are some secret options:
     if you select either -1 or -2 then the shift will be exactly the selected median and the algorithm will not be re-run.
     If you select 0 then the global median is used and the algorithm is not re-run.
+
+:*suffix*: File suffix of raw grid data files. Default is "FITS"
 
 Example Config File
 -------------------

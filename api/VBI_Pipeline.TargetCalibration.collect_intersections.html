@@ -4,17 +4,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>collect_intersections &#8212; VBI_Pipeline v0.8.2</title>
+    <title>collect_intersections &#8212; VBI_Pipeline v0.9.1</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" type="text/css" />
     <link rel="stylesheet" href="../_static/dkist.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
     <link rel="shortcut icon" href="../_static/favico.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -143,12 +143,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../API.html#module-VBI_Pipeline.GainCalibration">VBI_Pipeline.GainCalibration Module</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../API.html#module-VBI_Pipeline.TargetCalibration">VBI_Pipeline.TargetCalibration Module</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="../API.html#id6">Functions</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.analyze_hough.html">analyze_hough</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.check_shifts.html">check_shifts</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">collect_intersections</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.command_line.html">command_line</a></li>
-<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.do_single_frame.html">do_single_frame</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.find_intersections.html">find_intersections</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.find_match_idx.html">find_match_idx</a></li>
+<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.fwhm.html">fwhm</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.gen_debug_plots.html">gen_debug_plots</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.generate_target_calibration.html">generate_target_calibration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.load_hough_pickle.html">load_hough_pickle</a></li>
@@ -174,7 +175,7 @@
 <h1>collect_intersections<a class="headerlink" href="#collect-intersections" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="VBI_Pipeline.TargetCalibration.collect_intersections">
-<code class="sig-prename descclassname">VBI_Pipeline.TargetCalibration.</code><code class="sig-name descname">collect_intersections</code><span class="sig-paren">(</span><em class="sig-param">gridData</em>, <em class="sig-param">rho_min_dist</em>, <em class="sig-param">gauss_sigma=30.0</em>, <em class="sig-param">rho_smooth=10</em>, <em class="sig-param">binary_threshold=0.1</em>, <em class="sig-param">sigclip=3</em>, <em class="sig-param">debug=False</em>, <em class="sig-param">**hough_args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/TargetCalibration.html#collect_intersections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.TargetCalibration.collect_intersections" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">VBI_Pipeline.TargetCalibration.</code><code class="sig-name descname">collect_intersections</code><span class="sig-paren">(</span><em class="sig-param">gridData</em>, <em class="sig-param">rho_min_dist</em>, <em class="sig-param">gauss_sigma=30.0</em>, <em class="sig-param">rho_smooth=10</em>, <em class="sig-param">binary_threshold=0.1</em>, <em class="sig-param">sigclip=3</em>, <em class="sig-param">debug=False</em>, <em class="sig-param">**analyze_args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/TargetCalibration.html#collect_intersections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.TargetCalibration.collect_intersections" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a list grid intersection points for each hdu in the input data.</p>
 <p>The general algorithm for each hdu is:</p>
 <blockquote>
@@ -208,6 +209,8 @@ calculation.</p>
 <dt><strong>debug</strong><span class="classifier">bool</span></dt><dd><p>If True the code will stop at each hdu (i.e., exposure) and generate some diagnostic plots that show the
 computed lines and grid intersections.</p>
 </dd>
+<dt><strong>**analyze_args</strong><span class="classifier">dict</span></dt><dd><p>Any keyword arguments to pass to <a class="reference internal" href="VBI_Pipeline.TargetCalibration.analyze_hough.html#VBI_Pipeline.TargetCalibration.analyze_hough" title="VBI_Pipeline.TargetCalibration.analyze_hough"><code class="xref py py-obj docutils literal notranslate"><span class="pre">analyze_hough</span></code></a></p>
+</dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -237,10 +240,10 @@ N) containing the (x,y) coordinates for the N intersections found in that hdu.</
     </div>
    
     <div class="right-footer">
-      Last updated on 13 Jan 2020.
+      Last updated on 24 Mar 2020.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4
     </div>
   </div>
 </footer>

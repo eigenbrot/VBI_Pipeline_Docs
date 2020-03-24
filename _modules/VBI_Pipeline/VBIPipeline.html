@@ -4,17 +4,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>VBI_Pipeline.VBIPipeline &#8212; VBI_Pipeline v0.8.2</title>
+    <title>VBI_Pipeline.VBIPipeline &#8212; VBI_Pipeline v0.9.1</title>
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" type="text/css" />
     <link rel="stylesheet" href="../../_static/dkist.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
     <link rel="shortcut icon" href="../../_static/favico.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -138,13 +138,14 @@
 <span class="kn">import</span> <span class="nn">pkg_resources</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
+<span class="kn">from</span> <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span><span class="p">,</span> <span class="n">ExtendedInterpolation</span>
 <span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
 <span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span> <span class="k">as</span> <span class="n">pyfits</span>
 <span class="kn">import</span> <span class="nn">VBI_Pipeline</span>
 <span class="kn">from</span> <span class="nn">VBI_Pipeline</span> <span class="kn">import</span> <span class="n">Data</span><span class="p">,</span> <span class="n">DarkCalibration</span><span class="p">,</span> <span class="n">GainCalibration</span><span class="p">,</span> <span class="n">TargetCalibration</span><span class="p">,</span> <span class="n">ScienceCalibration</span>
 <span class="kn">from</span> <span class="nn">VBI_Pipeline.tag</span> <span class="kn">import</span> <span class="n">tag</span>
-
+<span class="kn">from</span> <span class="nn">VBI_Pipeline.data</span> <span class="kn">import</span> <span class="n">S122</span>
+<span class="kn">from</span> <span class="nn">VBI_Pipeline.data.string_matches</span> <span class="kn">import</span> <span class="n">IP_TASK_STRINGS</span><span class="p">,</span> <span class="n">INSTRUMENT_STRINGS</span>
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api/VBI_Pipeline.VBIPipeline.main.html#VBI_Pipeline.VBIPipeline.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">config_file</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Check for file existence and generate intermediate Calibration data as needed, then run the Science Calibration.</span>
@@ -179,14 +180,19 @@
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Raw science data directory </span><span class="si">{}</span><span class="s1"> does not exist!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;raw_sci_dir&#39;</span><span class="p">]))</span>
         <span class="k">return</span> <span class="mi">1</span>
 
-    <span class="n">inst_name</span> <span class="o">=</span> <span class="n">get_instrument_name</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;raw_sci_dir&#39;</span><span class="p">])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Instrument: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">inst_name</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: DataSet: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;data_set_ID&#39;</span><span class="p">]))</span>
     <span class="n">defaults</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
     <span class="n">defaults</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;data/defaults.ini&#39;</span><span class="p">))</span>
+    <span class="n">suffix</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sci_suffix&#39;</span><span class="p">,</span> <span class="n">defaults</span><span class="p">[</span><span class="s1">&#39;common&#39;</span><span class="p">][</span><span class="s1">&#39;suffix&#39;</span><span class="p">])</span>
+
+    <span class="n">inst_name</span> <span class="o">=</span> <span class="n">get_instrument_name</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;raw_sci_dir&#39;</span><span class="p">],</span> <span class="n">suffix</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Instrument: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">inst_name</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: DataSet: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;data_set_ID&#39;</span><span class="p">]))</span>
 
     <span class="c1"># Check for necessary calibration data and try to generate them if needed</span>
-    <span class="n">sci_kwargs</span> <span class="o">=</span> <span class="n">generate_intermediate_objects</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">defaults</span><span class="p">,</span> <span class="n">inst_name</span><span class="p">)</span>
+    <span class="n">sci_kwargs</span> <span class="o">=</span> <span class="n">generate_intermediate_objects</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">inst_name</span><span class="p">)</span>
+
+    <span class="n">sci_kwargs</span><span class="p">[</span><span class="s1">&#39;suffix&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">suffix</span>
+    <span class="n">sci_kwargs</span><span class="p">[</span><span class="s1">&#39;final_average&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s1">&#39;final_average&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
     <span class="n">run_science</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">sci_kwargs</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: All done in </span><span class="si">{}</span><span class="s1"> s&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t1</span><span class="p">))</span>
@@ -194,7 +200,7 @@
     <span class="k">return</span> <span class="mi">0</span></div>
 
 
-<div class="viewcode-block" id="get_instrument_name"><a class="viewcode-back" href="../../api/VBI_Pipeline.VBIPipeline.get_instrument_name.html#VBI_Pipeline.VBIPipeline.get_instrument_name">[docs]</a><span class="k">def</span> <span class="nf">get_instrument_name</span><span class="p">(</span><span class="n">data_dir</span><span class="p">):</span>
+<div class="viewcode-block" id="get_instrument_name"><a class="viewcode-back" href="../../api/VBI_Pipeline.VBIPipeline.get_instrument_name.html#VBI_Pipeline.VBIPipeline.get_instrument_name">[docs]</a><span class="k">def</span> <span class="nf">get_instrument_name</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Given a directory of VBI data, determine which camera was used to take the data.</span>
 
 <span class="sd">    This function does NOT verify that all of the data are from the same camera (that happens elsewhere), it just</span>
@@ -205,13 +211,22 @@
 <span class="sd">    data_dir : str</span>
 <span class="sd">        Directory containing VBI data</span>
 
+<span class="sd">    suffix : str</span>
+<span class="sd">        Only look for files with this suffix</span>
+
 <span class="sd">    Returns:</span>
 <span class="sd">    str</span>
 <span class="sd">        The value of INSTRUME for the first file loaded. Will be &#39;VBI-RED&#39; or &#39;VBI-BLUE&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">FD</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">ObservationData</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
+    <span class="n">FD</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">ObservationData</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="n">suffix</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">FD</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;INSTRUME&#39;</span><span class="p">]</span></div>
+    <span class="n">fits_inst</span> <span class="o">=</span> <span class="n">FD</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">S122</span><span class="p">[</span><span class="s1">&#39;Instrument&#39;</span><span class="p">]]</span>
+
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">INSTRUMENT_STRINGS</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">fits_inst</span> <span class="ow">in</span> <span class="n">INSTRUMENT_STRINGS</span><span class="p">[</span><span class="n">k</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="n">k</span>
+
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The value of </span><span class="si">{}</span><span class="s1"> (&quot;</span><span class="si">{}</span><span class="s1">&quot;) is not a recognized instrument&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">S122</span><span class="p">[</span><span class="s1">&#39;Instrument&#39;</span><span class="p">],</span> <span class="n">fits_inst</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="run_science"><a class="viewcode-back" href="../../api/VBI_Pipeline.VBIPipeline.run_science.html#VBI_Pipeline.VBIPipeline.run_science">[docs]</a><span class="k">def</span> <span class="nf">run_science</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">sci_kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Determine if multiple targets are going to be reduced and then start the ScienceCalibration</span>
@@ -232,7 +247,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">unique_targets</span> <span class="o">=</span> <span class="n">get_all_obs_targets</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;raw_sci_dir&#39;</span><span class="p">])</span>
+    <span class="n">unique_targets</span> <span class="o">=</span> <span class="n">get_all_obs_targets</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;raw_sci_dir&#39;</span><span class="p">],</span> <span class="n">suffix</span><span class="o">=</span><span class="n">sci_kwargs</span><span class="p">[</span><span class="s1">&#39;suffix&#39;</span><span class="p">])</span>
     <span class="k">if</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;data_set_ID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;all&#39;</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Found targets </span><span class="si">{}</span><span class="s1"> in </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">unique_targets</span><span class="p">,</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;raw_sci_dir&#39;</span><span class="p">]))</span>
 
@@ -261,7 +276,7 @@
     <span class="k">return</span></div>
 
 <div class="viewcode-block" id="get_all_obs_targets"><a class="viewcode-back" href="../../api/VBI_Pipeline.VBIPipeline.get_all_obs_targets.html#VBI_Pipeline.VBIPipeline.get_all_obs_targets">[docs]</a><span class="k">def</span> <span class="nf">get_all_obs_targets</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.fits&#39;</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Find the unique set of data set ID&#39;s (ID___004) for Observation data in a given directory</span>
+    <span class="sd">&quot;&quot;&quot;Find the unique set of data set ID&#39;s (ID___003) for Observation data in a given directory</span>
 
 <span class="sd">    Only files with DKIST004 == &#39;Observation&#39; will be scanned.</span>
 
@@ -276,12 +291,13 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    list</span>
-<span class="sd">        A list containing all unique values of ID___004 found in the given directory</span>
+<span class="sd">        A list containing all unique values of ID___003 found in the given directory</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">file_list</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/*</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="p">))</span>
 
     <span class="n">hdulist</span> <span class="o">=</span> <span class="p">[</span><span class="n">pyfits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">]</span>
-    <span class="n">target_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;ID___004&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">hdulist</span> <span class="k">if</span> <span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;DKIST004&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Observation&#39;</span><span class="p">]</span>
+    <span class="n">target_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="n">S122</span><span class="p">[</span><span class="s1">&#39;DataSetParametersID&#39;</span><span class="p">]]</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">hdulist</span> <span class="k">if</span>
+                   <span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="n">S122</span><span class="p">[</span><span class="s1">&#39;InstrumentProgramTask&#39;</span><span class="p">]]</span> <span class="ow">in</span> <span class="n">IP_TASK_STRINGS</span><span class="p">[</span><span class="s1">&#39;Observation&#39;</span><span class="p">]]</span>
     <span class="n">unique_targets</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">target_list</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">hdulist</span><span class="p">:</span>
@@ -289,7 +305,7 @@
 
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">unique_targets</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="generate_intermediate_objects"><a class="viewcode-back" href="../../api/VBI_Pipeline.VBIPipeline.generate_intermediate_objects.html#VBI_Pipeline.VBIPipeline.generate_intermediate_objects">[docs]</a><span class="k">def</span> <span class="nf">generate_intermediate_objects</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">defaults</span><span class="p">,</span> <span class="n">instrument</span><span class="p">):</span>
+<div class="viewcode-block" id="generate_intermediate_objects"><a class="viewcode-back" href="../../api/VBI_Pipeline.VBIPipeline.generate_intermediate_objects.html#VBI_Pipeline.VBIPipeline.generate_intermediate_objects">[docs]</a><span class="k">def</span> <span class="nf">generate_intermediate_objects</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">instrument</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Generate/collect the intermediate Calibration Objects needed by the Science Calibration module.</span>
 
 <span class="sd">    If the an individual object already exists on disk, simply read it. Otherwise, call that object&#39;s generating module.</span>
@@ -299,11 +315,8 @@
 <span class="sd">    config : configparser.ConfigParser</span>
 <span class="sd">        The object containing user-defined reduction options</span>
 
-<span class="sd">    defaults : configparser.ConfigParser</span>
-<span class="sd">        Object containing all available reduction options. This is used to fill in any gaps in the user-defined options.</span>
-
 <span class="sd">    instrument : str</span>
-<span class="sd">        Name of the instrument. Directly the &#39;INSTRUME&#39; header keyword.</span>
+<span class="sd">        Name of the instrument. Use `get_instrument_name` to find this.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -315,7 +328,7 @@
     <span class="n">filename</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;dark_cal&#39;</span><span class="p">]</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Could not find </span><span class="si">{}</span><span class="s1">, attempting to generate with DarkCalibration&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">filename</span><span class="p">))</span>
-        <span class="n">kwargs</span> <span class="o">=</span> <span class="n">get_intermediate_kwargs</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">defaults</span><span class="p">,</span> <span class="n">instrument</span><span class="p">,</span> <span class="s1">&#39;DarkCalibration&#39;</span><span class="p">,</span> <span class="s1">&#39;raw_dark_dir&#39;</span><span class="p">)</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="n">get_intermediate_kwargs</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">instrument</span><span class="p">,</span> <span class="s1">&#39;DarkCalibration&#39;</span><span class="p">,</span> <span class="s1">&#39;raw_dark_dir&#39;</span><span class="p">)</span>
         <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;DarkCalibration&#39;</span><span class="p">][</span><span class="s1">&#39;raw_dark_dir&#39;</span><span class="p">],</span> <span class="n">filename</span><span class="p">]</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Calling DarkCalibration.main()&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:  with args </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">args</span><span class="p">))</span>
@@ -331,7 +344,7 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Could not find </span><span class="si">{}</span><span class="s1">, attempting to generate with GainCalibration&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">filename</span><span class="p">))</span>
         <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;GainCalibration&#39;</span><span class="p">][</span><span class="s1">&#39;raw_gain_dir&#39;</span><span class="p">],</span> <span class="n">filename</span><span class="p">]</span>
-        <span class="n">kwargs</span> <span class="o">=</span> <span class="n">get_intermediate_kwargs</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">defaults</span><span class="p">,</span> <span class="n">instrument</span><span class="p">,</span> <span class="s1">&#39;GainCalibration&#39;</span><span class="p">,</span> <span class="s1">&#39;raw_gain_dir&#39;</span><span class="p">)</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="n">get_intermediate_kwargs</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">instrument</span><span class="p">,</span> <span class="s1">&#39;GainCalibration&#39;</span><span class="p">,</span> <span class="s1">&#39;raw_gain_dir&#39;</span><span class="p">)</span>
         <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;dark_cal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DarkCal</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Calling GainCalibration.main()&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:  with args </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">args</span><span class="p">))</span>
@@ -347,7 +360,7 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Could not find </span><span class="si">{}</span><span class="s1">, attempting to generate with TargetCalibration&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">filename</span><span class="p">))</span>
         <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;TargetCalibration&#39;</span><span class="p">][</span><span class="s1">&#39;raw_grid_dir&#39;</span><span class="p">],</span> <span class="n">filename</span><span class="p">]</span>
-        <span class="n">kwargs</span> <span class="o">=</span> <span class="n">get_intermediate_kwargs</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">defaults</span><span class="p">,</span> <span class="n">instrument</span><span class="p">,</span> <span class="s1">&#39;TargetCalibration&#39;</span><span class="p">,</span> <span class="s1">&#39;raw_grid_dir&#39;</span><span class="p">)</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="n">get_intermediate_kwargs</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">instrument</span><span class="p">,</span> <span class="s1">&#39;TargetCalibration&#39;</span><span class="p">,</span> <span class="s1">&#39;raw_grid_dir&#39;</span><span class="p">)</span>
         <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;dark_cal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DarkCal</span>
         <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;gain_cal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">GainCal</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Calling TargetCalibration.main()&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
@@ -363,7 +376,7 @@
 
     <span class="k">return</span> <span class="n">sci_kwargs</span></div>
 
-<div class="viewcode-block" id="get_intermediate_kwargs"><a class="viewcode-back" href="../../api/VBI_Pipeline.VBIPipeline.get_intermediate_kwargs.html#VBI_Pipeline.VBIPipeline.get_intermediate_kwargs">[docs]</a><span class="k">def</span> <span class="nf">get_intermediate_kwargs</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">defaults</span><span class="p">,</span> <span class="n">instrument</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">data_kwd</span><span class="p">):</span>
+<div class="viewcode-block" id="get_intermediate_kwargs"><a class="viewcode-back" href="../../api/VBI_Pipeline.VBIPipeline.get_intermediate_kwargs.html#VBI_Pipeline.VBIPipeline.get_intermediate_kwargs">[docs]</a><span class="k">def</span> <span class="nf">get_intermediate_kwargs</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">instrument</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">data_kwd</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Given user-defined and default parameters, construct the kwarg dictionary for a call to a *Calibration module</span>
 
 <span class="sd">    User-provided parameters take precedence over defaults.</span>
@@ -372,9 +385,6 @@
 <span class="sd">    ----------</span>
 <span class="sd">    config : configparser.ConfigParser</span>
 <span class="sd">        The object containing user-defined reduction options</span>
-
-<span class="sd">    defaults : configparser.ConfigParser</span>
-<span class="sd">        Object containing all available reduction options. This is used to fill in any gaps in the user-defined options.</span>
 
 <span class="sd">    instrument : str</span>
 <span class="sd">        Name of the instrument. Directly the &#39;INSTRUME&#39; header keyword.</span>
@@ -392,6 +402,9 @@
 <span class="sd">        Dictionary containing the keyword arguments that have been loaded from config and defaults for the specified</span>
 <span class="sd">        section</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">defaults</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">(</span><span class="n">interpolation</span><span class="o">=</span><span class="n">ExtendedInterpolation</span><span class="p">())</span>
+    <span class="n">defaults</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;data/defaults.ini&#39;</span><span class="p">))</span>
+
     <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">def_sec_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">instrument</span><span class="p">,</span> <span class="n">section</span><span class="p">)</span>
 
@@ -399,12 +412,18 @@
     <span class="k">if</span> <span class="n">def_sec_name</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">sections</span><span class="p">():</span>
         <span class="k">for</span> <span class="n">kw</span> <span class="ow">in</span> <span class="n">defaults</span><span class="p">[</span><span class="n">def_sec_name</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="c1"># literal_eval is a safe way of turning e.g. strings into float</span>
-            <span class="n">kwargs</span><span class="p">[</span><span class="n">kw</span><span class="p">]</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">defaults</span><span class="p">[</span><span class="n">def_sec_name</span><span class="p">][</span><span class="n">kw</span><span class="p">])</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">kwargs</span><span class="p">[</span><span class="n">kw</span><span class="p">]</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">defaults</span><span class="p">[</span><span class="n">def_sec_name</span><span class="p">][</span><span class="n">kw</span><span class="p">])</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="n">kwargs</span><span class="p">[</span><span class="n">kw</span><span class="p">]</span> <span class="o">=</span> <span class="n">defaults</span><span class="p">[</span><span class="n">def_sec_name</span><span class="p">][</span><span class="n">kw</span><span class="p">]</span>
 
     <span class="c1"># ...and allow the user to override with their own definitions</span>
     <span class="k">for</span> <span class="n">kw</span> <span class="ow">in</span> <span class="n">config</span><span class="p">[</span><span class="n">section</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">kw</span> <span class="o">!=</span> <span class="n">data_kwd</span><span class="p">:</span>
-            <span class="n">kwargs</span><span class="p">[</span><span class="n">kw</span><span class="p">]</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="n">kw</span><span class="p">])</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">kwargs</span><span class="p">[</span><span class="n">kw</span><span class="p">]</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="n">kw</span><span class="p">])</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="n">kwargs</span><span class="p">[</span><span class="n">kw</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="n">kw</span><span class="p">]</span>
 
     <span class="k">return</span> <span class="n">kwargs</span></div>
 
@@ -508,10 +527,10 @@
     </div>
    
     <div class="right-footer">
-      Last updated on 13 Jan 2020.
+      Last updated on 24 Mar 2020.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4
     </div>
   </div>
 </footer>

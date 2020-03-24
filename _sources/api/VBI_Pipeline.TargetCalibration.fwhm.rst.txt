@@ -1,0 +1,6 @@
+fwhm
+====
+
+.. currentmodule:: VBI_Pipeline.TargetCalibration
+
+.. autofunction:: fwhm

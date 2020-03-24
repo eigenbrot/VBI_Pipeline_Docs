@@ -1,0 +1,6 @@
+analyze_hough
+=============
+
+.. currentmodule:: VBI_Pipeline.TargetCalibration
+
+.. autofunction:: analyze_hough

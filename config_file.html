@@ -4,17 +4,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Configuration File Format &#8212; VBI_Pipeline v0.8.2</title>
+    <title>Configuration File Format &#8212; VBI_Pipeline v0.9.1</title>
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" type="text/css" />
     <link rel="stylesheet" href="_static/dkist.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     <link rel="shortcut icon" href="_static/favico.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -175,14 +175,14 @@ Calibration Objects by simply pointing the corresponding option to a file that d
 <dd class="field-odd"><p>Path to a directory containing all of the Object (i.e., science) FITS files that will be reduced</p>
 </dd>
 <dt class="field-even">data_set_id</dt>
-<dd class="field-even"><p>A string that is used to refine the selection of data from <code class="docutils literal notranslate"><span class="pre">raw_sci_dir</span></code>. Only files whose ‘ID_004’
+<dd class="field-even"><p>A string that is used to refine the selection of data from <code class="docutils literal notranslate"><span class="pre">raw_sci_dir</span></code>. Only files whose ‘ID_003’
 metadata matches this parameter will be used. If left blank then all data in the <code class="docutils literal notranslate"><span class="pre">raw_sci_dir</span></code> will be treated as
 a single data set, which might produce some strange looking outputs. <strong>Note</strong> As a special case, if this option is
 “all” then each data set found in the directory will be reduced separately.</p>
 </dd>
 <dt class="field-odd">output</dt>
 <dd class="field-odd"><p>Path to file in which to save the reduced output images. <strong>Note:</strong> In the cas where <code class="docutils literal notranslate"><span class="pre">data_set_id</span> <span class="pre">=</span> <span class="pre">all</span></code> this
-option defines the prefix used when saving each separate data set. They will be saved as OUTPUT_ID004.fits.</p>
+option defines the prefix used when saving each separate data set. They will be saved as OUTPUT_ID003.fits.</p>
 </dd>
 <dt class="field-even">dark_cal</dt>
 <dd class="field-even"><p>The location of the processed DarkCalibration object. If this file does not exist it will be generated.</p>
@@ -193,10 +193,17 @@ option defines the prefix used when saving each separate data set. They will be 
 <dt class="field-even">target_cal</dt>
 <dd class="field-even"><p>The location of the processed TargetCalibration object. If this file does not exist it will  be generated.</p>
 </dd>
-<dt class="field-odd">flush</dt>
-<dd class="field-odd"><p>If ‘True’ then the VBI Pipeline will try to write intermediate data products and read them using memmap in an
-attempt to save on memory usage. This results in a slight performance hit, but might be the only way you can get
-a huge data set to process without running out of RAM.</p>
+<dt class="field-odd"><em>final_average</em></dt>
+<dd class="field-odd"><p><strong>(bool)</strong> If ‘True’ then average all exposures from the same spatial position in the final data.
+In this case the output file will have a single HDU for each unique spatial position present. Default is False.</p>
+</dd>
+<dt class="field-even">flush</dt>
+<dd class="field-even"><p><strong>(bool)</strong> If ‘True’ then the VBI Pipeline will try to write intermediate data products and read them using
+memmap in an attempt to save on memory usage. This results in a slight performance hit, but might be the only way
+you can get a huge data set to process without running out of RAM.</p>
+</dd>
+<dt class="field-odd"><em>sci_suffix</em></dt>
+<dd class="field-odd"><p>The file suffix for Science data files. Default is “FITS”.</p>
 </dd>
 </dl>
 </div>
@@ -218,6 +225,9 @@ from the mean is less than 0.682 - low_acceptance parameter an error will be thr
 in a good DarkCalibration object. If the fraction of pixels in the object that are less than 1 stddev away
 from the mean is more than 0.682 + low_acceptance parameter an error will be thrown.</p>
 </dd>
+<dt class="field-even"><em>suffix</em></dt>
+<dd class="field-even"><p>File suffix of raw Dark data files. Default is “FITS”</p>
+</dd>
 </dl>
 </div>
 <div class="section" id="gaincalibration">
@@ -237,6 +247,9 @@ from the mean is less than 0.682 - low_acceptance parameter an error will be thr
 <dd class="field-odd"><p><strong>(float)</strong> This sets the lower limit for the fraction of outlying pixels that are allowed
 in a good GainCalibration object. If the fraction of pixels in the object that are less than 1 stddev away
 from the mean is more than 0.682 + low_acceptance parameter an error will be thrown.</p>
+</dd>
+<dt class="field-even"><em>suffix</em></dt>
+<dd class="field-even"><p>File suffix of raw Gain data files. Default is “FITS”</p>
 </dd>
 </dl>
 </div>
@@ -279,6 +292,14 @@ then some cleaning of outlying pixels is performed.</p>
 <dd class="field-even"><p><strong>(float)</strong> Another way to keep the binary image clean. Any pixels more than sigclip standard deviations away
 from the image mean are ignored.</p>
 </dd>
+<dt class="field-odd"><em>peak_threshold</em></dt>
+<dd class="field-odd"><p><strong>(float)</strong> Relative cutoff for detecting peaks in the Hough transform [0 - 1]. Larger numbers will
+exclude shorter lines, but can help if spurious lines are being detected.</p>
+</dd>
+<dt class="field-even"><em>theta_window</em></dt>
+<dd class="field-even"><p><strong>(float)</strong> Size of region (in radians) around the peak angles to include when looking for peaks in
+the Hough rho dimension. Smaller numbers can improve the centering of rho peaks. Default is pi/360.</p>
+</dd>
 <dt class="field-odd"><em>bimode_choice</em></dt>
 <dd class="field-odd"><p><strong>(list)</strong> You’ll hopefully never need this. Sometimes the camera offsets can be such that the distribution
 of offsets between camera positions is bi-modal. If this option is not specified then the user is asked to manually select
@@ -290,6 +311,9 @@ You can also specify a single number to select the same option for all camera po
 you just want to always choose the strongest mode and not be bothered. <strong>NOTE (pt2):</strong> There are some secret options:
 if you select either -1 or -2 then the shift will be exactly the selected median and the algorithm will not be re-run.
 If you select 0 then the global median is used and the algorithm is not re-run.</p>
+</dd>
+<dt class="field-even"><em>suffix</em></dt>
+<dd class="field-even"><p>File suffix of raw grid data files. Default is “FITS”</p>
 </dd>
 </dl>
 </div>
@@ -330,10 +354,10 @@ If you select 0 then the global median is used and the algorithm is not re-run.<
     </div>
    
     <div class="right-footer">
-      Last updated on 13 Jan 2020.
+      Last updated on 24 Mar 2020.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4
     </div>
   </div>
 </footer>

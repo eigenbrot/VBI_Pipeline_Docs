@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>make_binary_gauss &#8212; VBI_Pipeline v0.9.1</title>
+    <title>analyze_hough &#8212; VBI_Pipeline v0.9.1</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -18,8 +18,8 @@
     <link rel="shortcut icon" href="../_static/favico.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="AlignmentData" href="VBI_Pipeline.Data.AlignmentData.html" />
-    <link rel="prev" title="main" href="VBI_Pipeline.TargetCalibration.main.html" />
+    <link rel="next" title="check_shifts" href="VBI_Pipeline.TargetCalibration.check_shifts.html" />
+    <link rel="prev" title="validate_gain_task_data" href="VBI_Pipeline.GainCalibration.validate_gain_task_data.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -75,7 +75,7 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">make_binary_gauss</a></li>
+<li><a class="reference internal" href="#">analyze_hough</a></li>
 </ul>
 </ul>
 </li>
@@ -85,11 +85,11 @@
               
                 
   <li>
-    <a href="VBI_Pipeline.TargetCalibration.main.html" title="Previous Chapter: main"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; main</span>
+    <a href="VBI_Pipeline.GainCalibration.validate_gain_task_data.html" title="Previous Chapter: validate_gain_task_data"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; validate_gain...</span>
     </a>
   </li>
   <li>
-    <a href="VBI_Pipeline.Data.AlignmentData.html" title="Next Chapter: AlignmentData"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">AlignmentData &raquo;</span>
+    <a href="VBI_Pipeline.TargetCalibration.check_shifts.html" title="Next Chapter: check_shifts"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">check_shifts &raquo;</span>
     </a>
   </li>
               
@@ -143,7 +143,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../API.html#module-VBI_Pipeline.GainCalibration">VBI_Pipeline.GainCalibration Module</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../API.html#module-VBI_Pipeline.TargetCalibration">VBI_Pipeline.TargetCalibration Module</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="../API.html#id6">Functions</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.analyze_hough.html">analyze_hough</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">analyze_hough</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.check_shifts.html">check_shifts</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.collect_intersections.html">collect_intersections</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.command_line.html">command_line</a></li>
@@ -154,7 +154,7 @@
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.generate_target_calibration.html">generate_target_calibration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.load_hough_pickle.html">load_hough_pickle</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.main.html">main</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">make_binary_gauss</a></li>
+<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.TargetCalibration.make_binary_gauss.html">make_binary_gauss</a></li>
 </ul>
 </li>
 </ul>
@@ -171,45 +171,57 @@
 
     <div class="body col-md-9 content" role="main">
       
-  <div class="section" id="make-binary-gauss">
-<h1>make_binary_gauss<a class="headerlink" href="#make-binary-gauss" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="analyze-hough">
+<h1>analyze_hough<a class="headerlink" href="#analyze-hough" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
-<dt id="VBI_Pipeline.TargetCalibration.make_binary_gauss">
-<code class="sig-prename descclassname">VBI_Pipeline.TargetCalibration.</code><code class="sig-name descname">make_binary_gauss</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">sigma=30</em>, <em class="sig-param">binary_threshold=0.1</em>, <em class="sig-param">sigclip=3.0</em>, <em class="sig-param">debug=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/TargetCalibration.html#make_binary_gauss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.TargetCalibration.make_binary_gauss" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert an array to a binary image using a gaussian smoothing method.</p>
-<p>This method is designed to highlight features with high spatial frequency (i.e., grid lines). The algorithm is:</p>
-<blockquote>
-<div><ol class="arabic simple">
-<li><p>Create a smooth version of the input data</p></li>
-<li><p>Subtract the smooth and un-smooth data</p></li>
-<li><p>Use Otsu’s method to threshold the resulting image</p></li>
-<li><p>Apply the threshold to the difference image.</p></li>
-</ol>
-</div></blockquote>
-<p>The idea here is that the interesting features have been smoothed out of the smooth image and thus the difference
-image has very strong signal at these features. To work properly the amount of blur should be very close to the
-pixel width of the features to be extracted.</p>
+<dt id="VBI_Pipeline.TargetCalibration.analyze_hough">
+<code class="sig-prename descclassname">VBI_Pipeline.TargetCalibration.</code><code class="sig-name descname">analyze_hough</code><span class="sig-paren">(</span><em class="sig-param">H</em>, <em class="sig-param">theta</em>, <em class="sig-param">rho</em>, <em class="sig-param">theta_window=0.008726646259971648</em>, <em class="sig-param">rho_window=10</em>, <em class="sig-param">theta_min_dist=150.0</em>, <em class="sig-param">rho_min_dist=50</em>, <em class="sig-param">rho_smooth=10.0</em>, <em class="sig-param">peak_threshold=0.1</em>, <em class="sig-param">refine_theta=False</em>, <em class="sig-param">binary=None</em>, <em class="sig-param">debug=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/TargetCalibration.html#analyze_hough"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.TargetCalibration.analyze_hough" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the equations for all the horizontal and vertical lines in a data array.</p>
+<p>The lines are found using a Hough Transform and are thus parametrized by (theta, rho). Before the Hough Transform
+the data are converted to a binary array and the actual transform is done using skimage.</p>
+<p>The lines discovered by the transform are constrained to be within +/- 20 degrees of horizontal or vertical.
+Finally, any lines with angles that significantly deviate from the group average are removed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>data</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>Input data array</p>
+<dt><strong>data</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>Input data array. Should be 2-d</p>
 </dd>
-<dt><strong>sigma</strong><span class="classifier">float</span></dt><dd><p>Width (in px units) of smoothing kernel. See above; this should be close to the size of the feature to be
-extracted.</p>
+<dt><strong>gauss_sigma</strong><span class="classifier">float</span></dt><dd><p>Width of smoothing kernel used to construct a binary image from the input data. Should be slightly less than
+the pixel width of the grid lines.</p>
+</dd>
+<dt><strong>theta_window</strong><span class="classifier">float</span></dt><dd><p>Window in radians around (before and after) each peak angle within which to search for peaks in rho.</p>
+</dd>
+<dt><strong>rho_window</strong><span class="classifier">float</span></dt><dd><p>Window in pixels around (before and after) each peak rho value within which to refine location of peak angle.</p>
+</dd>
+<dt><strong>theta_min_dist</strong><span class="classifier">float</span></dt><dd><p>Minimum distance (in Hough space coordinates) allowed between peaks in theta.</p>
+</dd>
+<dt><strong>rho_min_dist</strong><span class="classifier">float</span></dt><dd><p>Minimum distance (in Hough space coordinates) allowed between peaks in rho. This parameter is highly dependent
+on the pixel scale of the grid lines.</p>
+</dd>
+<dt><strong>rho_smooth</strong><span class="classifier">float</span></dt><dd><p>Sigma of smoothing kernel used to remove noise from the rho rss. Something b/t 5 and 10 is probably good.</p>
 </dd>
 <dt><strong>binary_threshold</strong><span class="classifier">float</span></dt><dd><p>Min percentage of pixels to be on one side of the Otsu threshold when constructing the binary image.
 If the percentage of pixels above the threshold is outside the range (binary_threshold, 1 - binary_threshold),
 then some cleaning of outlying pixels is performed.</p>
 </dd>
-<dt><strong>sigclip</strong><span class="classifier">float</span></dt><dd><p>Any pixels beyond sigclip standard deviations from the mean are excluded from the thresholding calculation.</p>
+<dt><strong>peak_threshold</strong><span class="classifier">float</span></dt><dd><p>Relative cutoff for detecting peaks in the Hough transform [0 - 1]. Larger numbers will exclude shorter lines,
+but can help if spurious lines are being detected.</p>
 </dd>
-<dt><strong>debug</strong><span class="classifier">bool</span></dt><dd><p>If True, write out the binary image for later inspection. It will be called ‘binary.fits’</p>
+<dt><strong>refine_theta</strong><span class="classifier">bool</span></dt><dd><p>If True then re-compute the angle of each identified lines. Otherwise all lines are assigned the global average.</p>
+</dd>
+<dt><strong>sigclip</strong><span class="classifier">float</span></dt><dd><p>Any pixels beyond sigclip standard deviations from the mean are excluded from the binary thresholding
+calculation.</p>
+</dd>
+<dt><strong>debug</strong><span class="classifier">bool</span></dt><dd><p>If True the code will stop at each hdu (i.e., exposure) and generate some diagnostic plots that show the
+computed lines and grid intersections.</p>
+</dd>
+<dt><strong>binary</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>The binary image of <code class="xref py py-obj docutils literal notranslate"><span class="pre">data</span></code>. Only used for making debug images.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>numpy.ndarray</dt><dd><p>The binary image</p>
+<dt>tuple</dt><dd><p>(rho, theta) where each element is an ndarray with the associated values</p>
 </dd>
 </dl>
 </dd>

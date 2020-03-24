@@ -4,17 +4,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>get_instrument_name &#8212; VBI_Pipeline v0.8.2</title>
+    <title>get_instrument_name &#8212; VBI_Pipeline v0.9.1</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" type="text/css" />
     <link rel="stylesheet" href="../_static/dkist.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
     <link rel="shortcut icon" href="../_static/favico.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -171,7 +171,7 @@
 <h1>get_instrument_name<a class="headerlink" href="#get-instrument-name" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="VBI_Pipeline.VBIPipeline.get_instrument_name">
-<code class="sig-prename descclassname">VBI_Pipeline.VBIPipeline.</code><code class="sig-name descname">get_instrument_name</code><span class="sig-paren">(</span><em class="sig-param">data_dir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/VBIPipeline.html#get_instrument_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.VBIPipeline.get_instrument_name" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">VBI_Pipeline.VBIPipeline.</code><code class="sig-name descname">get_instrument_name</code><span class="sig-paren">(</span><em class="sig-param">data_dir</em>, <em class="sig-param">suffix</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/VBIPipeline.html#get_instrument_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.VBIPipeline.get_instrument_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a directory of VBI data, determine which camera was used to take the data.</p>
 <p>This function does NOT verify that all of the data are from the same camera (that happens elsewhere), it just
 returns the instrument (camera) of the first file read by the system.</p>
@@ -179,6 +179,8 @@ returns the instrument (camera) of the first file read by the system.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>data_dir</strong><span class="classifier">str</span></dt><dd><p>Directory containing VBI data</p>
+</dd>
+<dt><strong>suffix</strong><span class="classifier">str</span></dt><dd><p>Only look for files with this suffix</p>
 </dd>
 <dt><strong>Returns:</strong></dt><dd></dd>
 <dt><strong>str</strong></dt><dd><p>The value of INSTRUME for the first file loaded. Will be ‘VBI-RED’ or ‘VBI-BLUE’</p>
@@ -203,10 +205,10 @@ returns the instrument (camera) of the first file read by the system.</p>
     </div>
    
     <div class="right-footer">
-      Last updated on 13 Jan 2020.
+      Last updated on 24 Mar 2020.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4
     </div>
   </div>
 </footer>
