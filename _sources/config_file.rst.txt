@@ -28,14 +28,14 @@ Calibration Objects by simply pointing the corresponding option to a file that d
 
 :target_cal: The location of the processed TargetCalibration object. If this file does not exist it will  be generated.
 
+:*apply_target_cal*: **(bool)** If 'False' then don't look for, generate, or use a Target Calibration.
+
 :*final_average*: **(bool)** If 'True' then average all exposures from the same spatial position in the final data.
     In this case the output file will have a single HDU for each unique spatial position present. Default is False.
 
 :flush: **(bool)** If 'True' then the VBI Pipeline will try to write intermediate data products and read them using
     memmap in an attempt to save on memory usage. This results in a slight performance hit, but might be the only way
     you can get a huge data set to process without running out of RAM.
-
-:*sci_suffix*: The file suffix for Science data files. Default is "FITS".
 
 DarkCalibration
 ---------------
@@ -129,10 +129,10 @@ Example Config File
   [Main]
   raw_sci_dir = ../
   data_set_id = GOS target
-  output = SciTarget.fits
-  dark_cal = DarkCal.fits
-  gain_cal = GainCal.fits
-  target_cal = TargetCal.fits
+  output = SciTarget
+  dark_cal = DarkCal
+  gain_cal = GainCal
+  target_cal = TargetCal
   flush = False
 
   [DarkCalibration]

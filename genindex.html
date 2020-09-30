@@ -1,11 +1,11 @@
 
-
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>Index &#8212; VBI_Pipeline v0.9.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index &#8212; VBI_Pipeline v0.10.0</title>
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
@@ -23,9 +23,9 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="_static/js/jquery-1.12.4.min.js "></script>
 <script type="text/javascript" src="_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
 <script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
 
   </head><body>
@@ -133,6 +133,7 @@
  | <a href="#N"><strong>N</strong></a>
  | <a href="#O"><strong>O</strong></a>
  | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
  | <a href="#V"><strong>V</strong></a>
@@ -192,17 +193,23 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/VBI_Pipeline.generic.dark_correction.html#VBI_Pipeline.generic.dark_correction">dark_correction() (in module VBI_Pipeline.generic)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/VBI_Pipeline.Data.DarkData.html#VBI_Pipeline.Data.DarkData">DarkData (class in VBI_Pipeline.Data)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData.data">data (VBI_Pipeline.Data.FitsData attribute)</a>
+</li>
+      <li><a href="api/VBI_Pipeline.Data.DSPSData.html#VBI_Pipeline.Data.DSPSData">DSPSData (class in VBI_Pipeline.Data)</a>
 </li>
   </ul></td>
 </tr></table>
 
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/VBI_Pipeline.generic.ensure_fits.html#VBI_Pipeline.generic.ensure_fits">ensure_fits() (in module VBI_Pipeline.generic)</a>
+</li>
+  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/VBI_Pipeline.generic.extract_ROI.html#VBI_Pipeline.generic.extract_ROI">extract_ROI() (in module VBI_Pipeline.generic)</a>
 </li>
@@ -246,15 +253,17 @@
 </li>
       <li><a href="api/VBI_Pipeline.DarkCalibration.generate_dark_calibration.html#VBI_Pipeline.DarkCalibration.generate_dark_calibration">generate_dark_calibration() (in module VBI_Pipeline.DarkCalibration)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/VBI_Pipeline.GainCalibration.generate_gain_calibration.html#VBI_Pipeline.GainCalibration.generate_gain_calibration">generate_gain_calibration() (in module VBI_Pipeline.GainCalibration)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/VBI_Pipeline.VBIPipeline.generate_intermediate_objects.html#VBI_Pipeline.VBIPipeline.generate_intermediate_objects">generate_intermediate_objects() (in module VBI_Pipeline.VBIPipeline)</a>
 </li>
       <li><a href="api/VBI_Pipeline.TargetCalibration.generate_target_calibration.html#VBI_Pipeline.TargetCalibration.generate_target_calibration">generate_target_calibration() (in module VBI_Pipeline.TargetCalibration)</a>
 </li>
       <li><a href="api/VBI_Pipeline.VBIPipeline.get_all_obs_targets.html#VBI_Pipeline.VBIPipeline.get_all_obs_targets">get_all_obs_targets() (in module VBI_Pipeline.VBIPipeline)</a>
+</li>
+      <li><a href="api/VBI_Pipeline.Data.DSPSData.html#VBI_Pipeline.Data.DSPSData.get_dsps_data">get_dsps_data() (VBI_Pipeline.Data.DSPSData method)</a>
 </li>
       <li><a href="api/VBI_Pipeline.VBIPipeline.get_instrument_name.html#VBI_Pipeline.VBIPipeline.get_instrument_name">get_instrument_name() (in module VBI_Pipeline.VBIPipeline)</a>
 </li>
@@ -292,6 +301,8 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData.load_from_filelist">load_from_filelist() (VBI_Pipeline.Data.FitsData method)</a>
+</li>
       <li><a href="api/VBI_Pipeline.TargetCalibration.load_hough_pickle.html#VBI_Pipeline.TargetCalibration.load_hough_pickle">load_hough_pickle() (in module VBI_Pipeline.TargetCalibration)</a>
 </li>
   </ul></td>
@@ -312,10 +323,27 @@
         <li><a href="api/VBI_Pipeline.VBIStitch.main.html#VBI_Pipeline.VBIStitch.main">(in module VBI_Pipeline.VBIStitch)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/VBI_Pipeline.TargetCalibration.make_binary_gauss.html#VBI_Pipeline.TargetCalibration.make_binary_gauss">make_binary_gauss() (in module VBI_Pipeline.TargetCalibration)</a>
 </li>
+      <li>
+    module
+
+      <ul>
+        <li><a href="API.html#module-VBI_Pipeline.DarkCalibration">VBI_Pipeline.DarkCalibration</a>
+</li>
+        <li><a href="API.html#module-VBI_Pipeline.Data">VBI_Pipeline.Data</a>
+</li>
+        <li><a href="API.html#module-VBI_Pipeline.GainCalibration">VBI_Pipeline.GainCalibration</a>
+</li>
+        <li><a href="API.html#module-VBI_Pipeline.generic">VBI_Pipeline.generic</a>
+</li>
+        <li><a href="API.html#module-VBI_Pipeline.TargetCalibration">VBI_Pipeline.TargetCalibration</a>
+</li>
+        <li><a href="API.html#module-VBI_Pipeline.VBIPipeline">VBI_Pipeline.VBIPipeline</a>
+</li>
+        <li><a href="API.html#module-VBI_Pipeline.VBIStitch">VBI_Pipeline.VBIStitch</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -326,6 +354,8 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/VBI_Pipeline.Data.DSPSData.html#VBI_Pipeline.Data.DSPSData.num_dsps">num_dsps (VBI_Pipeline.Data.DSPSData attribute)</a>
+</li>
       <li><a href="api/VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData.num_steps">num_steps (VBI_Pipeline.Data.FitsData attribute)</a>
 </li>
   </ul></td>
@@ -342,7 +372,19 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/VBI_Pipeline.Data.DSPSData.html#VBI_Pipeline.Data.DSPSData.read_directory">read_directory() (VBI_Pipeline.Data.DSPSData method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/VBI_Pipeline.VBIPipeline.run_science.html#VBI_Pipeline.VBIPipeline.run_science">run_science() (in module VBI_Pipeline.VBIPipeline)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/VBI_Pipeline.generic.strip_fits.html#VBI_Pipeline.generic.strip_fits">strip_fits() (in module VBI_Pipeline.generic)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -350,14 +392,14 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/VBI_Pipeline.Data.AlignmentData.html#VBI_Pipeline.Data.AlignmentData.task">task (VBI_Pipeline.Data.AlignmentData attribute)</a>
+      <li><a href="api/VBI_Pipeline.Data.AlignmentData.html#VBI_Pipeline.Data.AlignmentData.task_dict">task_dict (VBI_Pipeline.Data.AlignmentData attribute)</a>
 
       <ul>
-        <li><a href="api/VBI_Pipeline.Data.DarkData.html#VBI_Pipeline.Data.DarkData.task">(VBI_Pipeline.Data.DarkData attribute)</a>
+        <li><a href="api/VBI_Pipeline.Data.DarkData.html#VBI_Pipeline.Data.DarkData.task_dict">(VBI_Pipeline.Data.DarkData attribute)</a>
 </li>
-        <li><a href="api/VBI_Pipeline.Data.GainData.html#VBI_Pipeline.Data.GainData.task">(VBI_Pipeline.Data.GainData attribute)</a>
+        <li><a href="api/VBI_Pipeline.Data.GainData.html#VBI_Pipeline.Data.GainData.task_dict">(VBI_Pipeline.Data.GainData attribute)</a>
 </li>
-        <li><a href="api/VBI_Pipeline.Data.ObservationData.html#VBI_Pipeline.Data.ObservationData.task">(VBI_Pipeline.Data.ObservationData attribute)</a>
+        <li><a href="api/VBI_Pipeline.Data.ObservationData.html#VBI_Pipeline.Data.ObservationData.task_dict">(VBI_Pipeline.Data.ObservationData attribute)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -386,22 +428,57 @@
 </li>
       <li><a href="api/VBI_Pipeline.GainCalibration.validate_gain_task_data.html#VBI_Pipeline.GainCalibration.validate_gain_task_data">validate_gain_task_data() (in module VBI_Pipeline.GainCalibration)</a>
 </li>
-      <li><a href="API.html#module-VBI_Pipeline.DarkCalibration">VBI_Pipeline.DarkCalibration (module)</a>
+      <li>
+    VBI_Pipeline.DarkCalibration
+
+      <ul>
+        <li><a href="API.html#module-VBI_Pipeline.DarkCalibration">module</a>
 </li>
+      </ul></li>
+      <li>
+    VBI_Pipeline.Data
+
+      <ul>
+        <li><a href="API.html#module-VBI_Pipeline.Data">module</a>
+</li>
+      </ul></li>
+      <li>
+    VBI_Pipeline.GainCalibration
+
+      <ul>
+        <li><a href="API.html#module-VBI_Pipeline.GainCalibration">module</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="API.html#module-VBI_Pipeline.Data">VBI_Pipeline.Data (module)</a>
+      <li>
+    VBI_Pipeline.generic
+
+      <ul>
+        <li><a href="API.html#module-VBI_Pipeline.generic">module</a>
 </li>
-      <li><a href="API.html#module-VBI_Pipeline.GainCalibration">VBI_Pipeline.GainCalibration (module)</a>
+      </ul></li>
+      <li>
+    VBI_Pipeline.TargetCalibration
+
+      <ul>
+        <li><a href="API.html#module-VBI_Pipeline.TargetCalibration">module</a>
 </li>
-      <li><a href="API.html#module-VBI_Pipeline.generic">VBI_Pipeline.generic (module)</a>
+      </ul></li>
+      <li>
+    VBI_Pipeline.VBIPipeline
+
+      <ul>
+        <li><a href="API.html#module-VBI_Pipeline.VBIPipeline">module</a>
 </li>
-      <li><a href="API.html#module-VBI_Pipeline.TargetCalibration">VBI_Pipeline.TargetCalibration (module)</a>
+      </ul></li>
+      <li>
+    VBI_Pipeline.VBIStitch
+
+      <ul>
+        <li><a href="API.html#module-VBI_Pipeline.VBIStitch">module</a>
 </li>
-      <li><a href="API.html#module-VBI_Pipeline.VBIPipeline">VBI_Pipeline.VBIPipeline (module)</a>
-</li>
-      <li><a href="API.html#module-VBI_Pipeline.VBIStitch">VBI_Pipeline.VBIStitch (module)</a>
-</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -427,10 +504,10 @@
     </div>
    
     <div class="right-footer">
-      Last updated on 24 Mar 2020.
+      Last updated on 30 Sep 2020.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1
     </div>
   </div>
 </footer>

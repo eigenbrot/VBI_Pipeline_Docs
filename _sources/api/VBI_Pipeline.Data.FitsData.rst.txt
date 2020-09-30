@@ -27,6 +27,7 @@ FitsData
       ~FitsData.get_stacked_data
       ~FitsData.init_with_ndarray
       ~FitsData.load_from_file
+      ~FitsData.load_from_filelist
       ~FitsData.update_header
       ~FitsData.write_out
 
@@ -47,5 +48,6 @@ FitsData
    .. automethod:: get_stacked_data
    .. automethod:: init_with_ndarray
    .. automethod:: load_from_file
+   .. automethod:: load_from_filelist
    .. automethod:: update_header
    .. automethod:: write_out

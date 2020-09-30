@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ObservationData &#8212; VBI_Pipeline v0.10.0</title>
+    <title>DSPSData &#8212; VBI_Pipeline v0.10.0</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -19,8 +19,8 @@
     <link rel="shortcut icon" href="../_static/favico.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="average_FitsData" href="VBI_Pipeline.generic.average_FitsData.html" />
-    <link rel="prev" title="GainData" href="VBI_Pipeline.Data.GainData.html" />
+    <link rel="next" title="DarkData" href="VBI_Pipeline.Data.DarkData.html" />
+    <link rel="prev" title="AlignmentData" href="VBI_Pipeline.Data.AlignmentData.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -76,7 +76,7 @@
   <ul class="dropdown-menu localtoc"
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
-<li><a class="reference internal" href="#">ObservationData</a></li>
+<li><a class="reference internal" href="#">DSPSData</a></li>
 </ul>
 </ul>
 </li>
@@ -86,11 +86,11 @@
               
                 
   <li>
-    <a href="VBI_Pipeline.Data.GainData.html" title="Previous Chapter: GainData"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; GainData</span>
+    <a href="VBI_Pipeline.Data.AlignmentData.html" title="Previous Chapter: AlignmentData"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; AlignmentData</span>
     </a>
   </li>
   <li>
-    <a href="VBI_Pipeline.generic.average_FitsData.html" title="Next Chapter: average_FitsData"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">average_FitsData &raquo;</span>
+    <a href="VBI_Pipeline.Data.DarkData.html" title="Next Chapter: DarkData"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">DarkData &raquo;</span>
     </a>
   </li>
               
@@ -146,11 +146,11 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../API.html#module-VBI_Pipeline.Data">VBI_Pipeline.Data Module</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="../API.html#classes">Classes</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.Data.AlignmentData.html">AlignmentData</a></li>
-<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.Data.DSPSData.html">DSPSData</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">DSPSData</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.Data.DarkData.html">DarkData</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.Data.FitsData.html">FitsData</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.Data.GainData.html">GainData</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">ObservationData</a></li>
+<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.Data.ObservationData.html">ObservationData</a></li>
 </ul>
 </li>
 </ul>
@@ -166,23 +166,29 @@
 
     <div class="body col-md-9 content" role="main">
       
-  <div class="section" id="observationdata">
-<h1>ObservationData<a class="headerlink" href="#observationdata" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="dspsdata">
+<h1>DSPSData<a class="headerlink" href="#dspsdata" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="VBI_Pipeline.Data.ObservationData">
-<em class="property">class </em><code class="sig-prename descclassname">VBI_Pipeline.Data.</code><code class="sig-name descname">ObservationData</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_dir</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dataset_ID</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">suffix</span><span class="o">=</span><span class="default_value">'FITS'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#VBI_Pipeline.Data.ObservationData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">VBI_Pipeline.Data._TaskData</span></code></p>
-<p>ObservationData is an extension of <code class="xref py py-obj docutils literal notranslate"><span class="pre">FitData</span></code> designed to only hold data associated with Observation. It inherits all of 
-the functionality of <a class="reference internal" href="VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData" title="VBI_Pipeline.Data.FitsData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FitsData</span></code></a> and defines an extra method that loads all data from a directory who’s headers match the 
-following:</p>
-<blockquote>
-<div><blockquote>
-<div><p>Key  Value
-—  —–</p>
-</div></blockquote>
-<p>DKIST004  Observation</p>
-</div></blockquote>
-<p>Initialize the empty object and maybe load some data.</p>
+<dt id="VBI_Pipeline.Data.DSPSData">
+<em class="property">class </em><code class="sig-prename descclassname">VBI_Pipeline.Data.</code><code class="sig-name descname">DSPSData</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_dir</span></em>, <em class="sig-param"><span class="n">target</span></em>, <em class="sig-param"><span class="n">suffix</span><span class="o">=</span><span class="default_value">'FITS'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#DSPSData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.Data.DSPSData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>DSPSData is designed to handle the aggregation of a bunch of files that belong to multiple DSPS Repeat numbers
+of VBI. This class reads all files in a directory and populates a dictionary that maps DSPS number to a list of
+filenames. It can then create and return instances of ObservationData based on this dictionary. In this way the
+entire directory only needs to be read once, which saves a lot of time.</p>
+<p>Initialize a few parameters and read the directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>data_dir</strong><span class="classifier">str</span></dt><dd><p>Path to directory in which to look for data</p>
+</dd>
+<dt><strong>target</strong><span class="classifier">str</span></dt><dd><p>The VBI target to look for</p>
+</dd>
+<dt><strong>suffix</strong><span class="classifier">str</span></dt><dd><p>Optional file mask. The full mask is DATA_DIR/*SUFFIX.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <p class="rubric">Attributes Summary</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -190,16 +196,75 @@ following:</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#VBI_Pipeline.Data.ObservationData.task_dict" title="VBI_Pipeline.Data.ObservationData.task_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">task_dict</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#VBI_Pipeline.Data.DSPSData.num_dsps" title="VBI_Pipeline.Data.DSPSData.num_dsps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">num_dsps</span></code></a></p></td>
 <td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#VBI_Pipeline.Data.DSPSData.get_dsps_data" title="VBI_Pipeline.Data.DSPSData.get_dsps_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_dsps_data</span></code></a>(dsps_num)</p></td>
+<td><p>Initialize an ObservationData object and populate its HDUlist with the files corresponding to the specified DSPS Repeat number</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#VBI_Pipeline.Data.DSPSData.read_directory" title="VBI_Pipeline.Data.DSPSData.read_directory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_directory</span></code></a>(data_dir, target[, suffix])</p></td>
+<td><p>Read all files in a directory and populate a dictionary mapping DSPS repeat number to filename</p></td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Attributes Documentation</p>
 <dl class="py attribute">
-<dt id="VBI_Pipeline.Data.ObservationData.task_dict">
-<code class="sig-name descname">task_dict</code><em class="property"> = {'InstrumentProgramTask': 'Observation'}</em><a class="headerlink" href="#VBI_Pipeline.Data.ObservationData.task_dict" title="Permalink to this definition">¶</a></dt>
+<dt id="VBI_Pipeline.Data.DSPSData.num_dsps">
+<code class="sig-name descname">num_dsps</code><a class="headerlink" href="#VBI_Pipeline.Data.DSPSData.num_dsps" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<p class="rubric">Methods Documentation</p>
+<dl class="py method">
+<dt id="VBI_Pipeline.Data.DSPSData.get_dsps_data">
+<code class="sig-name descname">get_dsps_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dsps_num</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#DSPSData.get_dsps_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.Data.DSPSData.get_dsps_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize an ObservationData object and populate its HDUlist with the files corresponding to the specified
+DSPS Repeat number</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>dsps_num</strong><span class="classifier">int</span></dt><dd><p>The DSPS repeat number to use</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>ObservationData</dt><dd><p>The object containing all the data for the specified spatial step</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="VBI_Pipeline.Data.DSPSData.read_directory">
+<code class="sig-name descname">read_directory</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_dir</span></em>, <em class="sig-param"><span class="n">target</span></em>, <em class="sig-param"><span class="n">suffix</span><span class="o">=</span><span class="default_value">'FITS'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#DSPSData.read_directory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.Data.DSPSData.read_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read all files in a directory and populate a dictionary mapping DSPS repeat number to filename</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>data_dir</strong><span class="classifier">str</span></dt><dd><p>Path to directory in which to look for data</p>
+</dd>
+<dt><strong>target</strong><span class="classifier">str</span></dt><dd><blockquote>
+<div><p>The VBI target to look for</p>
+</div></blockquote>
+<dl class="simple">
+<dt>suffix<span class="classifier">str</span></dt><dd><p>Optional file mask. The full mask is DATA_DIR/*SUFFIX.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 

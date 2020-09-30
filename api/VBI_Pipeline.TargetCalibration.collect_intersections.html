@@ -1,10 +1,11 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>collect_intersections &#8212; VBI_Pipeline v0.9.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>collect_intersections &#8212; VBI_Pipeline v0.10.0</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -24,9 +25,9 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-1.12.4.min.js "></script>
 <script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
 <script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
@@ -173,9 +174,9 @@
       
   <div class="section" id="collect-intersections">
 <h1>collect_intersections<a class="headerlink" href="#collect-intersections" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
+<dl class="py function">
 <dt id="VBI_Pipeline.TargetCalibration.collect_intersections">
-<code class="sig-prename descclassname">VBI_Pipeline.TargetCalibration.</code><code class="sig-name descname">collect_intersections</code><span class="sig-paren">(</span><em class="sig-param">gridData</em>, <em class="sig-param">rho_min_dist</em>, <em class="sig-param">gauss_sigma=30.0</em>, <em class="sig-param">rho_smooth=10</em>, <em class="sig-param">binary_threshold=0.1</em>, <em class="sig-param">sigclip=3</em>, <em class="sig-param">debug=False</em>, <em class="sig-param">**analyze_args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/TargetCalibration.html#collect_intersections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.TargetCalibration.collect_intersections" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">VBI_Pipeline.TargetCalibration.</code><code class="sig-name descname">collect_intersections</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">gridData</span></em>, <em class="sig-param"><span class="n">rho_min_dist</span></em>, <em class="sig-param"><span class="n">gauss_sigma</span><span class="o">=</span><span class="default_value">30.0</span></em>, <em class="sig-param"><span class="n">rho_smooth</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">binary_threshold</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">sigclip</span><span class="o">=</span><span class="default_value">3</span></em>, <em class="sig-param"><span class="n">debug</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">analyze_args</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/TargetCalibration.html#collect_intersections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.TargetCalibration.collect_intersections" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a list grid intersection points for each hdu in the input data.</p>
 <p>The general algorithm for each hdu is:</p>
 <blockquote>
@@ -240,10 +241,10 @@ N) containing the (x,y) coordinates for the N intersections found in that hdu.</
     </div>
    
     <div class="right-footer">
-      Last updated on 24 Mar 2020.
+      Last updated on 30 Sep 2020.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1
     </div>
   </div>
 </footer>

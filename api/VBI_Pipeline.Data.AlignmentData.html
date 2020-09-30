@@ -1,10 +1,11 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>AlignmentData &#8212; VBI_Pipeline v0.9.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AlignmentData &#8212; VBI_Pipeline v0.10.0</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -18,15 +19,15 @@
     <link rel="shortcut icon" href="../_static/favico.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="DarkData" href="VBI_Pipeline.Data.DarkData.html" />
+    <link rel="next" title="DSPSData" href="VBI_Pipeline.Data.DSPSData.html" />
     <link rel="prev" title="make_binary_gauss" href="VBI_Pipeline.TargetCalibration.make_binary_gauss.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-1.12.4.min.js "></script>
 <script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
 <script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
@@ -89,7 +90,7 @@
     </a>
   </li>
   <li>
-    <a href="VBI_Pipeline.Data.DarkData.html" title="Next Chapter: DarkData"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">DarkData &raquo;</span>
+    <a href="VBI_Pipeline.Data.DSPSData.html" title="Next Chapter: DSPSData"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">DSPSData &raquo;</span>
     </a>
   </li>
               
@@ -145,6 +146,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../API.html#module-VBI_Pipeline.Data">VBI_Pipeline.Data Module</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="../API.html#classes">Classes</a><ul class="current">
 <li class="toctree-l4 current"><a class="current reference internal" href="#">AlignmentData</a></li>
+<li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.Data.DSPSData.html">DSPSData</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.Data.DarkData.html">DarkData</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.Data.FitsData.html">FitsData</a></li>
 <li class="toctree-l4"><a class="reference internal" href="VBI_Pipeline.Data.GainData.html">GainData</a></li>
@@ -166,13 +168,20 @@
       
   <div class="section" id="alignmentdata">
 <h1>AlignmentData<a class="headerlink" href="#alignmentdata" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
+<dl class="py class">
 <dt id="VBI_Pipeline.Data.AlignmentData">
-<em class="property">class </em><code class="sig-prename descclassname">VBI_Pipeline.Data.</code><code class="sig-name descname">AlignmentData</code><span class="sig-paren">(</span><em class="sig-param">data_dir=None</em>, <em class="sig-param">dataset_ID=''</em>, <em class="sig-param">suffix='.fits'</em><span class="sig-paren">)</span><a class="headerlink" href="#VBI_Pipeline.Data.AlignmentData" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">VBI_Pipeline.Data.</code><code class="sig-name descname">AlignmentData</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_dir</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dataset_ID</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">suffix</span><span class="o">=</span><span class="default_value">'FITS'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#VBI_Pipeline.Data.AlignmentData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">VBI_Pipeline.Data._TaskData</span></code></p>
-<p>AlignmentData is an extension of <code class="xref py py-obj docutils literal notranslate"><span class="pre">FitData</span></code> designed to only hold data from the Alignment InstrumentProgramTask
-(DKIST004). It inherits all of the functionality of <a class="reference internal" href="VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData" title="VBI_Pipeline.Data.FitsData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FitsData</span></code></a> and defines an extra method that loads
-data from a directory, provided it’s DKIST004 value is ‘Alignment’.</p>
+<p>AlignmentData is an extension of <code class="xref py py-obj docutils literal notranslate"><span class="pre">FitData</span></code> designed to only hold data associated with Alignment. It inherits all of 
+the functionality of <a class="reference internal" href="VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData" title="VBI_Pipeline.Data.FitsData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FitsData</span></code></a> and defines an extra method that loads all data from a directory who’s headers match the 
+following:</p>
+<blockquote>
+<div><blockquote>
+<div><p>Key  Value
+—  —–</p>
+</div></blockquote>
+<p>DKIST004  Alignment</p>
+</div></blockquote>
 <p>Initialize the empty object and maybe load some data.</p>
 <p class="rubric">Attributes Summary</p>
 <table class="longtable docutils align-default">
@@ -181,15 +190,15 @@ data from a directory, provided it’s DKIST004 value is ‘Alignment’.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#VBI_Pipeline.Data.AlignmentData.task" title="VBI_Pipeline.Data.AlignmentData.task"><code class="xref py py-obj docutils literal notranslate"><span class="pre">task</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#VBI_Pipeline.Data.AlignmentData.task_dict" title="VBI_Pipeline.Data.AlignmentData.task_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">task_dict</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Attributes Documentation</p>
-<dl class="attribute">
-<dt id="VBI_Pipeline.Data.AlignmentData.task">
-<code class="sig-name descname">task</code><em class="property"> = 'Alignment'</em><a class="headerlink" href="#VBI_Pipeline.Data.AlignmentData.task" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt id="VBI_Pipeline.Data.AlignmentData.task_dict">
+<code class="sig-name descname">task_dict</code><em class="property"> = {'InstrumentProgramTask': 'Alignment'}</em><a class="headerlink" href="#VBI_Pipeline.Data.AlignmentData.task_dict" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -209,10 +218,10 @@ data from a directory, provided it’s DKIST004 value is ‘Alignment’.</p>
     </div>
    
     <div class="right-footer">
-      Last updated on 24 Mar 2020.
+      Last updated on 30 Sep 2020.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1
     </div>
   </div>
 </footer>

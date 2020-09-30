@@ -1,10 +1,11 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>VBI_Pipeline.Data &#8212; VBI_Pipeline v0.9.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VBI_Pipeline.Data &#8212; VBI_Pipeline v0.10.0</title>
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
@@ -22,9 +23,9 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../_static/js/jquery-1.12.4.min.js "></script>
 <script type="text/javascript" src="../../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
 <script type="text/javascript" src="../../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
@@ -139,9 +140,9 @@
 <span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span> <span class="k">as</span> <span class="n">pyfits</span>
+<span class="kn">from</span> <span class="nn">VBI_Pipeline</span> <span class="kn">import</span> <span class="n">generic</span>
 <span class="kn">from</span> <span class="nn">VBI_Pipeline.tag</span> <span class="kn">import</span> <span class="n">tag</span>
-<span class="kn">from</span> <span class="nn">VBI_Pipeline.data</span> <span class="kn">import</span> <span class="n">S122</span>
-<span class="kn">from</span> <span class="nn">VBI_Pipeline.data.string_matches</span> <span class="kn">import</span> <span class="n">IP_TASK_STRINGS</span>
+<span class="kn">from</span> <span class="nn">VBI_Pipeline.data</span> <span class="kn">import</span> <span class="n">S122</span><span class="p">,</span> <span class="n">TASK_DATA_DICTS</span><span class="p">,</span> <span class="n">CONSTANTS</span>
 
 <div class="viewcode-block" id="FitsData"><a class="viewcode-back" href="../../api/VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData">[docs]</a><span class="k">class</span> <span class="nc">FitsData</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;FitsData is a basically a wrapper for astropy.io.fits, with some extra methods and properties to aid the</span>
@@ -205,6 +206,25 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">hdulist</span> <span class="o">=</span> <span class="n">pyfits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fitsfile</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ref_file</span> <span class="o">=</span> <span class="n">fitsfile</span></div>
 
+<div class="viewcode-block" id="FitsData.load_from_filelist"><a class="viewcode-back" href="../../api/VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData.load_from_filelist">[docs]</a>    <span class="k">def</span> <span class="nf">load_from_filelist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Load files from a list of file names</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        file_list : lst</span>
+<span class="sd">            A list of paths to files to load</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">hdulist</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">:</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="n">pyfits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+            <span class="n">hdulist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">hdulist</span> <span class="o">=</span> <span class="n">pyfits</span><span class="o">.</span><span class="n">HDUList</span><span class="p">([</span><span class="n">pyfits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">copy</span><span class="p">())]</span> <span class="o">+</span> <span class="n">hdulist</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="s1">&#39;a list of files&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_list</span> <span class="o">=</span> <span class="n">file_list</span></div>
+
 <div class="viewcode-block" id="FitsData.init_with_ndarray"><a class="viewcode-back" href="../../api/VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData.init_with_ndarray">[docs]</a>    <span class="k">def</span> <span class="nf">init_with_ndarray</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span> <span class="n">outputfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Load data from a numpy.ndarray and construct an astropy.io.fits HDU list</span>
 
@@ -243,7 +263,7 @@
 
         <span class="c1"># Now write to a file so we don&#39;t keep everything in memory</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">outputfile</span><span class="p">:</span>
-            <span class="n">outputfile</span> <span class="o">=</span> <span class="s1">&#39;tmp</span><span class="si">{}</span><span class="s1">.fits&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)))</span>
+            <span class="n">outputfile</span> <span class="o">=</span> <span class="s1">&#39;tmp</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)),</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="s1">&#39;common&#39;</span><span class="p">][</span><span class="s1">&#39;suffix&#39;</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">is_tmp</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="n">pyfits</span><span class="o">.</span><span class="n">HDUList</span><span class="p">(</span><span class="n">hdulist</span><span class="p">)</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="n">outputfile</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">)</span>
@@ -417,7 +437,7 @@
             <span class="n">d</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">nomem</span><span class="p">:</span>
-            <span class="n">newfile</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_flt32.fits&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ref_file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.fits&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">newfile</span> <span class="o">=</span> <span class="n">generic</span><span class="o">.</span><span class="n">ensure_fits</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_flt32.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">generic</span><span class="o">.</span><span class="n">strip_fits</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ref_file</span><span class="p">),</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="s1">&#39;common&#39;</span><span class="p">][</span><span class="s1">&#39;suffix&#39;</span><span class="p">]))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">write_out</span><span class="p">(</span><span class="n">newfile</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">overwrite</span><span class="p">)</span>
 
             <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">:</span>
@@ -432,7 +452,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_tmp</span><span class="p">:</span>
             <span class="n">outputfile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ref_file</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">outputfile</span> <span class="o">=</span> <span class="s1">&#39;tmp</span><span class="si">{}</span><span class="s1">.fits&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)))</span>
+            <span class="n">outputfile</span> <span class="o">=</span> <span class="s1">&#39;tmp</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)),</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="s1">&#39;common&#39;</span><span class="p">][</span><span class="s1">&#39;suffix&#39;</span><span class="p">])</span>
 
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Flushing </span><span class="si">{}</span><span class="s1"> to </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="bp">self</span><span class="p">,</span> <span class="n">outputfile</span><span class="p">))</span>
 
@@ -505,12 +525,13 @@
 <span class="sd">    behaves exactly like `FitsData`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dataset_ID</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.fits&#39;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dataset_ID</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;FITS&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initialize the empty object and maybe load some data.&quot;&quot;&quot;</span>
 
         <span class="n">FitsData</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">ref_dir</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset_ID</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">file_list</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="n">data_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">load_from_dir</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">dataset_ID</span><span class="o">=</span><span class="n">dataset_ID</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="n">suffix</span><span class="p">)</span>
@@ -518,7 +539,7 @@
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> loaded from </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ref_dir</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">load_from_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.fits&#39;</span><span class="p">,</span> <span class="n">dataset_ID</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">load_from_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;FITS&#39;</span><span class="p">,</span> <span class="n">dataset_ID</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Load DHS-style data from a directory.</span>
 
 <span class="sd">        It is assumed that all relevant files in the directory have SPEC-0122 headers and a single HDU. In other words,</span>
@@ -531,18 +552,19 @@
 <span class="sd">            Path to the directory containing data to load</span>
 
 <span class="sd">        suffix : str</span>
-<span class="sd">            Optional file mask. The full mask is DATA_DIR/*SUFFIX. Defaults to &quot;.fits&quot;</span>
+<span class="sd">            Optional file mask. The full mask is DATA_DIR/*SUFFIX.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">file_list</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/*</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="p">))</span>
         <span class="n">hdulist</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">:</span>
-            <span class="n">h</span> <span class="o">=</span> <span class="n">pyfits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">f</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">h</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="n">S122</span><span class="p">[</span><span class="s1">&#39;InstrumentProgramTask&#39;</span><span class="p">]]</span> <span class="ow">in</span> <span class="n">IP_TASK_STRINGS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="p">]</span> <span class="ow">and</span> \
-                    <span class="p">(</span><span class="n">dataset_ID</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span> <span class="ow">or</span> <span class="n">h</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="n">S122</span><span class="p">[</span><span class="s1">&#39;DataSetParametersID&#39;</span><span class="p">]]</span> <span class="o">==</span> <span class="n">dataset_ID</span><span class="p">):</span>
-                <span class="n">hdulist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="n">pyfits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">([</span><span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="n">S122</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_dict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()])</span> <span class="ow">and</span> \
+                    <span class="p">(</span><span class="n">dataset_ID</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span> <span class="ow">or</span> <span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="n">S122</span><span class="p">[</span><span class="s1">&#39;DataSetParametersID&#39;</span><span class="p">]]</span> <span class="o">==</span> <span class="n">dataset_ID</span><span class="p">):</span>
+                <span class="n">hdulist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">file_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
+            <span class="k">del</span> <span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">del</span> <span class="n">h</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">hdulist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -550,28 +572,115 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">hdulist</span> <span class="o">=</span> <span class="n">hdulist</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ref_dir</span> <span class="o">=</span> <span class="n">data_dir</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Did not find any </span><span class="si">{}</span><span class="s1"> images with </span><span class="si">{}</span><span class="s1">/*</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">task</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Did not find any </span><span class="si">{}</span><span class="s1"> images with </span><span class="si">{}</span><span class="s1">/*</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                                                                                        <span class="n">data_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="p">))</span>
 
 
 <span class="c1">############################</span>
 <span class="c1"># Here we define a separate _TaskData class for each type of InstrumentProgramTask (DKIST004) we&#39;ll need. Any additions</span>
 <span class="c1"># can simply be added to this list.</span>
-<span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Dark&#39;</span><span class="p">,</span> <span class="s1">&#39;Gain&#39;</span><span class="p">,</span> <span class="s1">&#39;Alignment&#39;</span><span class="p">,</span> <span class="s1">&#39;Observation&#39;</span><span class="p">]:</span>
-    <span class="n">new_class_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">Data&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
-    <span class="n">docstring</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="si">{0}</span><span class="s2"> is an extension of `FitData` designed to only hold data from the </span><span class="si">{1}</span><span class="s2"> InstrumentProgramTask</span>
-<span class="s2">                (</span><span class="si">{2}</span><span class="s2">). It inherits all of the functionality of `FitsData` and defines an extra method that loads</span>
-<span class="s2">                data from a directory, provided it&#39;s </span><span class="si">{2}</span><span class="s2"> value is &#39;</span><span class="si">{1}</span><span class="s2">&#39;.&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_class_name</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span>
-                                                                                  <span class="n">S122</span><span class="p">[</span><span class="s1">&#39;InstrumentProgramTask&#39;</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">TASK_DATA_DICTS</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="n">new_class_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">Data&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">docstring</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="si">{0}</span><span class="s2"> is an extension of `FitData` designed to only hold data associated with </span><span class="si">{1}</span><span class="s2">. It inherits all of </span>
+<span class="s2">the functionality of `FitsData` and defines an extra method that loads all data from a directory who&#39;s headers match the </span>
+<span class="s2">following:</span><span class="se">\n</span><span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_class_name</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="n">docstring</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="si">{:&gt;10}</span><span class="s1">  </span><span class="si">{}</span><span class="se">\n\t</span><span class="si">{:&gt;10}</span><span class="s1">  </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;Key&#39;</span><span class="p">,</span> <span class="s1">&#39;Value&#39;</span><span class="p">,</span> <span class="s1">&#39;---&#39;</span><span class="p">,</span> <span class="s1">&#39;-----&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">TASK_DATA_DICTS</span><span class="p">[</span><span class="n">name</span><span class="p">]:</span>
+        <span class="n">docstring</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="si">{:&gt;10}</span><span class="s1">  </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">S122</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">TASK_DATA_DICTS</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="n">k</span><span class="p">])</span>
 
     <span class="c1"># This is some deep python-fu. type() is a metaclass that creates classes based on a BaseClass and dictionary of</span>
     <span class="c1"># attributes</span>
-    <span class="n">new_class</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">new_class_name</span><span class="p">,</span> <span class="p">(</span><span class="n">_TaskData</span><span class="p">,),</span> <span class="p">{</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="n">task</span><span class="p">,</span> <span class="s1">&#39;__doc__&#39;</span><span class="p">:</span> <span class="n">docstring</span><span class="p">})</span>
+    <span class="n">new_class</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">new_class_name</span><span class="p">,</span> <span class="p">(</span><span class="n">_TaskData</span><span class="p">,),</span> <span class="p">{</span><span class="s1">&#39;task_dict&#39;</span><span class="p">:</span> <span class="n">TASK_DATA_DICTS</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="s1">&#39;__doc__&#39;</span><span class="p">:</span> <span class="n">docstring</span><span class="p">})</span>
 
     <span class="c1"># Then we set the new class as one of this module&#39;s attributes</span>
     <span class="nb">setattr</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="vm">__name__</span><span class="p">],</span> <span class="n">new_class_name</span><span class="p">,</span> <span class="n">new_class</span><span class="p">)</span>
 
 <span class="c1"># And finally, clean up our mess</span>
 <span class="k">del</span> <span class="n">new_class</span><span class="p">,</span> <span class="n">new_class_name</span><span class="p">,</span> <span class="n">docstring</span>
+
+
+<div class="viewcode-block" id="DSPSData"><a class="viewcode-back" href="../../api/VBI_Pipeline.Data.DSPSData.html#VBI_Pipeline.Data.DSPSData">[docs]</a><span class="k">class</span> <span class="nc">DSPSData</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;DSPSData is designed to handle the aggregation of a bunch of files that belong to multiple DSPS Repeat numbers</span>
+<span class="sd">    of VBI. This class reads all files in a directory and populates a dictionary that maps DSPS number to a list of</span>
+<span class="sd">    filenames. It can then create and return instances of ObservationData based on this dictionary. In this way the</span>
+<span class="sd">    entire directory only needs to be read once, which saves a lot of time.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;FITS&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize a few parameters and read the directory.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data_dir : str</span>
+<span class="sd">            Path to directory in which to look for data</span>
+
+<span class="sd">        target : str</span>
+<span class="sd">            The VBI target to look for</span>
+
+<span class="sd">        suffix : str</span>
+<span class="sd">            Optional file mask. The full mask is DATA_DIR/\*SUFFIX.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dsps_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span> <span class="o">=</span> <span class="n">data_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">read_directory</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="n">suffix</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;DSPSData from dir </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">num_dsps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dsps_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<div class="viewcode-block" id="DSPSData.read_directory"><a class="viewcode-back" href="../../api/VBI_Pipeline.Data.DSPSData.html#VBI_Pipeline.Data.DSPSData.read_directory">[docs]</a>    <span class="k">def</span> <span class="nf">read_directory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;FITS&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read all files in a directory and populate a dictionary mapping DSPS repeat number to filename</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data_dir : str</span>
+<span class="sd">            Path to directory in which to look for data</span>
+
+<span class="sd">       target : str</span>
+<span class="sd">            The VBI target to look for</span>
+
+<span class="sd">        suffix : str</span>
+<span class="sd">            Optional file mask. The full mask is DATA_DIR/\*SUFFIX.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">file_list</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/*</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">:</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="n">pyfits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="n">S122</span><span class="p">[</span><span class="s1">&#39;InstrumentProgramTask&#39;</span><span class="p">]]</span> <span class="o">==</span> <span class="s1">&#39;Observation&#39;</span> \
+                    <span class="ow">and</span> <span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="n">S122</span><span class="p">[</span><span class="s1">&#39;DataSetParametersID&#39;</span><span class="p">]]</span> <span class="o">==</span> <span class="n">target</span><span class="p">:</span>
+                <span class="n">dsps_num</span> <span class="o">=</span> <span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="n">S122</span><span class="p">[</span><span class="s1">&#39;DSPSRepeatNumber&#39;</span><span class="p">]]</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dsps_dict</span><span class="p">[</span><span class="n">dsps_num</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dsps_dict</span><span class="p">[</span><span class="n">dsps_num</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="p">]</span>
+
+            <span class="n">h</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">del</span> <span class="n">h</span></div>
+
+<div class="viewcode-block" id="DSPSData.get_dsps_data"><a class="viewcode-back" href="../../api/VBI_Pipeline.Data.DSPSData.html#VBI_Pipeline.Data.DSPSData.get_dsps_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_dsps_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dsps_num</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize an ObservationData object and populate its HDUlist with the files corresponding to the specified</span>
+<span class="sd">        DSPS Repeat number</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dsps_num : int</span>
+<span class="sd">            The DSPS repeat number to use</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ObservationData</span>
+<span class="sd">            The object containing all the data for the specified spatial step</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">dsps_num</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dsps_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> cannot find dsps repeat number </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dsps_num</span><span class="p">))</span>
+        <span class="n">OD</span> <span class="o">=</span> <span class="n">ObservationData</span><span class="p">()</span>
+        <span class="n">OD</span><span class="o">.</span><span class="n">load_from_filelist</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dsps_dict</span><span class="p">[</span><span class="n">dsps_num</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">OD</span></div></div>
 </pre></div>
 
     </div>
@@ -586,10 +695,10 @@
     </div>
    
     <div class="right-footer">
-      Last updated on 24 Mar 2020.
+      Last updated on 30 Sep 2020.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1
     </div>
   </div>
 </footer>

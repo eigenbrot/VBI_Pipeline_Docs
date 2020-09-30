@@ -1,10 +1,11 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>validate_dark_calibration &#8212; VBI_Pipeline v0.9.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>validate_dark_calibration &#8212; VBI_Pipeline v0.10.0</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -24,9 +25,9 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-1.12.4.min.js "></script>
 <script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
 <script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
@@ -166,9 +167,9 @@
       
   <div class="section" id="validate-dark-calibration">
 <h1>validate_dark_calibration<a class="headerlink" href="#validate-dark-calibration" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
+<dl class="py function">
 <dt id="VBI_Pipeline.DarkCalibration.validate_dark_calibration">
-<code class="sig-prename descclassname">VBI_Pipeline.DarkCalibration.</code><code class="sig-name descname">validate_dark_calibration</code><span class="sig-paren">(</span><em class="sig-param">avgData</em>, <em class="sig-param">low_acceptance_threshold</em>, <em class="sig-param">high_acceptance_threshold</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/DarkCalibration.html#validate_dark_calibration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.DarkCalibration.validate_dark_calibration" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">VBI_Pipeline.DarkCalibration.</code><code class="sig-name descname">validate_dark_calibration</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">avgData</span></em>, <em class="sig-param"><span class="n">low_acceptance_threshold</span></em>, <em class="sig-param"><span class="n">high_acceptance_threshold</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/DarkCalibration.html#validate_dark_calibration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.DarkCalibration.validate_dark_calibration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Verify that the dark frame for each camera has an acceptable number of pixels that deviate significantly from the
 mean.</p>
 <p>“Good” pixels are defined as those that are within 1 standard deviation of the mean. If the fractional number of
@@ -203,10 +204,10 @@ the corresponding frame is considered bad.</p>
     </div>
    
     <div class="right-footer">
-      Last updated on 24 Mar 2020.
+      Last updated on 30 Sep 2020.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1
     </div>
   </div>
 </footer>

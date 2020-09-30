@@ -1,10 +1,11 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>Instrument Partner Testing Access &#8212; VBI_Pipeline v0.9.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Instrument Partner Testing Access &#8212; VBI_Pipeline v0.10.0</title>
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
@@ -24,9 +25,9 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="_static/js/jquery-1.12.4.min.js "></script>
 <script type="text/javascript" src="_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
 <script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
 
   </head><body>
@@ -89,6 +90,11 @@
 <li><a class="reference internal" href="#target-calibration">Target Calibration</a><ul>
 <li><a class="reference internal" href="#id3">Usage</a></li>
 <li><a class="reference internal" href="#id4">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#science-calibration">Science Calibration</a><ul>
+<li><a class="reference internal" href="#id5">Usage</a></li>
+<li><a class="reference internal" href="#id6">Example</a></li>
 </ul>
 </li>
 </ul>
@@ -168,6 +174,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#id4">Example</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#science-calibration">Science Calibration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Example</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="API.html">Reference/API</a></li>
@@ -212,7 +223,7 @@ set by the user the optional parameters fall back on the package defaults (the s
 </div>
 <div class="section" id="example">
 <h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> vbi_dark ../input_data DC.fits
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> vbi_dark ../input_data DC.FITS
 </pre></div>
 </div>
 </div>
@@ -246,7 +257,7 @@ set by the user the optional parameters fall back on the package defaults (the s
 </div>
 <div class="section" id="id2">
 <h3>Example<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> vbi_gain ../input_data GC.fits -D DC.fits
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> vbi_gain ../input_data GC.FITS -D DC.FITS
 </pre></div>
 </div>
 </div>
@@ -317,7 +328,43 @@ a successful TargetCal run.</p>
 </div>
 <div class="section" id="id4">
 <h3>Example<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> vbi_target ../input_data TC.fits -D DC.fits -G GC.fits
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> vbi_target ../input_data TC.FITS -D DC.FITS -G GC.FITS
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="science-calibration">
+<h2>Science Calibration<a class="headerlink" href="#science-calibration" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h3>Usage<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: vbi_science [-h] [-f] [-a] [-D DARK_CAL] [-G GAIN_CAL] [-T TARGET_CAL] [-S SUFFIX] [-I DATASET_ID] data_dir output</span>
+
+<span class="go">Run the VBI Pipeline&#39;s Science Calibration module. This is a direct hook into ScienceCalibration.main()and all kwargs are exposed as command line options</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  data_dir              Directory containing raw observation images</span>
+<span class="go">  output                Location to save Science Calibration FITS object</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -f, --force           Overwrite output</span>
+<span class="go">  -a, --average         Average all exposures from the same spatial positions together</span>
+<span class="go">  -D DARK_CAL, --dark-cal DARK_CAL</span>
+<span class="go">                        Location of Dark Calibration object FITS file. If none is provided then no dark correction will be done.</span>
+<span class="go">  -G GAIN_CAL, --gain-cal GAIN_CAL</span>
+<span class="go">                        Location of Gain Calibration object FITS file. If none is provided then no gain correction will be done.</span>
+<span class="go">  -T TARGET_CAL, --target-cal TARGET_CAL</span>
+<span class="go">                        Location of Target Calibration object FITS file. If none is provided then no target calibration will be done.</span>
+<span class="go">  -S SUFFIX, --suffix SUFFIX</span>
+<span class="go">                        Only load files with this extension. Default is &quot;FITS&quot;</span>
+<span class="go">  -I DATASET_ID, --dataset-ID DATASET_ID</span>
+<span class="go">                        Only reduce observation data that have ID___003 equal to dataset-ID. If blank, reduce all data found.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>Example<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> vbi_science ../input_data Sci -D DC.FITS -G GC.FITS -T TC.FITS -I <span class="s1">&#39;sunspot 1&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -337,10 +384,10 @@ a successful TargetCal run.</p>
     </div>
    
     <div class="right-footer">
-      Last updated on 24 Mar 2020.
+      Last updated on 30 Sep 2020.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1
     </div>
   </div>
 </footer>

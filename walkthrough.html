@@ -1,10 +1,11 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>Data Reduction Walkthrough &#8212; VBI_Pipeline v0.9.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Reduction Walkthrough &#8212; VBI_Pipeline v0.10.0</title>
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
@@ -24,9 +25,9 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="_static/js/jquery-1.12.4.min.js "></script>
 <script type="text/javascript" src="_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
 <script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
 
   </head><body>
@@ -175,7 +176,7 @@ data. To do so we’ll need two sets of data; some images of the Sun from the DS
 You can download the <a class="reference external" href="https://drive.google.com/file/d/109KcM3BMI-lXHHlgcqBt6Cz6TA-5t1Rp/view?usp=sharing">DST data here</a>
 and the <a class="reference external" href="https://drive.google.com/file/d/1ItlFUZ_JS58N9jecXdVG6dZXT6ibS2ON/view?usp=sharing">GOS images here</a>. Once
 you’ve extracted those tarballs use the following command to generate a fake data set:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> vbi_fake_data DST_data GOS_grids raw
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> vbi_fake_data DST_data GOS_grids raw -S <span class="s1">&#39;GOS target&#39;</span> <span class="s1">&#39;sunspot 1&#39;</span>
 <span class="go">...</span>
 <span class="gp">$</span> ls -1 raw
 <span class="go">VBI-RED_20180511T142400.000000_0.fits</span>
@@ -210,9 +211,9 @@ files.</p>
 <span class="na">data_set_id</span> <span class="o">=</span> <span class="s">all</span>
 <span class="na">output</span> <span class="o">=</span> <span class="s">Sci</span>
 <span class="c1">; the following 3 options point to where these objects will be saved. they don&#39;t need to exist</span>
-<span class="na">dark_cal</span> <span class="o">=</span> <span class="s">DarkCal.fits</span>
-<span class="na">gain_cal</span> <span class="o">=</span> <span class="s">GainCal.fits</span>
-<span class="na">target_cal</span> <span class="o">=</span> <span class="s">TargetCal.fits</span>
+<span class="na">dark_cal</span> <span class="o">=</span> <span class="s">DarkCal</span>
+<span class="na">gain_cal</span> <span class="o">=</span> <span class="s">GainCal</span>
+<span class="na">target_cal</span> <span class="o">=</span> <span class="s">TargetCal</span>
 <span class="c1">; if flush is true memory usage will be very conservative at the expense of more disk usage</span>
 <span class="na">flush</span> <span class="o">=</span> <span class="s">False</span>
 
@@ -236,7 +237,7 @@ files.</p>
 <p>Depending on which camera you’re using this might take between 3 and 8 minutes. The VBI Pipeline produces a lot of
 status messages and it is usually a good idea to save these somewhere so you can see exactly what was done to the data
 at a later time (and find any error messages). To do this I usually run the pipeline as</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span><span class="nv">PYTHONUNBUFFERED</span><span class="o">=</span>yes vbi_pipeline config.ini <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> tee spool.txt
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span><span class="nv">PYTHONUNBUFFERED</span><span class="o">=</span>yes vbi_pipeline config.ini <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> tee -i spool.txt
 </pre></div>
 </div>
 <p>The <code class="xref py py-obj docutils literal notranslate"><span class="pre">PYTHONUNBUFFERED=yes</span></code> is there because on most systems simply piping the python output will cause your terminal
@@ -247,22 +248,22 @@ at a later time (and find any error messages). To do this I usually run the pipe
 <p>If your config file looks like the one above then your reduction directory will now look like this</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> ls -1
 <span class="go">config.ini</span>
-<span class="go">DarkCal.fits</span>
-<span class="go">GainCal.fits</span>
+<span class="go">DarkCal.FITS</span>
+<span class="go">GainCal.FITS</span>
 <span class="go">grid_proc.fits</span>
-<span class="go">Sci_GOStarget.fits</span>
-<span class="go">Sci_sunspot1.fits</span>
-<span class="go">TargetCal.fits</span>
+<span class="go">Sci_GOStarget.FITS</span>
+<span class="go">Sci_sunspot1.FITS</span>
+<span class="go">TargetCal.FITS</span>
 <span class="go">TargetCal_houghres.pkl</span>
 </pre></div>
 </div>
-<p>All of the <code class="docutils literal notranslate"><span class="pre">*Cal.fits</span></code> files are the intermediate data products used by the pipeline whose names are specified in the
+<p>All of the <code class="docutils literal notranslate"><span class="pre">*Cal.FITS</span></code> files are the intermediate data products used by the pipeline whose names are specified in the
 config file. <code class="docutils literal notranslate"><span class="pre">grid_proc.fits</span></code> and <code class="docutils literal notranslate"><span class="pre">TargetCal_houghres.pkl</span></code> are special intermediates to the Target Calibration
 module and exist to speed up future reduction runs (assuming the parameters stay the same).</p>
-<p>The processed data live in <code class="docutils literal notranslate"><span class="pre">Sci_*.fits</span></code>. These files each contain a single Primary HDU with no data and a set of Image
+<p>The processed data live in <code class="docutils literal notranslate"><span class="pre">Sci_*.FITS</span></code>. These files each contain a single Primary HDU with no data and a set of Image
 HDUs, one for each SysOutput of the input data. This format is suitable for further scientific analysis but if
 you just want to see what the full image looks like you can stitch together the entire VBI field with <code class="docutils literal notranslate"><span class="pre">vbi_stitch</span></code>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> vbi_stitch Sci_GOStarget.fits Sci_GOStarget_stitched.fits
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> vbi_stitch Sci_GOStarget.FITS Sci_GOStarget_stitched.FITS
 </pre></div>
 </div>
 <p>The stitching process first averages the data to produce a single frame for each camera position and then places all
@@ -286,10 +287,10 @@ to push different science objects through the same pipeline. All subsequent runs
     </div>
    
     <div class="right-footer">
-      Last updated on 24 Mar 2020.
+      Last updated on 30 Sep 2020.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1
     </div>
   </div>
 </footer>

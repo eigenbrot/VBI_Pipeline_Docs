@@ -1,10 +1,11 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>generate_target_calibration &#8212; VBI_Pipeline v0.9.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>generate_target_calibration &#8212; VBI_Pipeline v0.10.0</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -24,9 +25,9 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-1.12.4.min.js "></script>
 <script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
 <script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
@@ -173,9 +174,9 @@
       
   <div class="section" id="generate-target-calibration">
 <h1>generate_target_calibration<a class="headerlink" href="#generate-target-calibration" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
+<dl class="py function">
 <dt id="VBI_Pipeline.TargetCalibration.generate_target_calibration">
-<code class="sig-prename descclassname">VBI_Pipeline.TargetCalibration.</code><code class="sig-name descname">generate_target_calibration</code><span class="sig-paren">(</span><em class="sig-param">intsects</em>, <em class="sig-param">pos_list</em>, <em class="sig-param">refidx</em>, <em class="sig-param">dmax</em>, <em class="sig-param">header</em>, <em class="sig-param">output='Target_Calibration.fits'</em>, <em class="sig-param">bimode_choice=False</em>, <em class="sig-param">debug=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/TargetCalibration.html#generate_target_calibration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.TargetCalibration.generate_target_calibration" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">VBI_Pipeline.TargetCalibration.</code><code class="sig-name descname">generate_target_calibration</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">intsects</span></em>, <em class="sig-param"><span class="n">pos_list</span></em>, <em class="sig-param"><span class="n">refidx</span></em>, <em class="sig-param"><span class="n">dmax</span></em>, <em class="sig-param"><span class="n">header</span></em>, <em class="sig-param"><span class="n">output</span><span class="o">=</span><span class="default_value">'Target_Calibration.FITS'</span></em>, <em class="sig-param"><span class="n">bimode_choice</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">debug</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/TargetCalibration.html#generate_target_calibration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.TargetCalibration.generate_target_calibration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find overlapping intersections and use them to compute sub-pixel offsets between pairs of hdus.</p>
 <p>The resulting offsets are then saved separate HDUs of a Data.FitsData object.</p>
 <p>As of right now this algorithm is a little dumb; it only finds the offsets relative to a single, reference hdu.
@@ -231,10 +232,10 @@ the shifts circled in red.</p>
     </div>
    
     <div class="right-footer">
-      Last updated on 24 Mar 2020.
+      Last updated on 30 Sep 2020.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1
     </div>
   </div>
 </footer>

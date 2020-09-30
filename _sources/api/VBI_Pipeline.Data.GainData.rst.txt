@@ -10,8 +10,8 @@ GainData
 
    .. autosummary::
 
-      ~GainData.task
+      ~GainData.task_dict
 
    .. rubric:: Attributes Documentation
 
-   .. autoattribute:: task
+   .. autoattribute:: task_dict

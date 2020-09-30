@@ -39,7 +39,7 @@ Example
 
 .. code-block:: console
 
-  $ vbi_dark ../input_data DC.fits
+  $ vbi_dark ../input_data DC.FITS
 
 Gain Calibration
 ----------------
@@ -75,7 +75,7 @@ Example
 
 .. code-block:: console
 
-  $ vbi_gain ../input_data GC.fits -D DC.fits
+  $ vbi_gain ../input_data GC.FITS -D DC.FITS
 
 Target Calibration
 ------------------
@@ -147,5 +147,42 @@ Example
 
 .. code-block:: console
 
-  $ vbi_target ../input_data TC.fits -D DC.fits -G GC.fits
+  $ vbi_target ../input_data TC.FITS -D DC.FITS -G GC.FITS
 
+Science Calibration
+-------------------
+
+Usage
+*****
+
+.. code-block:: console
+
+  usage: vbi_science [-h] [-f] [-a] [-D DARK_CAL] [-G GAIN_CAL] [-T TARGET_CAL] [-S SUFFIX] [-I DATASET_ID] data_dir output
+
+  Run the VBI Pipeline's Science Calibration module. This is a direct hook into ScienceCalibration.main()and all kwargs are exposed as command line options
+
+  positional arguments:
+    data_dir              Directory containing raw observation images
+    output                Location to save Science Calibration FITS object
+
+  optional arguments:
+    -h, --help            show this help message and exit
+    -f, --force           Overwrite output
+    -a, --average         Average all exposures from the same spatial positions together
+    -D DARK_CAL, --dark-cal DARK_CAL
+                          Location of Dark Calibration object FITS file. If none is provided then no dark correction will be done.
+    -G GAIN_CAL, --gain-cal GAIN_CAL
+                          Location of Gain Calibration object FITS file. If none is provided then no gain correction will be done.
+    -T TARGET_CAL, --target-cal TARGET_CAL
+                          Location of Target Calibration object FITS file. If none is provided then no target calibration will be done.
+    -S SUFFIX, --suffix SUFFIX
+                          Only load files with this extension. Default is "FITS"
+    -I DATASET_ID, --dataset-ID DATASET_ID
+                          Only reduce observation data that have ID___003 equal to dataset-ID. If blank, reduce all data found.
+
+Example
+*******
+
+.. code-block:: console
+
+  $ vbi_science ../input_data Sci -D DC.FITS -G GC.FITS -T TC.FITS -I 'sunspot 1'

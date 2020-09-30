@@ -1,10 +1,11 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>Reference/API &#8212; VBI_Pipeline v0.9.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reference/API &#8212; VBI_Pipeline v0.10.0</title>
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
@@ -24,9 +25,9 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="_static/js/jquery-1.12.4.min.js "></script>
 <script type="text/javascript" src="_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
 <script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
 
   </head><body>
@@ -232,6 +233,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#module-VBI_Pipeline.Data">VBI_Pipeline.Data Module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#classes">Classes</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="api/VBI_Pipeline.Data.AlignmentData.html">AlignmentData</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/VBI_Pipeline.Data.DSPSData.html">DSPSData</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/VBI_Pipeline.Data.DarkData.html">DarkData</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/VBI_Pipeline.Data.FitsData.html">FitsData</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/VBI_Pipeline.Data.GainData.html">GainData</a></li>
@@ -247,8 +249,10 @@
 <li class="toctree-l4"><a class="reference internal" href="api/VBI_Pipeline.generic.bin_calibration.html">bin_calibration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/VBI_Pipeline.generic.conform_calibration.html">conform_calibration</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/VBI_Pipeline.generic.dark_correction.html">dark_correction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/VBI_Pipeline.generic.ensure_fits.html">ensure_fits</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/VBI_Pipeline.generic.extract_ROI.html">extract_ROI</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/VBI_Pipeline.generic.gain_correction.html">gain_correction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/VBI_Pipeline.generic.strip_fits.html">strip_fits</a></li>
 </ul>
 </li>
 </ul>
@@ -296,7 +300,7 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.VBIPipeline.main.html#VBI_Pipeline.VBIPipeline.main" title="VBI_Pipeline.VBIPipeline.main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">main</span></code></a>(config_file)</p></td>
 <td><p>Check for file existence and generate intermediate Calibration data as needed, then run the Science Calibration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.VBIPipeline.run_science.html#VBI_Pipeline.VBIPipeline.run_science" title="VBI_Pipeline.VBIPipeline.run_science"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_science</span></code></a>(config, sci_kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.VBIPipeline.run_science.html#VBI_Pipeline.VBIPipeline.run_science" title="VBI_Pipeline.VBIPipeline.run_science"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_science</span></code></a>(config, sci_kwargs, suffix)</p></td>
 <td><p>Determine if multiple targets are going to be reduced and then start the ScienceCalibration</p></td>
 </tr>
 </tbody>
@@ -442,19 +446,22 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.Data.AlignmentData.html#VBI_Pipeline.Data.AlignmentData" title="VBI_Pipeline.Data.AlignmentData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlignmentData</span></code></a>([data_dir, dataset_ID, suffix])</p></td>
-<td><p>AlignmentData is an extension of <code class="xref py py-obj docutils literal notranslate"><span class="pre">FitData</span></code> designed to only hold data from the Alignment InstrumentProgramTask (DKIST004).</p></td>
+<td><p>AlignmentData is an extension of <code class="xref py py-obj docutils literal notranslate"><span class="pre">FitData</span></code> designed to only hold data associated with Alignment. It inherits all of  the functionality of <a class="reference internal" href="api/VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData" title="VBI_Pipeline.Data.FitsData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FitsData</span></code></a> and defines an extra method that loads all data from a directory who’s headers match the  following:                Key  Value                —  —–           DKIST004  Alignment.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.Data.DarkData.html#VBI_Pipeline.Data.DarkData" title="VBI_Pipeline.Data.DarkData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DarkData</span></code></a>([data_dir, dataset_ID, suffix])</p></td>
-<td><p>DarkData is an extension of <code class="xref py py-obj docutils literal notranslate"><span class="pre">FitData</span></code> designed to only hold data from the Dark InstrumentProgramTask (DKIST004).</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.Data.DSPSData.html#VBI_Pipeline.Data.DSPSData" title="VBI_Pipeline.Data.DSPSData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSPSData</span></code></a>(data_dir, target[, suffix])</p></td>
+<td><p>DSPSData is designed to handle the aggregation of a bunch of files that belong to multiple DSPS Repeat numbers of VBI.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData" title="VBI_Pipeline.Data.FitsData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FitsData</span></code></a>([fitsfile])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.Data.DarkData.html#VBI_Pipeline.Data.DarkData" title="VBI_Pipeline.Data.DarkData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DarkData</span></code></a>([data_dir, dataset_ID, suffix])</p></td>
+<td><p>DarkData is an extension of <code class="xref py py-obj docutils literal notranslate"><span class="pre">FitData</span></code> designed to only hold data associated with Dark. It inherits all of  the functionality of <a class="reference internal" href="api/VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData" title="VBI_Pipeline.Data.FitsData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FitsData</span></code></a> and defines an extra method that loads all data from a directory who’s headers match the  following:                Key  Value                —  —–           DKIST004  Dark.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData" title="VBI_Pipeline.Data.FitsData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FitsData</span></code></a>([fitsfile])</p></td>
 <td><p>FitsData is a basically a wrapper for astropy.io.fits, with some extra methods and properties to aid the reduction of DKIST data.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.Data.GainData.html#VBI_Pipeline.Data.GainData" title="VBI_Pipeline.Data.GainData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GainData</span></code></a>([data_dir, dataset_ID, suffix])</p></td>
-<td><p>GainData is an extension of <code class="xref py py-obj docutils literal notranslate"><span class="pre">FitData</span></code> designed to only hold data from the Gain InstrumentProgramTask (DKIST004).</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.Data.GainData.html#VBI_Pipeline.Data.GainData" title="VBI_Pipeline.Data.GainData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GainData</span></code></a>([data_dir, dataset_ID, suffix])</p></td>
+<td><p>GainData is an extension of <code class="xref py py-obj docutils literal notranslate"><span class="pre">FitData</span></code> designed to only hold data associated with Gain. It inherits all of  the functionality of <a class="reference internal" href="api/VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData" title="VBI_Pipeline.Data.FitsData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FitsData</span></code></a> and defines an extra method that loads all data from a directory who’s headers match the  following:                Key  Value                —  —–           DKIST004  Gain.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.Data.ObservationData.html#VBI_Pipeline.Data.ObservationData" title="VBI_Pipeline.Data.ObservationData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ObservationData</span></code></a>([data_dir, dataset_ID, suffix])</p></td>
-<td><p>ObservationData is an extension of <code class="xref py py-obj docutils literal notranslate"><span class="pre">FitData</span></code> designed to only hold data from the Observation InstrumentProgramTask (DKIST004).</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.Data.ObservationData.html#VBI_Pipeline.Data.ObservationData" title="VBI_Pipeline.Data.ObservationData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ObservationData</span></code></a>([data_dir, dataset_ID, suffix])</p></td>
+<td><p>ObservationData is an extension of <code class="xref py py-obj docutils literal notranslate"><span class="pre">FitData</span></code> designed to only hold data associated with Observation. It inherits all of  the functionality of <a class="reference internal" href="api/VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData" title="VBI_Pipeline.Data.FitsData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FitsData</span></code></a> and defines an extra method that loads all data from a directory who’s headers match the  following:                Key  Value                —  —–           DKIST004  Observation.</p></td>
 </tr>
 </tbody>
 </table>
@@ -485,11 +492,17 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.generic.dark_correction.html#VBI_Pipeline.generic.dark_correction" title="VBI_Pipeline.generic.dark_correction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dark_correction</span></code></a>(fitsData, dark_calibration)</p></td>
 <td><p>Subtract a dark calibration from input data</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.generic.extract_ROI.html#VBI_Pipeline.generic.extract_ROI" title="VBI_Pipeline.generic.extract_ROI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_ROI</span></code></a>(Data, ROI_min, ROI_max)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.generic.ensure_fits.html#VBI_Pipeline.generic.ensure_fits" title="VBI_Pipeline.generic.ensure_fits"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_fits</span></code></a>(filename)</p></td>
+<td><p>Make sure that a string has only one ‘.fits’ on the end of it</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.generic.extract_ROI.html#VBI_Pipeline.generic.extract_ROI" title="VBI_Pipeline.generic.extract_ROI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_ROI</span></code></a>(Data, ROI_min, ROI_max)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.generic.gain_correction.html#VBI_Pipeline.generic.gain_correction" title="VBI_Pipeline.generic.gain_correction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gain_correction</span></code></a>(fitsData, gain_calibration)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.generic.gain_correction.html#VBI_Pipeline.generic.gain_correction" title="VBI_Pipeline.generic.gain_correction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gain_correction</span></code></a>(fitsData, gain_calibration)</p></td>
 <td><p>Divide a gain calibration into input data</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.generic.strip_fits.html#VBI_Pipeline.generic.strip_fits" title="VBI_Pipeline.generic.strip_fits"><code class="xref py py-obj docutils literal notranslate"><span class="pre">strip_fits</span></code></a>(filename)</p></td>
+<td><p>Strip the ‘.fits’ extension from a filename</p></td>
 </tr>
 </tbody>
 </table>
@@ -510,10 +523,10 @@
     </div>
    
     <div class="right-footer">
-      Last updated on 24 Mar 2020.
+      Last updated on 30 Sep 2020.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1
     </div>
   </div>
 </footer>

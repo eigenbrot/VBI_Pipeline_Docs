@@ -18,7 +18,7 @@ you've extracted those tarballs use the following command to generate a fake dat
 
 .. code-block:: console
 
-  $ vbi_fake_data DST_data GOS_grids raw
+  $ vbi_fake_data DST_data GOS_grids raw -S 'GOS target' 'sunspot 1'
   ...
   $ ls -1 raw
   VBI-RED_20180511T142400.000000_0.fits
@@ -57,9 +57,9 @@ files.
  data_set_id = all
  output = Sci
  ; the following 3 options point to where these objects will be saved. they don't need to exist
- dark_cal = DarkCal.fits
- gain_cal = GainCal.fits
- target_cal = TargetCal.fits
+ dark_cal = DarkCal
+ gain_cal = GainCal
+ target_cal = TargetCal
  ; if flush is true memory usage will be very conservative at the expense of more disk usage
  flush = False
 
@@ -86,7 +86,7 @@ at a later time (and find any error messages). To do this I usually run the pipe
 
 .. code-block:: console
 
-  $PYTHONUNBUFFERED=yes vbi_pipeline config.ini 2>&1 | tee spool.txt
+  $PYTHONUNBUFFERED=yes vbi_pipeline config.ini 2>&1 | tee -i spool.txt
 
 The `PYTHONUNBUFFERED=yes` is there because on most systems simply piping the python output will cause your terminal
 (stdout) to update much less frequently than usual. This is due to how python decides to flush its buffer to stdout.
@@ -99,25 +99,25 @@ If your config file looks like the one above then your reduction directory will 
 
   $ ls -1
   config.ini
-  DarkCal.fits
-  GainCal.fits
+  DarkCal.FITS
+  GainCal.FITS
   grid_proc.fits
-  Sci_GOStarget.fits
-  Sci_sunspot1.fits
-  TargetCal.fits
+  Sci_GOStarget.FITS
+  Sci_sunspot1.FITS
+  TargetCal.FITS
   TargetCal_houghres.pkl
 
-All of the ``*Cal.fits`` files are the intermediate data products used by the pipeline whose names are specified in the
+All of the ``*Cal.FITS`` files are the intermediate data products used by the pipeline whose names are specified in the
 config file. ``grid_proc.fits`` and ``TargetCal_houghres.pkl`` are special intermediates to the Target Calibration
 module and exist to speed up future reduction runs (assuming the parameters stay the same).
 
-The processed data live in ``Sci_*.fits``. These files each contain a single Primary HDU with no data and a set of Image
+The processed data live in ``Sci_*.FITS``. These files each contain a single Primary HDU with no data and a set of Image
 HDUs, one for each SysOutput of the input data. This format is suitable for further scientific analysis but if
 you just want to see what the full image looks like you can stitch together the entire VBI field with ``vbi_stitch``:
 
 .. code-block:: console
 
-  $ vbi_stitch Sci_GOStarget.fits Sci_GOStarget_stitched.fits
+  $ vbi_stitch Sci_GOStarget.FITS Sci_GOStarget_stitched.FITS
 
 The stitching process first averages the data to produce a single frame for each camera position and then places all
 of the camera positions in their correct location in a single frame. This process necessarily interpolates the data

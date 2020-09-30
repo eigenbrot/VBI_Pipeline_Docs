@@ -1,10 +1,11 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
-    <title>gen_debug_plots &#8212; VBI_Pipeline v0.9.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>gen_debug_plots &#8212; VBI_Pipeline v0.10.0</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -24,9 +25,9 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-1.12.4.min.js "></script>
 <script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
-<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.4.1/js/bootstrap.min.js "></script>
 <script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
 
   </head><body>
@@ -173,9 +174,9 @@
       
   <div class="section" id="gen-debug-plots">
 <h1>gen_debug_plots<a class="headerlink" href="#gen-debug-plots" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
+<dl class="py function">
 <dt id="VBI_Pipeline.TargetCalibration.gen_debug_plots">
-<code class="sig-prename descclassname">VBI_Pipeline.TargetCalibration.</code><code class="sig-name descname">gen_debug_plots</code><span class="sig-paren">(</span><em class="sig-param">intsects</em>, <em class="sig-param">pos_list</em>, <em class="sig-param">refidx</em>, <em class="sig-param">dmax</em>, <em class="sig-param">c_i</em>, <em class="sig-param">c_ref</em>, <em class="sig-param">min_i</em>, <em class="sig-param">min_ref</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/TargetCalibration.html#gen_debug_plots"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.TargetCalibration.gen_debug_plots" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">VBI_Pipeline.TargetCalibration.</code><code class="sig-name descname">gen_debug_plots</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">intsects</span></em>, <em class="sig-param"><span class="n">pos_list</span></em>, <em class="sig-param"><span class="n">refidx</span></em>, <em class="sig-param"><span class="n">dmax</span></em>, <em class="sig-param"><span class="n">c_i</span></em>, <em class="sig-param"><span class="n">c_ref</span></em>, <em class="sig-param"><span class="n">min_i</span></em>, <em class="sig-param"><span class="n">min_ref</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/TargetCalibration.html#gen_debug_plots"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.TargetCalibration.gen_debug_plots" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate 2 debug plots associated with the calculation of the camera shifts:</p>
 <p>1. “overlap.pdf” - A plot showing all grid images and all found intersections (yellow). The reference intersections
 are identified with green dots and all matching candidate intersections have red dots. Colored lines connecting
@@ -198,13 +199,13 @@ collect_intersections()</p>
 </dd>
 <dt><strong>dmax</strong><span class="classifier">float</span></dt><dd><p>Any intersections with pixel locations less than dmax apart are considered to be the same intersection.</p>
 </dd>
-<dt><strong>c_i</strong><span class="classifier"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>(2, M) shape array containing (x, y) coordinates of all matching points in the candidate image.</p>
+<dt><strong>c_i</strong><span class="classifier"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>(2, M) shape array containing (x, y) coordinates of all matching points in the candidate image.</p>
 </dd>
-<dt><strong>c_ref</strong><span class="classifier"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>(2, M) shape array containing (x, y) coordinates of all matching points in the reference image.</p>
+<dt><strong>c_ref</strong><span class="classifier"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>(2, M) shape array containing (x, y) coordinates of all matching points in the reference image.</p>
 </dd>
-<dt><strong>min_i</strong><span class="classifier"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>1D array containing the radial distance of the closest intersection to all intersections in the candidate image</p>
+<dt><strong>min_i</strong><span class="classifier"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>1D array containing the radial distance of the closest intersection to all intersections in the candidate image</p>
 </dd>
-<dt><strong>min_ref</strong><span class="classifier"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>1D array containing the radial distance of the closest intersection to all intersections in the reference image</p>
+<dt><strong>min_ref</strong><span class="classifier"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>1D array containing the radial distance of the closest intersection to all intersections in the reference image</p>
 </dd>
 </dl>
 </dd>
@@ -226,10 +227,10 @@ collect_intersections()</p>
     </div>
    
     <div class="right-footer">
-      Last updated on 24 Mar 2020.
+      Last updated on 30 Sep 2020.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1
     </div>
   </div>
 </footer>
