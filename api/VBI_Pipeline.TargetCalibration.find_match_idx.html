@@ -4,18 +4,19 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>find_match_idx &#8212; VBI_Pipeline v0.10.0</title>
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>find_match_idx &#8212; VBI_Pipeline v1.0.0</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/bootstrap-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" type="text/css" />
     <link rel="stylesheet" href="../_static/dkist.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <link rel="shortcut icon" href="../_static/favico.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -102,9 +103,6 @@
           
             <ul class="nav navbar-nav navbar-left">
               <li><a href="http://dkist.nso.edu/">DKIST</a></li>
-              <li><a href="http://docs.cadair.com/devdocs">DC Developer Guide</a></li>
-              <li><a href="http://docs.cadair.com/datarate">DKIST Data Rate</a></li>
-              <li><a href="http://docs.cadair.com/datamodel">DKIST Data Model</a></li>
             </ul>
           
           
@@ -172,11 +170,11 @@
 
     <div class="body col-md-9 content" role="main">
       
-  <div class="section" id="find-match-idx">
+  <section id="find-match-idx">
 <h1>find_match_idx<a class="headerlink" href="#find-match-idx" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
-<dt id="VBI_Pipeline.TargetCalibration.find_match_idx">
-<code class="sig-prename descclassname">VBI_Pipeline.TargetCalibration.</code><code class="sig-name descname">find_match_idx</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">intsects_i</span></em>, <em class="sig-param"><span class="n">intsects_ref</span></em>, <em class="sig-param"><span class="n">dmax</span></em>, <em class="sig-param"><span class="n">ignore_dict</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">debug</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">i</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/TargetCalibration.html#find_match_idx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.TargetCalibration.find_match_idx" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="VBI_Pipeline.TargetCalibration.find_match_idx">
+<span class="sig-prename descclassname"><span class="pre">VBI_Pipeline.TargetCalibration.</span></span><span class="sig-name descname"><span class="pre">find_match_idx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">intsects_i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intsects_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/TargetCalibration.html#find_match_idx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#VBI_Pipeline.TargetCalibration.find_match_idx" title="Permalink to this definition">¶</a></dt>
 <dd><p>Identify intersections that are probably the same point and return their indices</p>
 <p>The radial distances between ALL intersections are computed and any less than <code class="docutils literal notranslate"><span class="pre">dmax</span></code> are considered to be the same
 points. Additionally, the algorithm ensures that a) only the minimum distance companion for each intersection is
@@ -186,9 +184,9 @@ bimodal distribution of match offsets is suspected.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl>
-<dt><strong>intsects_i</strong><span class="classifier"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>Array of shape (2, M) containing the (X, Y) locations of the M intersections in the candidate image</p>
+<dt><strong>intsects_i</strong><span class="classifier"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>Array of shape (2, M) containing the (X, Y) locations of the M intersections in the candidate image</p>
 </dd>
-<dt><strong>intsects_ref</strong><span class="classifier"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>Array of shape (2, N) containing the (X, Y) locations of the N intersections in the reference image</p>
+<dt><strong>intsects_ref</strong><span class="classifier"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>Array of shape (2, N) containing the (X, Y) locations of the N intersections in the reference image</p>
 </dd>
 <dt><strong>dmax</strong><span class="classifier">float</span></dt><dd><p>Any match candidates with a radial distance greater than dmax are immediately excluded from consideration</p>
 </dd>
@@ -205,16 +203,16 @@ are to each other.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></dt><dd><p>The array that slices all matching points from intsects_i</p>
+<dt><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></dt><dd><p>The array that slices all matching points from intsects_i</p>
 </dd>
-<dt><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></dt><dd><p>The array that slices all matching points from intsects_ref</p>
+<dt><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.21)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></dt><dd><p>The array that slices all matching points from intsects_ref</p>
 </dd>
 </dl>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
+</section>
 
 
     </div>
@@ -224,15 +222,15 @@ are to each other.</p>
 <footer class="footer">
   <div class="container">
     <div class="left-footer">
-         &copy; 2020, Arthur Eigenbrot
+         &copy; 2021, Arthur Eigenbrot
        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
     </div>
    
     <div class="right-footer">
-      Last updated on 30 Sep 2020.
+      Last updated on 19 Oct 2021.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.2.0
     </div>
   </div>
 </footer>

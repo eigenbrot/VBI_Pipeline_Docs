@@ -5,17 +5,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VBI_Pipeline.VBIPipeline &#8212; VBI_Pipeline v0.10.0</title>
-    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <title>VBI_Pipeline.VBIPipeline &#8212; VBI_Pipeline v1.0.0</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/bootstrap-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" type="text/css" />
     <link rel="stylesheet" href="../../_static/dkist.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
     <link rel="shortcut icon" href="../../_static/favico.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -89,9 +89,6 @@
           
             <ul class="nav navbar-nav navbar-left">
               <li><a href="http://dkist.nso.edu/">DKIST</a></li>
-              <li><a href="http://docs.cadair.com/devdocs">DC Developer Guide</a></li>
-              <li><a href="http://docs.cadair.com/datarate">DKIST Data Rate</a></li>
-              <li><a href="http://docs.cadair.com/datamodel">DKIST Data Model</a></li>
             </ul>
           
           
@@ -137,14 +134,25 @@
 <span></span><span class="kn">import</span> <span class="nn">ast</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
 <span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span> <span class="k">as</span> <span class="n">pyfits</span>
+
 <span class="kn">import</span> <span class="nn">VBI_Pipeline</span>
-<span class="kn">from</span> <span class="nn">VBI_Pipeline</span> <span class="kn">import</span> <span class="n">Data</span><span class="p">,</span> <span class="n">DarkCalibration</span><span class="p">,</span> <span class="n">GainCalibration</span><span class="p">,</span> <span class="n">TargetCalibration</span><span class="p">,</span> <span class="n">ScienceCalibration</span><span class="p">,</span> <span class="n">generic</span>
+<span class="kn">from</span> <span class="nn">VBI_Pipeline</span> <span class="kn">import</span> <span class="n">DarkCalibration</span>
+<span class="kn">from</span> <span class="nn">VBI_Pipeline</span> <span class="kn">import</span> <span class="n">Data</span>
+<span class="kn">from</span> <span class="nn">VBI_Pipeline</span> <span class="kn">import</span> <span class="n">GainCalibration</span>
+<span class="kn">from</span> <span class="nn">VBI_Pipeline</span> <span class="kn">import</span> <span class="n">generic</span>
+<span class="kn">from</span> <span class="nn">VBI_Pipeline</span> <span class="kn">import</span> <span class="n">ScienceCalibration</span>
+<span class="kn">from</span> <span class="nn">VBI_Pipeline</span> <span class="kn">import</span> <span class="n">TargetCalibration</span>
+<span class="kn">from</span> <span class="nn">VBI_Pipeline.data</span> <span class="kn">import</span> <span class="n">CONSTANTS</span>
+<span class="kn">from</span> <span class="nn">VBI_Pipeline.data</span> <span class="kn">import</span> <span class="n">INSTRUMENT_WAVE_RANGES</span>
+<span class="kn">from</span> <span class="nn">VBI_Pipeline.data</span> <span class="kn">import</span> <span class="n">S122</span>
+<span class="kn">from</span> <span class="nn">VBI_Pipeline.data</span> <span class="kn">import</span> <span class="n">TASK_DATA_DICTS</span>
 <span class="kn">from</span> <span class="nn">VBI_Pipeline.tag</span> <span class="kn">import</span> <span class="n">tag</span>
-<span class="kn">from</span> <span class="nn">VBI_Pipeline.data</span> <span class="kn">import</span> <span class="n">S122</span><span class="p">,</span> <span class="n">TASK_DATA_DICTS</span><span class="p">,</span> <span class="n">CONSTANTS</span><span class="p">,</span> <span class="n">INSTRUMENT_STRINGS</span>
+
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api/VBI_Pipeline.VBIPipeline.main.html#VBI_Pipeline.VBIPipeline.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">config_file</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Check for file existence and generate intermediate Calibration data as needed, then run the Science Calibration.</span>
@@ -170,28 +178,32 @@
     <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">()</span>
     <span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
-    <span class="n">VBI_Pipeline</span><span class="o">.</span><span class="n">FLUSH</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s1">&#39;Main&#39;</span><span class="p">,</span> <span class="s1">&#39;flush&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Loaded configuration file </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">config_file</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: FLUSH set to </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">VBI_Pipeline</span><span class="o">.</span><span class="n">FLUSH</span><span class="p">))</span>
+    <span class="n">VBI_Pipeline</span><span class="o">.</span><span class="n">FLUSH</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s2">&quot;Main&quot;</span><span class="p">,</span> <span class="s2">&quot;flush&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Loaded configuration file </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">config_file</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: FLUSH set to </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">VBI_Pipeline</span><span class="o">.</span><span class="n">FLUSH</span><span class="p">))</span>
 
     <span class="c1"># Check to make sure raw science exists</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;raw_sci_dir&#39;</span><span class="p">]):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Raw science data directory </span><span class="si">{}</span><span class="s1"> does not exist!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;raw_sci_dir&#39;</span><span class="p">]))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;Main&quot;</span><span class="p">][</span><span class="s2">&quot;raw_sci_dir&quot;</span><span class="p">]):</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Raw science data directory </span><span class="si">{}</span><span class="s2"> does not exist!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">tag</span><span class="p">(),</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;Main&quot;</span><span class="p">][</span><span class="s2">&quot;raw_sci_dir&quot;</span><span class="p">]</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="mi">1</span>
 
-    <span class="n">suffix</span> <span class="o">=</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="s1">&#39;common&#39;</span><span class="p">][</span><span class="s1">&#39;suffix&#39;</span><span class="p">]</span>
+    <span class="n">suffix</span> <span class="o">=</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="s2">&quot;common&quot;</span><span class="p">][</span><span class="s2">&quot;suffix&quot;</span><span class="p">]</span>
 
-    <span class="n">inst_name</span> <span class="o">=</span> <span class="n">get_instrument_name</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;raw_sci_dir&#39;</span><span class="p">],</span> <span class="n">suffix</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Instrument: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">inst_name</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: DataSet: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;data_set_ID&#39;</span><span class="p">]))</span>
+    <span class="n">inst_name</span> <span class="o">=</span> <span class="n">get_instrument_name</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;Main&quot;</span><span class="p">][</span><span class="s2">&quot;raw_sci_dir&quot;</span><span class="p">],</span> <span class="n">suffix</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Instrument: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">inst_name</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: DataSet: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;Main&quot;</span><span class="p">][</span><span class="s2">&quot;data_set_ID&quot;</span><span class="p">]))</span>
 
     <span class="c1"># Check for necessary calibration data and try to generate them if needed</span>
     <span class="n">sci_kwargs</span> <span class="o">=</span> <span class="n">generate_intermediate_objects</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">inst_name</span><span class="p">)</span>
 
-    <span class="n">sci_kwargs</span><span class="p">[</span><span class="s1">&#39;final_average&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s1">&#39;final_average&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="n">sci_kwargs</span><span class="p">[</span><span class="s2">&quot;final_average&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;Main&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s2">&quot;final_average&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
     <span class="n">run_science</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">sci_kwargs</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: All done in </span><span class="si">{}</span><span class="s1"> s&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t1</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: All done in </span><span class="si">{}</span><span class="s2"> s&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t1</span><span class="p">))</span>
 
     <span class="k">return</span> <span class="mi">0</span></div>
 
@@ -216,13 +228,18 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">FD</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">ObservationData</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="n">suffix</span><span class="p">)</span>
 
-    <span class="n">fits_inst</span> <span class="o">=</span> <span class="n">FD</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">S122</span><span class="p">[</span><span class="s1">&#39;Instrument&#39;</span><span class="p">]]</span>
+    <span class="n">wave</span> <span class="o">=</span> <span class="n">FD</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">S122</span><span class="p">[</span><span class="s2">&quot;Wavelength&quot;</span><span class="p">]]</span>
 
-    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">INSTRUMENT_STRINGS</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">fits_inst</span> <span class="ow">in</span> <span class="n">INSTRUMENT_STRINGS</span><span class="p">[</span><span class="n">k</span><span class="p">]:</span>
-            <span class="k">return</span> <span class="n">k</span>
+    <span class="k">for</span> <span class="n">inst</span><span class="p">,</span> <span class="n">wave_range</span> <span class="ow">in</span> <span class="n">INSTRUMENT_WAVE_RANGES</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">wave_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">wave</span> <span class="o">&lt;</span> <span class="n">wave_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="n">inst</span>
 
-    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The value of </span><span class="si">{}</span><span class="s1"> (&quot;</span><span class="si">{}</span><span class="s1">&quot;) is not a recognized instrument&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">S122</span><span class="p">[</span><span class="s1">&#39;Instrument&#39;</span><span class="p">],</span> <span class="n">fits_inst</span><span class="p">))</span></div>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="s1">&#39;The value of </span><span class="si">{}</span><span class="s1"> (&quot;</span><span class="si">{}</span><span class="s1">&quot;) is not a recognized instrument&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">S122</span><span class="p">[</span><span class="s2">&quot;Instrument&quot;</span><span class="p">],</span> <span class="n">fits_inst</span>
+        <span class="p">)</span>
+    <span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="run_science"><a class="viewcode-back" href="../../api/VBI_Pipeline.VBIPipeline.run_science.html#VBI_Pipeline.VBIPipeline.run_science">[docs]</a><span class="k">def</span> <span class="nf">run_science</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">sci_kwargs</span><span class="p">,</span> <span class="n">suffix</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Determine if multiple targets are going to be reduced and then start the ScienceCalibration</span>
@@ -243,48 +260,64 @@
 <span class="sd">    -------</span>
 <span class="sd">    None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">unique_targets</span> <span class="o">=</span> <span class="n">get_all_obs_targets</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;raw_sci_dir&#39;</span><span class="p">],</span> <span class="n">suffix</span><span class="o">=</span><span class="n">suffix</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;data_set_ID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;all&#39;</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Found targets </span><span class="si">{}</span><span class="s1"> in </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">unique_targets</span><span class="p">,</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;raw_sci_dir&#39;</span><span class="p">]))</span>
+    <span class="n">unique_targets</span> <span class="o">=</span> <span class="n">get_all_obs_targets</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;Main&quot;</span><span class="p">][</span><span class="s2">&quot;raw_sci_dir&quot;</span><span class="p">],</span> <span class="n">suffix</span><span class="o">=</span><span class="n">suffix</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;Main&quot;</span><span class="p">][</span><span class="s2">&quot;data_set_ID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Found targets </span><span class="si">{}</span><span class="s2"> in </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">tag</span><span class="p">(),</span> <span class="n">unique_targets</span><span class="p">,</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;Main&quot;</span><span class="p">][</span><span class="s2">&quot;raw_sci_dir&quot;</span><span class="p">]</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
 
-        <span class="n">outprefix</span> <span class="o">=</span> <span class="n">generic</span><span class="o">.</span><span class="n">strip_fits</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;output&#39;</span><span class="p">])</span>
+        <span class="n">outprefix</span> <span class="o">=</span> <span class="n">generic</span><span class="o">.</span><span class="n">strip_fits</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;Main&quot;</span><span class="p">][</span><span class="s2">&quot;output&quot;</span><span class="p">])</span>
         <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">unique_targets</span><span class="p">:</span>
-            <span class="n">DSPSData</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">DSPSData</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;raw_sci_dir&#39;</span><span class="p">],</span> <span class="n">target</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Running target </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">target</span><span class="p">))</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Target </span><span class="si">{}</span><span class="s1"> has </span><span class="si">{}</span><span class="s1"> DSPS repeats&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">target</span><span class="p">,</span> <span class="n">DSPSData</span><span class="o">.</span><span class="n">num_dsps</span><span class="p">))</span>
+            <span class="n">DSPSData</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">DSPSData</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;Main&quot;</span><span class="p">][</span><span class="s2">&quot;raw_sci_dir&quot;</span><span class="p">],</span> <span class="n">target</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Running target </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">target</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Target </span><span class="si">{}</span><span class="s2"> has </span><span class="si">{}</span><span class="s2"> DSPS repeats&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">target</span><span class="p">,</span> <span class="n">DSPSData</span><span class="o">.</span><span class="n">num_dsps</span><span class="p">))</span>
 
             <span class="k">for</span> <span class="n">dsps</span> <span class="ow">in</span> <span class="n">DSPSData</span><span class="o">.</span><span class="n">dsps_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Running DSPS repeat </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">dsps</span><span class="p">))</span>
-                <span class="n">output</span> <span class="o">=</span> <span class="n">generic</span><span class="o">.</span><span class="n">ensure_fits</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:}</span><span class="s1">_</span><span class="si">{:}</span><span class="s1">_</span><span class="si">{:03n}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">outprefix</span><span class="p">,</span> <span class="n">target</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="n">dsps</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Running DSPS repeat </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">dsps</span><span class="p">))</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="n">generic</span><span class="o">.</span><span class="n">ensure_fits</span><span class="p">(</span>
+                    <span class="s2">&quot;</span><span class="si">{:}</span><span class="s2">_</span><span class="si">{:}</span><span class="s2">_</span><span class="si">{:03n}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">outprefix</span><span class="p">,</span> <span class="n">target</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span> <span class="n">dsps</span><span class="p">)</span>
+                <span class="p">)</span>
                 <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">DSPSData</span><span class="p">,</span> <span class="n">dsps</span><span class="p">,</span> <span class="n">output</span><span class="p">]</span>
 
-                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Calling ScienceCalibration.main()&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:  with args </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">args</span><span class="p">))</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:  and kwargs </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">sci_kwargs</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Calling ScienceCalibration.main()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:  with args </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">args</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:  and kwargs </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">sci_kwargs</span><span class="p">))</span>
                 <span class="n">ScienceCalibration</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">sci_kwargs</span><span class="p">)</span>
 
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;data_set_ID&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">unique_targets</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;data_set_ID &quot;</span><span class="si">{}</span><span class="s1">&quot; does not exist in </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;data_set_ID&#39;</span><span class="p">],</span>
-                                                                            <span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;raw_sci_dir&#39;</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;Main&quot;</span><span class="p">][</span><span class="s2">&quot;data_set_ID&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">unique_targets</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s1">&#39;data_set_ID &quot;</span><span class="si">{}</span><span class="s1">&quot; does not exist in </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;Main&quot;</span><span class="p">][</span><span class="s2">&quot;data_set_ID&quot;</span><span class="p">],</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;Main&quot;</span><span class="p">][</span><span class="s2">&quot;raw_sci_dir&quot;</span><span class="p">]</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
 
-        <span class="n">DSPSData</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">DSPSData</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;raw_sci_dir&#39;</span><span class="p">],</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;data_set_ID&#39;</span><span class="p">])</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Target </span><span class="si">{}</span><span class="s1"> has </span><span class="si">{}</span><span class="s1"> DSPS repeats&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;data_set_ID&#39;</span><span class="p">],</span> <span class="n">DSPSData</span><span class="o">.</span><span class="n">num_dsps</span><span class="p">))</span>
+        <span class="n">DSPSData</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">DSPSData</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;Main&quot;</span><span class="p">][</span><span class="s2">&quot;raw_sci_dir&quot;</span><span class="p">],</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;Main&quot;</span><span class="p">][</span><span class="s2">&quot;data_set_ID&quot;</span><span class="p">])</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Target </span><span class="si">{}</span><span class="s2"> has </span><span class="si">{}</span><span class="s2"> DSPS repeats&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">tag</span><span class="p">(),</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;Main&quot;</span><span class="p">][</span><span class="s2">&quot;data_set_ID&quot;</span><span class="p">],</span> <span class="n">DSPSData</span><span class="o">.</span><span class="n">num_dsps</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
 
         <span class="k">for</span> <span class="n">dsps</span> <span class="ow">in</span> <span class="n">DSPSData</span><span class="o">.</span><span class="n">dsps_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Running DSPS repeat </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">dsps</span><span class="p">))</span>
-            <span class="n">output</span> <span class="o">=</span> <span class="n">generic</span><span class="o">.</span><span class="n">ensure_fits</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:}</span><span class="s1">_</span><span class="si">{:03n}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">generic</span><span class="o">.</span><span class="n">strip_fits</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;output&#39;</span><span class="p">]),</span> <span class="n">dsps</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Running DSPS repeat </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">dsps</span><span class="p">))</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">generic</span><span class="o">.</span><span class="n">ensure_fits</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{:}</span><span class="s2">_</span><span class="si">{:03n}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">generic</span><span class="o">.</span><span class="n">strip_fits</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;Main&quot;</span><span class="p">][</span><span class="s2">&quot;output&quot;</span><span class="p">]),</span> <span class="n">dsps</span><span class="p">)</span>
+            <span class="p">)</span>
             <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">DSPSData</span><span class="p">,</span> <span class="n">dsps</span><span class="p">,</span> <span class="n">output</span><span class="p">]</span>
 
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Running science data&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Calling ScienceCalibration.main()&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:  with args </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">args</span><span class="p">))</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:  and kwargs </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">sci_kwargs</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Running science data&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Calling ScienceCalibration.main()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:  with args </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">args</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:  and kwargs </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">sci_kwargs</span><span class="p">))</span>
             <span class="n">ScienceCalibration</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">sci_kwargs</span><span class="p">)</span>
 
     <span class="k">return</span></div>
 
-<div class="viewcode-block" id="get_all_obs_targets"><a class="viewcode-back" href="../../api/VBI_Pipeline.VBIPipeline.get_all_obs_targets.html#VBI_Pipeline.VBIPipeline.get_all_obs_targets">[docs]</a><span class="k">def</span> <span class="nf">get_all_obs_targets</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;FITS&#39;</span><span class="p">):</span>
+
+<div class="viewcode-block" id="get_all_obs_targets"><a class="viewcode-back" href="../../api/VBI_Pipeline.VBIPipeline.get_all_obs_targets.html#VBI_Pipeline.VBIPipeline.get_all_obs_targets">[docs]</a><span class="k">def</span> <span class="nf">get_all_obs_targets</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;FITS&quot;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Find the unique set of data set ID&#39;s (ID___003) for Observation data in a given directory</span>
 
 <span class="sd">    Only files with DKIST004 == &#39;Observation&#39; will be scanned.</span>
@@ -302,17 +335,22 @@
 <span class="sd">    list</span>
 <span class="sd">        A list containing all unique values of ID___003 found in the given directory</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">file_list</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/*</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="p">))</span>
+    <span class="n">file_list</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/*</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">suffix</span><span class="p">))</span>
 
     <span class="n">hdulist</span> <span class="o">=</span> <span class="p">[</span><span class="n">pyfits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">]</span>
-    <span class="n">target_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="n">S122</span><span class="p">[</span><span class="s1">&#39;DataSetParametersID&#39;</span><span class="p">]]</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">hdulist</span> <span class="k">if</span>
-                   <span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="n">S122</span><span class="p">[</span><span class="s1">&#39;InstrumentProgramTask&#39;</span><span class="p">]]</span> <span class="ow">in</span> <span class="n">TASK_DATA_DICTS</span><span class="p">[</span><span class="s1">&#39;Observation&#39;</span><span class="p">][</span><span class="s1">&#39;InstrumentProgramTask&#39;</span><span class="p">]]</span>
+    <span class="n">target_list</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="n">S122</span><span class="p">[</span><span class="s2">&quot;DataSetParametersID&quot;</span><span class="p">]]</span>
+        <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">hdulist</span>
+        <span class="k">if</span> <span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="n">S122</span><span class="p">[</span><span class="s2">&quot;InstrumentProgramTask&quot;</span><span class="p">]]</span>
+        <span class="ow">in</span> <span class="n">TASK_DATA_DICTS</span><span class="p">[</span><span class="s2">&quot;Observation&quot;</span><span class="p">][</span><span class="s2">&quot;InstrumentProgramTask&quot;</span><span class="p">]</span>
+    <span class="p">]</span>
     <span class="n">unique_targets</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">target_list</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">hdulist</span><span class="p">:</span>
         <span class="n">h</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
     <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">unique_targets</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="generate_intermediate_objects"><a class="viewcode-back" href="../../api/VBI_Pipeline.VBIPipeline.generate_intermediate_objects.html#VBI_Pipeline.VBIPipeline.generate_intermediate_objects">[docs]</a><span class="k">def</span> <span class="nf">generate_intermediate_objects</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">instrument</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Generate/collect the intermediate Calibration Objects needed by the Science Calibration module.</span>
@@ -334,59 +372,74 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Dark</span>
     <span class="c1">######</span>
-    <span class="n">filename</span> <span class="o">=</span> <span class="n">generic</span><span class="o">.</span><span class="n">ensure_fits</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;dark_cal&#39;</span><span class="p">])</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">generic</span><span class="o">.</span><span class="n">ensure_fits</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;Main&quot;</span><span class="p">][</span><span class="s2">&quot;dark_cal&quot;</span><span class="p">])</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Could not find </span><span class="si">{}</span><span class="s1">, attempting to generate with DarkCalibration&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">filename</span><span class="p">))</span>
-        <span class="n">kwargs</span> <span class="o">=</span> <span class="n">get_intermediate_kwargs</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">instrument</span><span class="p">,</span> <span class="s1">&#39;DarkCalibration&#39;</span><span class="p">,</span> <span class="s1">&#39;raw_dark_dir&#39;</span><span class="p">)</span>
-        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;DarkCalibration&#39;</span><span class="p">][</span><span class="s1">&#39;raw_dark_dir&#39;</span><span class="p">],</span> <span class="n">filename</span><span class="p">]</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Calling DarkCalibration.main()&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:  with args </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">args</span><span class="p">))</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:  and kwargs </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">kwargs</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Could not find </span><span class="si">{}</span><span class="s2">, attempting to generate with DarkCalibration&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">tag</span><span class="p">(),</span> <span class="n">filename</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="n">get_intermediate_kwargs</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">instrument</span><span class="p">,</span> <span class="s2">&quot;DarkCalibration&quot;</span><span class="p">,</span> <span class="s2">&quot;raw_dark_dir&quot;</span><span class="p">)</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;DarkCalibration&quot;</span><span class="p">][</span><span class="s2">&quot;raw_dark_dir&quot;</span><span class="p">],</span> <span class="n">filename</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Calling DarkCalibration.main()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:  with args </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">args</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:  and kwargs </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">kwargs</span><span class="p">))</span>
         <span class="n">DarkCal</span> <span class="o">=</span> <span class="n">DarkCalibration</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">DarkCal</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">FitsData</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Loaded </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">filename</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Loaded </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">filename</span><span class="p">))</span>
 
     <span class="c1"># Gain</span>
     <span class="c1">######</span>
-    <span class="n">filename</span> <span class="o">=</span> <span class="n">generic</span><span class="o">.</span><span class="n">ensure_fits</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;gain_cal&#39;</span><span class="p">])</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">generic</span><span class="o">.</span><span class="n">ensure_fits</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;Main&quot;</span><span class="p">][</span><span class="s2">&quot;gain_cal&quot;</span><span class="p">])</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Could not find </span><span class="si">{}</span><span class="s1">, attempting to generate with GainCalibration&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">filename</span><span class="p">))</span>
-        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;GainCalibration&#39;</span><span class="p">][</span><span class="s1">&#39;raw_gain_dir&#39;</span><span class="p">],</span> <span class="n">filename</span><span class="p">]</span>
-        <span class="n">kwargs</span> <span class="o">=</span> <span class="n">get_intermediate_kwargs</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">instrument</span><span class="p">,</span> <span class="s1">&#39;GainCalibration&#39;</span><span class="p">,</span> <span class="s1">&#39;raw_gain_dir&#39;</span><span class="p">)</span>
-        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;dark_cal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DarkCal</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Calling GainCalibration.main()&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:  with args </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">args</span><span class="p">))</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:  and kwargs </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">kwargs</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Could not find </span><span class="si">{}</span><span class="s2">, attempting to generate with GainCalibration&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">tag</span><span class="p">(),</span> <span class="n">filename</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;GainCalibration&quot;</span><span class="p">][</span><span class="s2">&quot;raw_gain_dir&quot;</span><span class="p">],</span> <span class="n">filename</span><span class="p">]</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="n">get_intermediate_kwargs</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">instrument</span><span class="p">,</span> <span class="s2">&quot;GainCalibration&quot;</span><span class="p">,</span> <span class="s2">&quot;raw_gain_dir&quot;</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;dark_cal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DarkCal</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Calling GainCalibration.main()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:  with args </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">args</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:  and kwargs </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">kwargs</span><span class="p">))</span>
         <span class="n">GainCal</span> <span class="o">=</span> <span class="n">GainCalibration</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">GainCal</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">FitsData</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Loaded </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">filename</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Loaded </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">filename</span><span class="p">))</span>
 
     <span class="c1"># Target</span>
     <span class="c1">########</span>
-    <span class="k">if</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s1">&#39;apply_target_cal&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
-        <span class="n">filename</span> <span class="o">=</span> <span class="n">generic</span><span class="o">.</span><span class="n">ensure_fits</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">][</span><span class="s1">&#39;target_cal&#39;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;Main&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s2">&quot;apply_target_cal&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">generic</span><span class="o">.</span><span class="n">ensure_fits</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;Main&quot;</span><span class="p">][</span><span class="s2">&quot;target_cal&quot;</span><span class="p">])</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Could not find </span><span class="si">{}</span><span class="s1">, attempting to generate with TargetCalibration&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">filename</span><span class="p">))</span>
-            <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;TargetCalibration&#39;</span><span class="p">][</span><span class="s1">&#39;raw_grid_dir&#39;</span><span class="p">],</span> <span class="n">filename</span><span class="p">]</span>
-            <span class="n">kwargs</span> <span class="o">=</span> <span class="n">get_intermediate_kwargs</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">instrument</span><span class="p">,</span> <span class="s1">&#39;TargetCalibration&#39;</span><span class="p">,</span> <span class="s1">&#39;raw_grid_dir&#39;</span><span class="p">)</span>
-            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;dark_cal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DarkCal</span>
-            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;gain_cal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">GainCal</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Calling TargetCalibration.main()&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:  with args </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">args</span><span class="p">))</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:  and kwargs </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">kwargs</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Could not find </span><span class="si">{}</span><span class="s2">, attempting to generate with TargetCalibration&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">tag</span><span class="p">(),</span> <span class="n">filename</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;TargetCalibration&quot;</span><span class="p">][</span><span class="s2">&quot;raw_grid_dir&quot;</span><span class="p">],</span> <span class="n">filename</span><span class="p">]</span>
+            <span class="n">kwargs</span> <span class="o">=</span> <span class="n">get_intermediate_kwargs</span><span class="p">(</span>
+                <span class="n">config</span><span class="p">,</span> <span class="n">instrument</span><span class="p">,</span> <span class="s2">&quot;TargetCalibration&quot;</span><span class="p">,</span> <span class="s2">&quot;raw_grid_dir&quot;</span>
+            <span class="p">)</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;dark_cal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DarkCal</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;gain_cal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">GainCal</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Calling TargetCalibration.main()&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:  with args </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">args</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:  and kwargs </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">kwargs</span><span class="p">))</span>
             <span class="n">TargetCal</span> <span class="o">=</span> <span class="n">TargetCalibration</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">TargetCal</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">FitsData</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Loaded </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">filename</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Loaded </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">filename</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">TargetCal</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="c1"># Construct argument list for the main pipeline</span>
-    <span class="n">sci_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;dark_cal&#39;</span><span class="p">:</span> <span class="n">DarkCal</span><span class="p">,</span> <span class="s1">&#39;gain_cal&#39;</span><span class="p">:</span> <span class="n">GainCal</span><span class="p">,</span> <span class="s1">&#39;target_cal&#39;</span><span class="p">:</span> <span class="n">TargetCal</span><span class="p">}</span>
+    <span class="n">sci_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;dark_cal&quot;</span><span class="p">:</span> <span class="n">DarkCal</span><span class="p">,</span> <span class="s2">&quot;gain_cal&quot;</span><span class="p">:</span> <span class="n">GainCal</span><span class="p">,</span> <span class="s2">&quot;target_cal&quot;</span><span class="p">:</span> <span class="n">TargetCal</span><span class="p">}</span>
 
     <span class="k">return</span> <span class="n">sci_kwargs</span></div>
+
 
 <div class="viewcode-block" id="get_intermediate_kwargs"><a class="viewcode-back" href="../../api/VBI_Pipeline.VBIPipeline.get_intermediate_kwargs.html#VBI_Pipeline.VBIPipeline.get_intermediate_kwargs">[docs]</a><span class="k">def</span> <span class="nf">get_intermediate_kwargs</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">instrument</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">data_kwd</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Given user-defined and default parameters, construct the kwarg dictionary for a call to a *Calibration module</span>
@@ -415,7 +468,7 @@
 <span class="sd">        section</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">def_sec_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">instrument</span><span class="p">,</span> <span class="n">section</span><span class="p">)</span>
+    <span class="n">def_sec_name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">instrument</span><span class="p">,</span> <span class="n">section</span><span class="p">)</span>
 
     <span class="c1"># The default file...</span>
     <span class="k">if</span> <span class="n">def_sec_name</span> <span class="ow">in</span> <span class="n">CONSTANTS</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
@@ -436,6 +489,7 @@
 
     <span class="k">return</span> <span class="n">kwargs</span></div>
 
+
 <div class="viewcode-block" id="gen_blank_config"><a class="viewcode-back" href="../../api/VBI_Pipeline.VBIPipeline.gen_blank_config.html#VBI_Pipeline.VBIPipeline.gen_blank_config">[docs]</a><span class="k">def</span> <span class="nf">gen_blank_config</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Create a blank configuration file.</span>
 
@@ -451,47 +505,50 @@
 <span class="sd">    None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">(</span><span class="n">allow_no_value</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;raw_sci_dir&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-                      <span class="s1">&#39;data_set_ID&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-                      <span class="s1">&#39;output&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-                      <span class="s2">&quot;; The following 3 options point to where these objects will be saved. They don&#39;t need to exist&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-                      <span class="s1">&#39;dark_cal&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-                      <span class="s1">&#39;gain_cal&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-                      <span class="s1">&#39;target_cal&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-                      <span class="s1">&#39;apply_target_cal&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-                      <span class="s1">&#39;final_average&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-                      <span class="s1">&#39;; if flush is True memory usage will be very conservative at the expense of more disk usage&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-                      <span class="s1">&#39;flush&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
-    <span class="n">config</span><span class="p">[</span><span class="s1">&#39;DarkCalibration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;raw_dark_dir&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">}</span>
-    <span class="n">config</span><span class="p">[</span><span class="s1">&#39;GainCalibration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;raw_gain_dir&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">}</span>
-    <span class="n">config</span><span class="p">[</span><span class="s1">&#39;TargetCalibration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;raw_grid_dir&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;Main&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;raw_sci_dir&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data_set_ID&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;output&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;; The following 3 options point to where these objects will be saved. They don&#39;t need to exist&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;dark_cal&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;gain_cal&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;target_cal&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;apply_target_cal&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;final_average&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;; if flush is True memory usage will be very conservative at the expense of more disk usage&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;flush&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;DarkCalibration&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;raw_dark_dir&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;GainCalibration&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;raw_gain_dir&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;TargetCalibration&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;raw_grid_dir&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}</span>
 
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
     <span class="k">return</span></div>
 
 
-<div class="viewcode-block" id="gen_default_config"><a class="viewcode-back" href="../../api/VBI_Pipeline.VBIPipeline.gen_default_config.html#VBI_Pipeline.VBIPipeline.gen_default_config">[docs]</a><span class="k">def</span> <span class="nf">gen_default_config</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Generate a configuration file with defaults that make sense for testing on or around 11.08.17</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="gen_default_config"><a class="viewcode-back" href="../../api/VBI_Pipeline.VBIPipeline.gen_default_config.html#VBI_Pipeline.VBIPipeline.gen_default_config">[docs]</a><span class="k">def</span> <span class="nf">gen_default_config</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">raw_dir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generate a configuration file with defaults that make sense for testing on or around 11.08.17&quot;&quot;&quot;</span>
     <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">(</span><span class="n">allow_no_value</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">config</span><span class="p">[</span><span class="s1">&#39;Main&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;raw_sci_dir&#39;</span><span class="p">:</span> <span class="s1">&#39;REPLACE_ME&#39;</span><span class="p">,</span>
-                      <span class="s1">&#39;data_set_ID&#39;</span><span class="p">:</span> <span class="s1">&#39;all&#39;</span><span class="p">,</span>
-                      <span class="s1">&#39;output&#39;</span><span class="p">:</span> <span class="s1">&#39;SciData&#39;</span><span class="p">,</span>
-                      <span class="s2">&quot;; The following 3 options point to where these objects will be saved. They don&#39;t need to exist&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-                      <span class="s1">&#39;dark_cal&#39;</span><span class="p">:</span> <span class="s1">&#39;DarkCal&#39;</span><span class="p">,</span>
-                      <span class="s1">&#39;gain_cal&#39;</span><span class="p">:</span> <span class="s1">&#39;GainCal&#39;</span><span class="p">,</span>
-                      <span class="s1">&#39;target_cal&#39;</span><span class="p">:</span> <span class="s1">&#39;TargetCal&#39;</span><span class="p">,</span>
-                      <span class="s1">&#39;apply_target_cal&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-                      <span class="s1">&#39;final_average&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-                      <span class="s1">&#39;; if flush is True memory usage will be very conservative at the expense of more disk usage&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-                      <span class="s1">&#39;flush&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
-    <span class="n">config</span><span class="p">[</span><span class="s1">&#39;DarkCalibration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;raw_dark_dir&#39;</span><span class="p">:</span> <span class="s1">&#39;REPLACE_ME&#39;</span><span class="p">}</span>
-    <span class="n">config</span><span class="p">[</span><span class="s1">&#39;GainCalibration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;raw_gain_dir&#39;</span><span class="p">:</span> <span class="s1">&#39;REPLACE_ME&#39;</span><span class="p">}</span>
-    <span class="n">config</span><span class="p">[</span><span class="s1">&#39;TargetCalibration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;raw_grid_dir&#39;</span><span class="p">:</span> <span class="s1">&#39;REPLACE_ME&#39;</span><span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;Main&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;raw_sci_dir&quot;</span><span class="p">:</span> <span class="n">raw_dir</span><span class="p">,</span>
+        <span class="s2">&quot;data_set_ID&quot;</span><span class="p">:</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;output&quot;</span><span class="p">:</span> <span class="s2">&quot;SciData&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;; The following 3 options point to where these objects will be saved. They don&#39;t need to exist&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;dark_cal&quot;</span><span class="p">:</span> <span class="s2">&quot;DarkCal&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;gain_cal&quot;</span><span class="p">:</span> <span class="s2">&quot;GainCal&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;target_cal&quot;</span><span class="p">:</span> <span class="s2">&quot;TargetCal&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;apply_target_cal&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;final_average&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s2">&quot;; if flush is True memory usage will be very conservative at the expense of more disk usage&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="s2">&quot;flush&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;DarkCalibration&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;raw_dark_dir&quot;</span><span class="p">:</span> <span class="n">raw_dir</span><span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;GainCalibration&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;raw_gain_dir&quot;</span><span class="p">:</span> <span class="n">raw_dir</span><span class="p">}</span>
+    <span class="n">config</span><span class="p">[</span><span class="s2">&quot;TargetCalibration&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;raw_grid_dir&quot;</span><span class="p">:</span> <span class="n">raw_dir</span><span class="p">}</span>
 
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
     <span class="k">return</span></div>
@@ -502,19 +559,30 @@
     <span class="kn">import</span> <span class="nn">sys</span>
 
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
-        <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Run the VBI Pipeline using the parameters specified in the supplied config file. The user MUST &#39;</span>
-                    <span class="s1">&#39;specify either a set of options or a valid config file. Config files follow the standard INI &#39;</span>
-                    <span class="s1">&#39;format.&#39;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;config_file&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;INI-style file containing pipeline options. Default is &#39;config.ini&#39;.&quot;</span><span class="p">,</span>
-                        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;config.ini&#39;</span><span class="p">)</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Run the VBI Pipeline using the parameters specified in the supplied config file. The user MUST &quot;</span>
+        <span class="s2">&quot;specify either a set of options or a valid config file. Config files follow the standard INI &quot;</span>
+        <span class="s2">&quot;format.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;config_file&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;INI-style file containing pipeline options. Default is &#39;config.ini&#39;.&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;?&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;config.ini&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="n">gengroup</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_mutually_exclusive_group</span><span class="p">()</span>
-    <span class="n">gengroup</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-b&#39;</span><span class="p">,</span> <span class="s1">&#39;--blank&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Generate a blank configuration file&#39;</span><span class="p">)</span>
-    <span class="n">gengroup</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-d&#39;</span><span class="p">,</span> <span class="s1">&#39;--default&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
-                          <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Generate a configuration file with a some sensible parameters&#39;</span><span class="p">)</span>
+    <span class="n">gengroup</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-b&quot;</span><span class="p">,</span> <span class="s2">&quot;--blank&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Generate a blank configuration file&quot;</span>
+    <span class="p">)</span>
+    <span class="n">gengroup</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--default&quot;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;raw_dir&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Generate a configuration file with a some sensible parameters&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">default</span><span class="p">:</span>
-        <span class="n">gen_default_config</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config_file</span><span class="p">)</span>
+        <span class="n">gen_default_config</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config_file</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">default</span><span class="p">)</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">blank</span><span class="p">:</span>
@@ -524,7 +592,7 @@
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config_file</span><span class="p">):</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">main</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config_file</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Could not load config file </span><span class="si">{}</span><span class="s1">. Aborting&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config_file</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Could not load config file </span><span class="si">{}</span><span class="s2">. Aborting&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config_file</span><span class="p">))</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 
@@ -535,15 +603,15 @@
 <footer class="footer">
   <div class="container">
     <div class="left-footer">
-         &copy; 2020, Arthur Eigenbrot
+         &copy; 2021, Arthur Eigenbrot
        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
     </div>
    
     <div class="right-footer">
-      Last updated on 30 Sep 2020.
+      Last updated on 19 Oct 2021.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.2.0
     </div>
   </div>
 </footer>

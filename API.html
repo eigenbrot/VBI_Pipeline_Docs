@@ -4,18 +4,19 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reference/API &#8212; VBI_Pipeline v0.10.0</title>
-    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Reference/API &#8212; VBI_Pipeline v1.0.0</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/bootstrap-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" type="text/css" />
     <link rel="stylesheet" href="_static/dkist.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <link rel="shortcut icon" href="_static/favico.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -132,9 +133,6 @@
           
             <ul class="nav navbar-nav navbar-left">
               <li><a href="http://dkist.nso.edu/">DKIST</a></li>
-              <li><a href="http://docs.cadair.com/devdocs">DC Developer Guide</a></li>
-              <li><a href="http://docs.cadair.com/datarate">DKIST Data Rate</a></li>
-              <li><a href="http://docs.cadair.com/datamodel">DKIST Data Model</a></li>
             </ul>
           
           
@@ -267,11 +265,11 @@
 
     <div class="body col-md-9 content" role="main">
       
-  <div class="section" id="reference-api">
+  <section id="reference-api">
 <h1>Reference/API<a class="headerlink" href="#reference-api" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-VBI_Pipeline.VBIPipeline">
+<section id="module-VBI_Pipeline.VBIPipeline">
 <span id="vbi-pipeline-vbipipeline-module"></span><h2>VBI_Pipeline.VBIPipeline Module<a class="headerlink" href="#module-VBI_Pipeline.VBIPipeline" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="functions">
+<section id="functions">
 <h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -282,19 +280,19 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.VBIPipeline.gen_blank_config.html#VBI_Pipeline.VBIPipeline.gen_blank_config" title="VBI_Pipeline.VBIPipeline.gen_blank_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gen_blank_config</span></code></a>(filename)</p></td>
 <td><p>Create a blank configuration file.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.VBIPipeline.gen_default_config.html#VBI_Pipeline.VBIPipeline.gen_default_config" title="VBI_Pipeline.VBIPipeline.gen_default_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gen_default_config</span></code></a>(filename)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.VBIPipeline.gen_default_config.html#VBI_Pipeline.VBIPipeline.gen_default_config" title="VBI_Pipeline.VBIPipeline.gen_default_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gen_default_config</span></code></a>(filename, raw_dir)</p></td>
 <td><p>Generate a configuration file with defaults that make sense for testing on or around 11.08.17</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.VBIPipeline.generate_intermediate_objects.html#VBI_Pipeline.VBIPipeline.generate_intermediate_objects" title="VBI_Pipeline.VBIPipeline.generate_intermediate_objects"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_intermediate_objects</span></code></a>(config, instrument)</p></td>
 <td><p>Generate/collect the intermediate Calibration Objects needed by the Science Calibration module.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.VBIPipeline.get_all_obs_targets.html#VBI_Pipeline.VBIPipeline.get_all_obs_targets" title="VBI_Pipeline.VBIPipeline.get_all_obs_targets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_all_obs_targets</span></code></a>(data_dir[, suffix])</p></td>
-<td><p>Find the unique set of data set ID’s (ID___003) for Observation data in a given directory</p></td>
+<td><p>Find the unique set of data set ID's (ID___003) for Observation data in a given directory</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.VBIPipeline.get_instrument_name.html#VBI_Pipeline.VBIPipeline.get_instrument_name" title="VBI_Pipeline.VBIPipeline.get_instrument_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_instrument_name</span></code></a>(data_dir, suffix)</p></td>
 <td><p>Given a directory of VBI data, determine which camera was used to take the data.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.VBIPipeline.get_intermediate_kwargs.html#VBI_Pipeline.VBIPipeline.get_intermediate_kwargs" title="VBI_Pipeline.VBIPipeline.get_intermediate_kwargs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_intermediate_kwargs</span></code></a>(config, instrument, …)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.VBIPipeline.get_intermediate_kwargs.html#VBI_Pipeline.VBIPipeline.get_intermediate_kwargs" title="VBI_Pipeline.VBIPipeline.get_intermediate_kwargs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_intermediate_kwargs</span></code></a>(config, instrument, ...)</p></td>
 <td><p>Given user-defined and default parameters, construct the kwarg dictionary for a call to a <a href="#id1"><span class="problematic" id="id2">*</span></a>Calibration module</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.VBIPipeline.main.html#VBI_Pipeline.VBIPipeline.main" title="VBI_Pipeline.VBIPipeline.main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">main</span></code></a>(config_file)</p></td>
@@ -305,11 +303,11 @@
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="section" id="module-VBI_Pipeline.VBIStitch">
+</section>
+</section>
+<section id="module-VBI_Pipeline.VBIStitch">
 <span id="vbi-pipeline-vbistitch-module"></span><h2>VBI_Pipeline.VBIStitch Module<a class="headerlink" href="#module-VBI_Pipeline.VBIStitch" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id3">
+<section id="id3">
 <h3>Functions<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -317,16 +315,16 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.VBIStitch.main.html#VBI_Pipeline.VBIStitch.main" title="VBI_Pipeline.VBIStitch.main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">main</span></code></a>(inputfile, outputfile[, overwrite, …])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.VBIStitch.main.html#VBI_Pipeline.VBIStitch.main" title="VBI_Pipeline.VBIStitch.main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">main</span></code></a>(inputfile, outputfile[, overwrite, ...])</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="section" id="module-VBI_Pipeline.DarkCalibration">
+</section>
+</section>
+<section id="module-VBI_Pipeline.DarkCalibration">
 <span id="vbi-pipeline-darkcalibration-module"></span><h2>VBI_Pipeline.DarkCalibration Module<a class="headerlink" href="#module-VBI_Pipeline.DarkCalibration" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id4">
+<section id="id4">
 <h3>Functions<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -337,13 +335,13 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.DarkCalibration.command_line.html#VBI_Pipeline.DarkCalibration.command_line" title="VBI_Pipeline.DarkCalibration.command_line"><code class="xref py py-obj docutils literal notranslate"><span class="pre">command_line</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.DarkCalibration.generate_dark_calibration.html#VBI_Pipeline.DarkCalibration.generate_dark_calibration" title="VBI_Pipeline.DarkCalibration.generate_dark_calibration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_dark_calibration</span></code></a>(avgData, …)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.DarkCalibration.generate_dark_calibration.html#VBI_Pipeline.DarkCalibration.generate_dark_calibration" title="VBI_Pipeline.DarkCalibration.generate_dark_calibration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_dark_calibration</span></code></a>(avgData, ...)</p></td>
 <td><p>Simply update the primary header with the number of darks used and write the output file</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.DarkCalibration.main.html#VBI_Pipeline.DarkCalibration.main" title="VBI_Pipeline.DarkCalibration.main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">main</span></code></a>(dark_dir, outname[, …])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.DarkCalibration.main.html#VBI_Pipeline.DarkCalibration.main" title="VBI_Pipeline.DarkCalibration.main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">main</span></code></a>(dark_dir, outname[, ...])</p></td>
 <td><p>Run a raw data through the complete Dark Calibration pipeline.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.DarkCalibration.validate_dark_calibration.html#VBI_Pipeline.DarkCalibration.validate_dark_calibration" title="VBI_Pipeline.DarkCalibration.validate_dark_calibration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_dark_calibration</span></code></a>(avgData, …)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.DarkCalibration.validate_dark_calibration.html#VBI_Pipeline.DarkCalibration.validate_dark_calibration" title="VBI_Pipeline.DarkCalibration.validate_dark_calibration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_dark_calibration</span></code></a>(avgData, ...)</p></td>
 <td><p>Verify that the dark frame for each camera has an acceptable number of pixels that deviate significantly from the mean.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.DarkCalibration.validate_dark_task.html#VBI_Pipeline.DarkCalibration.validate_dark_task" title="VBI_Pipeline.DarkCalibration.validate_dark_task"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_dark_task</span></code></a>(darkData)</p></td>
@@ -351,11 +349,11 @@
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="section" id="module-VBI_Pipeline.GainCalibration">
+</section>
+</section>
+<section id="module-VBI_Pipeline.GainCalibration">
 <span id="vbi-pipeline-gaincalibration-module"></span><h2>VBI_Pipeline.GainCalibration Module<a class="headerlink" href="#module-VBI_Pipeline.GainCalibration" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id5">
+<section id="id5">
 <h3>Functions<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -369,13 +367,13 @@
 <tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.GainCalibration.generate_gain_calibration.html#VBI_Pipeline.GainCalibration.generate_gain_calibration" title="VBI_Pipeline.GainCalibration.generate_gain_calibration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_gain_calibration</span></code></a>(avgData, outname)</p></td>
 <td><p>Simply write the calibration to a file</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.GainCalibration.main.html#VBI_Pipeline.GainCalibration.main" title="VBI_Pipeline.GainCalibration.main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">main</span></code></a>(gain_dir, outname[, dark_cal, …])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.GainCalibration.main.html#VBI_Pipeline.GainCalibration.main" title="VBI_Pipeline.GainCalibration.main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">main</span></code></a>(gain_dir, outname[, dark_cal, ...])</p></td>
 <td><p>Run a raw data through the Gain Calibration pipeline</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.GainCalibration.normalize_gain.html#VBI_Pipeline.GainCalibration.normalize_gain" title="VBI_Pipeline.GainCalibration.normalize_gain"><code class="xref py py-obj docutils literal notranslate"><span class="pre">normalize_gain</span></code></a>(avgData)</p></td>
 <td><p>Normalize the gain images to a mean of 1.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.GainCalibration.validate_gain_calibration.html#VBI_Pipeline.GainCalibration.validate_gain_calibration" title="VBI_Pipeline.GainCalibration.validate_gain_calibration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_gain_calibration</span></code></a>(avgData, …)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.GainCalibration.validate_gain_calibration.html#VBI_Pipeline.GainCalibration.validate_gain_calibration" title="VBI_Pipeline.GainCalibration.validate_gain_calibration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_gain_calibration</span></code></a>(avgData, ...)</p></td>
 <td><p>Verify that the gain frame for each camera has an acceptable number of pixels that deviate significantly from the mean.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.GainCalibration.validate_gain_task_data.html#VBI_Pipeline.GainCalibration.validate_gain_task_data" title="VBI_Pipeline.GainCalibration.validate_gain_task_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_gain_task_data</span></code></a>(gainData)</p></td>
@@ -383,11 +381,11 @@
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="section" id="module-VBI_Pipeline.TargetCalibration">
+</section>
+</section>
+<section id="module-VBI_Pipeline.TargetCalibration">
 <span id="vbi-pipeline-targetcalibration-module"></span><h2>VBI_Pipeline.TargetCalibration Module<a class="headerlink" href="#module-VBI_Pipeline.TargetCalibration" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id6">
+<section id="id6">
 <h3>Functions<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -395,7 +393,7 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.TargetCalibration.analyze_hough.html#VBI_Pipeline.TargetCalibration.analyze_hough" title="VBI_Pipeline.TargetCalibration.analyze_hough"><code class="xref py py-obj docutils literal notranslate"><span class="pre">analyze_hough</span></code></a>(H, theta, rho[, theta_window, …])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.TargetCalibration.analyze_hough.html#VBI_Pipeline.TargetCalibration.analyze_hough" title="VBI_Pipeline.TargetCalibration.analyze_hough"><code class="xref py py-obj docutils literal notranslate"><span class="pre">analyze_hough</span></code></a>(H, theta, rho[, theta_window, ...])</p></td>
 <td><p>Find the equations for all the horizontal and vertical lines in a data array.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.TargetCalibration.check_shifts.html#VBI_Pipeline.TargetCalibration.check_shifts" title="VBI_Pipeline.TargetCalibration.check_shifts"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_shifts</span></code></a>(dists[, bimode_choice])</p></td>
@@ -416,28 +414,28 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.TargetCalibration.fwhm.html#VBI_Pipeline.TargetCalibration.fwhm" title="VBI_Pipeline.TargetCalibration.fwhm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fwhm</span></code></a>(x, y)</p></td>
 <td><p>Simple function to fit Hough peaks that have flat tops or are otherwise non-gaussian.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.TargetCalibration.gen_debug_plots.html#VBI_Pipeline.TargetCalibration.gen_debug_plots" title="VBI_Pipeline.TargetCalibration.gen_debug_plots"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gen_debug_plots</span></code></a>(intsects, pos_list, refidx, …)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.TargetCalibration.gen_debug_plots.html#VBI_Pipeline.TargetCalibration.gen_debug_plots" title="VBI_Pipeline.TargetCalibration.gen_debug_plots"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gen_debug_plots</span></code></a>(intsects, pos_list, ref_pos, ...)</p></td>
 <td><p>Generate 2 debug plots associated with the calculation of the camera shifts:</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.TargetCalibration.generate_target_calibration.html#VBI_Pipeline.TargetCalibration.generate_target_calibration" title="VBI_Pipeline.TargetCalibration.generate_target_calibration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_target_calibration</span></code></a>(intsects, …[, …])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.TargetCalibration.generate_target_calibration.html#VBI_Pipeline.TargetCalibration.generate_target_calibration" title="VBI_Pipeline.TargetCalibration.generate_target_calibration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_target_calibration</span></code></a>(intsects, ...[, ...])</p></td>
 <td><p>Find overlapping intersections and use them to compute sub-pixel offsets between pairs of hdus.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.TargetCalibration.load_hough_pickle.html#VBI_Pipeline.TargetCalibration.load_hough_pickle" title="VBI_Pipeline.TargetCalibration.load_hough_pickle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_hough_pickle</span></code></a>(outname)</p></td>
 <td><p>Load a previously-computed set of intersections and position list.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.TargetCalibration.main.html#VBI_Pipeline.TargetCalibration.main" title="VBI_Pipeline.TargetCalibration.main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">main</span></code></a>(grid_dir, outname[, suffix, dark_cal, …])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.TargetCalibration.main.html#VBI_Pipeline.TargetCalibration.main" title="VBI_Pipeline.TargetCalibration.main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">main</span></code></a>(grid_dir, outname[, suffix, dark_cal, ...])</p></td>
 <td><p>Compute a TargetCalibration (i.e., wcs sub-pixel offsets) given an input linegrid image.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.TargetCalibration.make_binary_gauss.html#VBI_Pipeline.TargetCalibration.make_binary_gauss" title="VBI_Pipeline.TargetCalibration.make_binary_gauss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_binary_gauss</span></code></a>(data[, sigma, …])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.TargetCalibration.make_binary_gauss.html#VBI_Pipeline.TargetCalibration.make_binary_gauss" title="VBI_Pipeline.TargetCalibration.make_binary_gauss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_binary_gauss</span></code></a>(data[, sigma, ...])</p></td>
 <td><p>Convert an array to a binary image using a gaussian smoothing method.</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="section" id="module-VBI_Pipeline.Data">
+</section>
+</section>
+<section id="module-VBI_Pipeline.Data">
 <span id="vbi-pipeline-data-module"></span><h2>VBI_Pipeline.Data Module<a class="headerlink" href="#module-VBI_Pipeline.Data" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="classes">
+<section id="classes">
 <h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -446,30 +444,30 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.Data.AlignmentData.html#VBI_Pipeline.Data.AlignmentData" title="VBI_Pipeline.Data.AlignmentData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlignmentData</span></code></a>([data_dir, dataset_ID, suffix])</p></td>
-<td><p>AlignmentData is an extension of <code class="xref py py-obj docutils literal notranslate"><span class="pre">FitData</span></code> designed to only hold data associated with Alignment. It inherits all of  the functionality of <a class="reference internal" href="api/VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData" title="VBI_Pipeline.Data.FitsData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FitsData</span></code></a> and defines an extra method that loads all data from a directory who’s headers match the  following:                Key  Value                —  —–           DKIST004  Alignment.</p></td>
+<td><p>AlignmentData is an extension of <code class="xref py py-obj docutils literal notranslate"><span class="pre">FitData</span></code> designed to only hold data associated with Alignment. It inherits all of the functionality of <a class="reference internal" href="api/VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData" title="VBI_Pipeline.Data.FitsData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FitsData</span></code></a> and defines an extra method that loads all data from a directory who's headers match the following:                Key  Value                ---  -----           DKIST004  align.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.Data.DSPSData.html#VBI_Pipeline.Data.DSPSData" title="VBI_Pipeline.Data.DSPSData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSPSData</span></code></a>(data_dir, target[, suffix])</p></td>
 <td><p>DSPSData is designed to handle the aggregation of a bunch of files that belong to multiple DSPS Repeat numbers of VBI.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.Data.DarkData.html#VBI_Pipeline.Data.DarkData" title="VBI_Pipeline.Data.DarkData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DarkData</span></code></a>([data_dir, dataset_ID, suffix])</p></td>
-<td><p>DarkData is an extension of <code class="xref py py-obj docutils literal notranslate"><span class="pre">FitData</span></code> designed to only hold data associated with Dark. It inherits all of  the functionality of <a class="reference internal" href="api/VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData" title="VBI_Pipeline.Data.FitsData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FitsData</span></code></a> and defines an extra method that loads all data from a directory who’s headers match the  following:                Key  Value                —  —–           DKIST004  Dark.</p></td>
+<td><p>DarkData is an extension of <code class="xref py py-obj docutils literal notranslate"><span class="pre">FitData</span></code> designed to only hold data associated with Dark. It inherits all of the functionality of <a class="reference internal" href="api/VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData" title="VBI_Pipeline.Data.FitsData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FitsData</span></code></a> and defines an extra method that loads all data from a directory who's headers match the following:                Key  Value                ---  -----           DKIST004  dark.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData" title="VBI_Pipeline.Data.FitsData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FitsData</span></code></a>([fitsfile])</p></td>
 <td><p>FitsData is a basically a wrapper for astropy.io.fits, with some extra methods and properties to aid the reduction of DKIST data.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.Data.GainData.html#VBI_Pipeline.Data.GainData" title="VBI_Pipeline.Data.GainData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GainData</span></code></a>([data_dir, dataset_ID, suffix])</p></td>
-<td><p>GainData is an extension of <code class="xref py py-obj docutils literal notranslate"><span class="pre">FitData</span></code> designed to only hold data associated with Gain. It inherits all of  the functionality of <a class="reference internal" href="api/VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData" title="VBI_Pipeline.Data.FitsData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FitsData</span></code></a> and defines an extra method that loads all data from a directory who’s headers match the  following:                Key  Value                —  —–           DKIST004  Gain.</p></td>
+<td><p>GainData is an extension of <code class="xref py py-obj docutils literal notranslate"><span class="pre">FitData</span></code> designed to only hold data associated with Gain. It inherits all of the functionality of <a class="reference internal" href="api/VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData" title="VBI_Pipeline.Data.FitsData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FitsData</span></code></a> and defines an extra method that loads all data from a directory who's headers match the following:                Key  Value                ---  -----           DKIST004  gain.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.Data.ObservationData.html#VBI_Pipeline.Data.ObservationData" title="VBI_Pipeline.Data.ObservationData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ObservationData</span></code></a>([data_dir, dataset_ID, suffix])</p></td>
-<td><p>ObservationData is an extension of <code class="xref py py-obj docutils literal notranslate"><span class="pre">FitData</span></code> designed to only hold data associated with Observation. It inherits all of  the functionality of <a class="reference internal" href="api/VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData" title="VBI_Pipeline.Data.FitsData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FitsData</span></code></a> and defines an extra method that loads all data from a directory who’s headers match the  following:                Key  Value                —  —–           DKIST004  Observation.</p></td>
+<td><p>ObservationData is an extension of <code class="xref py py-obj docutils literal notranslate"><span class="pre">FitData</span></code> designed to only hold data associated with Observation. It inherits all of the functionality of <a class="reference internal" href="api/VBI_Pipeline.Data.FitsData.html#VBI_Pipeline.Data.FitsData" title="VBI_Pipeline.Data.FitsData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FitsData</span></code></a> and defines an extra method that loads all data from a directory who's headers match the following:                Key  Value                ---  -----           DKIST004  observe.</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="section" id="module-VBI_Pipeline.generic">
+</section>
+</section>
+<section id="module-VBI_Pipeline.generic">
 <span id="vbi-pipeline-generic-module"></span><h2>VBI_Pipeline.generic Module<a class="headerlink" href="#module-VBI_Pipeline.generic" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id7">
+<section id="id7">
 <h3>Functions<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -486,14 +484,14 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.generic.bin_calibration.html#VBI_Pipeline.generic.bin_calibration" title="VBI_Pipeline.generic.bin_calibration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bin_calibration</span></code></a>(Data, x_binning, y_binning)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.generic.conform_calibration.html#VBI_Pipeline.generic.conform_calibration" title="VBI_Pipeline.generic.conform_calibration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">conform_calibration</span></code></a>(Data[, xy_binning, …])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.generic.conform_calibration.html#VBI_Pipeline.generic.conform_calibration" title="VBI_Pipeline.generic.conform_calibration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">conform_calibration</span></code></a>(Data[, xy_binning, ...])</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.generic.dark_correction.html#VBI_Pipeline.generic.dark_correction" title="VBI_Pipeline.generic.dark_correction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dark_correction</span></code></a>(fitsData, dark_calibration)</p></td>
 <td><p>Subtract a dark calibration from input data</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="api/VBI_Pipeline.generic.ensure_fits.html#VBI_Pipeline.generic.ensure_fits" title="VBI_Pipeline.generic.ensure_fits"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_fits</span></code></a>(filename)</p></td>
-<td><p>Make sure that a string has only one ‘.fits’ on the end of it</p></td>
+<td><p>Make sure that a string has only one '.fits' on the end of it</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.generic.extract_ROI.html#VBI_Pipeline.generic.extract_ROI" title="VBI_Pipeline.generic.extract_ROI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_ROI</span></code></a>(Data, ROI_min, ROI_max)</p></td>
 <td><p></p></td>
@@ -502,13 +500,13 @@
 <td><p>Divide a gain calibration into input data</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="api/VBI_Pipeline.generic.strip_fits.html#VBI_Pipeline.generic.strip_fits" title="VBI_Pipeline.generic.strip_fits"><code class="xref py py-obj docutils literal notranslate"><span class="pre">strip_fits</span></code></a>(filename)</p></td>
-<td><p>Strip the ‘.fits’ extension from a filename</p></td>
+<td><p>Strip the '.fits' extension from a filename</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
     </div>
@@ -518,15 +516,15 @@
 <footer class="footer">
   <div class="container">
     <div class="left-footer">
-         &copy; 2020, Arthur Eigenbrot
+         &copy; 2021, Arthur Eigenbrot
        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
     </div>
    
     <div class="right-footer">
-      Last updated on 30 Sep 2020.
+      Last updated on 19 Oct 2021.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.2.0
     </div>
   </div>
 </footer>

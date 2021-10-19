@@ -5,17 +5,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VBI_Pipeline.generic &#8212; VBI_Pipeline v0.10.0</title>
-    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <title>VBI_Pipeline.generic &#8212; VBI_Pipeline v1.0.0</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/bootstrap-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" type="text/css" />
     <link rel="stylesheet" href="../../_static/dkist.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
     <link rel="shortcut icon" href="../../_static/favico.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -89,9 +89,6 @@
           
             <ul class="nav navbar-nav navbar-left">
               <li><a href="http://dkist.nso.edu/">DKIST</a></li>
-              <li><a href="http://docs.cadair.com/devdocs">DC Developer Guide</a></li>
-              <li><a href="http://docs.cadair.com/datarate">DKIST Data Rate</a></li>
-              <li><a href="http://docs.cadair.com/datamodel">DKIST Data Model</a></li>
             </ul>
           
           
@@ -136,9 +133,12 @@
   <h1>Source code for VBI_Pipeline.generic</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span> <span class="k">as</span> <span class="n">pyfits</span>
+<span class="kn">from</span> <span class="nn">astropy.time</span> <span class="kn">import</span> <span class="n">Time</span>
+
 <span class="kn">from</span> <span class="nn">VBI_Pipeline</span> <span class="kn">import</span> <span class="n">Data</span>
+<span class="kn">from</span> <span class="nn">VBI_Pipeline.data</span> <span class="kn">import</span> <span class="n">CONSTANTS</span>
+<span class="kn">from</span> <span class="nn">VBI_Pipeline.data</span> <span class="kn">import</span> <span class="n">S122</span>
 <span class="kn">from</span> <span class="nn">VBI_Pipeline.tag</span> <span class="kn">import</span> <span class="n">tag</span>
-<span class="kn">from</span> <span class="nn">VBI_Pipeline.data</span> <span class="kn">import</span> <span class="n">S122</span><span class="p">,</span> <span class="n">CONSTANTS</span>
 
 
 <div class="viewcode-block" id="average_data"><a class="viewcode-back" href="../../api/VBI_Pipeline.generic.average_data.html#VBI_Pipeline.generic.average_data">[docs]</a><span class="k">def</span> <span class="nf">average_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -181,26 +181,36 @@
 
     <span class="k">if</span> <span class="n">preserve_camera_pos</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">unique_step_list</span><span class="p">:</span>
-            <span class="n">output</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">numx</span><span class="p">,</span> <span class="n">numy</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-            <span class="n">pos_idx</span> <span class="o">=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">find_data_keyword_idx</span><span class="p">(</span><span class="n">S122</span><span class="p">[</span><span class="s1">&#39;CurrentSpatialStep&#39;</span><span class="p">],</span> <span class="n">i</span><span class="p">)</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">numx</span><span class="p">,</span> <span class="n">numy</span><span class="p">))</span>
+            <span class="n">pos_idx</span> <span class="o">=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">find_data_keyword_idx</span><span class="p">(</span><span class="n">S122</span><span class="p">[</span><span class="s2">&quot;CurrentSpatialStep&quot;</span><span class="p">],</span> <span class="n">i</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pos_idx</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">header</span> <span class="o">=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">[</span><span class="n">pos_idx</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">header</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Averaging camera position </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">i</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Averaging camera position </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">i</span><span class="p">))</span>
+                <span class="n">dates</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">pos_idx</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:  using data HDU </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">j</span><span class="p">))</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:  using data HDU </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">j</span><span class="p">))</span>
                     <span class="n">output</span> <span class="o">+=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
-                <span class="n">hdulist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pyfits</span><span class="o">.</span><span class="n">ImageHDU</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">pos_idx</span><span class="p">),</span> <span class="n">header</span><span class="p">))</span>
+                    <span class="n">dates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Time</span><span class="p">(</span><span class="n">fitsData</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;DATE-OBS&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">mjd</span><span class="p">)</span>
+                <span class="n">ih</span> <span class="o">=</span> <span class="n">pyfits</span><span class="o">.</span><span class="n">ImageHDU</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">pos_idx</span><span class="p">),</span> <span class="n">header</span><span class="p">)</span>
+                <span class="n">avg_time</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dates</span><span class="p">),</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;mjd&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">fits</span>
+                <span class="n">ih</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;DATE-OBS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">avg_time</span>
+                <span class="n">hdulist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ih</span><span class="p">)</span>
 
     <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Averaging all HDUs&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
-        <span class="n">output</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">numx</span><span class="p">,</span> <span class="n">numy</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
-            <span class="n">output</span> <span class="o">+=</span> <span class="n">d</span>
-        <span class="n">hdulist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pyfits</span><span class="o">.</span><span class="n">ImageHDU</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">),</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: Averaging all HDUs&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">()))</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">numx</span><span class="p">,</span> <span class="n">numy</span><span class="p">))</span>
+        <span class="n">dates</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">dhdu</span> <span class="ow">in</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">data_hdus</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">+=</span> <span class="n">dhdu</span><span class="o">.</span><span class="n">data</span>
+            <span class="n">dates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Time</span><span class="p">(</span><span class="n">dhdu</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;DATE-OBS&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">mjd</span><span class="p">)</span>
+        <span class="n">ih</span> <span class="o">=</span> <span class="n">pyfits</span><span class="o">.</span><span class="n">ImageHDU</span><span class="p">(</span><span class="n">output</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">),</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">avg_time</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dates</span><span class="p">),</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;mjd&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">fits</span>
+        <span class="n">ih</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;DATE-OBS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">avg_time</span>
+        <span class="n">hdulist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ih</span><span class="p">)</span>
 
     <span class="n">newData</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">FitsData</span><span class="p">()</span>
     <span class="n">newData</span><span class="o">.</span><span class="n">hdulist</span> <span class="o">=</span> <span class="n">hdulist</span>
-    <span class="n">newData</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="s1">&#39;averageFitsData&#39;</span>
+    <span class="n">newData</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="s2">&quot;averageFitsData&quot;</span>
 
     <span class="k">return</span> <span class="n">newData</span></div>
 
@@ -224,19 +234,23 @@
 <span class="sd">        The input fitsData is updated inplace.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Should probably have a check here to make sure there are the same number of camera positions in both inputs</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: performing dark correction on </span><span class="si">{}</span><span class="s1"> with </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">fitsData</span><span class="p">,</span> <span class="n">dark_calibration</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: performing dark correction on </span><span class="si">{}</span><span class="s2"> with </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">fitsData</span><span class="p">,</span> <span class="n">dark_calibration</span><span class="p">))</span>
 
     <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">unique_step_list</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">dark_data_idx</span> <span class="o">=</span> <span class="n">dark_calibration</span><span class="o">.</span><span class="n">find_data_keyword_idx</span><span class="p">(</span><span class="n">S122</span><span class="p">[</span><span class="s1">&#39;CurrentSpatialStep&#39;</span><span class="p">],</span> <span class="n">pos</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">dark_data_idx</span> <span class="o">=</span> <span class="n">dark_calibration</span><span class="o">.</span><span class="n">find_data_keyword_idx</span><span class="p">(</span><span class="n">S122</span><span class="p">[</span><span class="s2">&quot;CurrentSpatialStep&quot;</span><span class="p">],</span> <span class="n">pos</span><span class="p">)[</span>
+                <span class="mi">0</span>
+            <span class="p">]</span>
         <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">&#39;Could not find a Dark HDU with </span><span class="si">{}</span><span class="s1"> = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">S122</span><span class="p">[</span><span class="s1">&#39;CurrentSpatialStep&#39;</span><span class="p">],</span> <span class="n">pos</span><span class="p">))</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: using dark data HDU </span><span class="si">{}</span><span class="s1">:&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">dark_data_idx</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span>
+                <span class="s2">&quot;Could not find a Dark HDU with </span><span class="si">{}</span><span class="s2"> = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">S122</span><span class="p">[</span><span class="s2">&quot;CurrentSpatialStep&quot;</span><span class="p">],</span> <span class="n">pos</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: using dark data HDU </span><span class="si">{}</span><span class="s2">:&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">dark_data_idx</span><span class="p">))</span>
         <span class="n">dark_data</span> <span class="o">=</span> <span class="n">dark_calibration</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">dark_data_idx</span><span class="p">]</span>
 
-        <span class="n">data_idx</span> <span class="o">=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">find_data_keyword_idx</span><span class="p">(</span><span class="n">S122</span><span class="p">[</span><span class="s1">&#39;CurrentSpatialStep&#39;</span><span class="p">],</span> <span class="n">pos</span><span class="p">)</span>
+        <span class="n">data_idx</span> <span class="o">=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">find_data_keyword_idx</span><span class="p">(</span><span class="n">S122</span><span class="p">[</span><span class="s2">&quot;CurrentSpatialStep&quot;</span><span class="p">],</span> <span class="n">pos</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data_idx</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:  using data HDU </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">i</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:  using data HDU </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">i</span><span class="p">))</span>
             <span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">dark_data</span></div>
 
 
@@ -260,21 +274,25 @@
 <span class="sd">    None</span>
 <span class="sd">        The input fitsData is updated inplace.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: performing gain correction on </span><span class="si">{}</span><span class="s1"> with </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">fitsData</span><span class="p">,</span> <span class="n">gain_calibration</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: performing gain correction on </span><span class="si">{}</span><span class="s2"> with </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">fitsData</span><span class="p">,</span> <span class="n">gain_calibration</span><span class="p">))</span>
 
     <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">unique_step_list</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">gain_data_idx</span> <span class="o">=</span> <span class="n">gain_calibration</span><span class="o">.</span><span class="n">find_data_keyword_idx</span><span class="p">(</span><span class="n">S122</span><span class="p">[</span><span class="s1">&#39;CurrentSpatialStep&#39;</span><span class="p">],</span> <span class="n">pos</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">gain_data_idx</span> <span class="o">=</span> <span class="n">gain_calibration</span><span class="o">.</span><span class="n">find_data_keyword_idx</span><span class="p">(</span><span class="n">S122</span><span class="p">[</span><span class="s2">&quot;CurrentSpatialStep&quot;</span><span class="p">],</span> <span class="n">pos</span><span class="p">)[</span>
+                <span class="mi">0</span>
+            <span class="p">]</span>
         <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">&#39;Could not find a Gain HDU with </span><span class="si">{}</span><span class="s1"> = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">S122</span><span class="p">[</span><span class="s1">&#39;CurrentSpatialStep&#39;</span><span class="p">],</span> <span class="n">pos</span><span class="p">))</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: using gain data HDU </span><span class="si">{}</span><span class="s1">:&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">gain_data_idx</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span>
+                <span class="s2">&quot;Could not find a Gain HDU with </span><span class="si">{}</span><span class="s2"> = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">S122</span><span class="p">[</span><span class="s2">&quot;CurrentSpatialStep&quot;</span><span class="p">],</span> <span class="n">pos</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: using gain data HDU </span><span class="si">{}</span><span class="s2">:&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">gain_data_idx</span><span class="p">))</span>
         <span class="n">gain_data</span> <span class="o">=</span> <span class="n">gain_calibration</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">gain_data_idx</span><span class="p">]</span>
 
-        <span class="n">data_idx</span> <span class="o">=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">find_data_keyword_idx</span><span class="p">(</span><span class="n">S122</span><span class="p">[</span><span class="s1">&#39;CurrentSpatialStep&#39;</span><span class="p">],</span> <span class="n">pos</span><span class="p">)</span>
+        <span class="n">data_idx</span> <span class="o">=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">find_data_keyword_idx</span><span class="p">(</span><span class="n">S122</span><span class="p">[</span><span class="s2">&quot;CurrentSpatialStep&quot;</span><span class="p">],</span> <span class="n">pos</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data_idx</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">:  using data HDU </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">i</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:  using data HDU </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tag</span><span class="p">(),</span> <span class="n">i</span><span class="p">))</span>
             <span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">gain_data</span>
-            <span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="mf">0.</span></div>
+            <span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">fitsData</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="mf">0.0</span></div>
 
 
 <div class="viewcode-block" id="conform_calibration"><a class="viewcode-back" href="../../api/VBI_Pipeline.generic.conform_calibration.html#VBI_Pipeline.generic.conform_calibration">[docs]</a><span class="k">def</span> <span class="nf">conform_calibration</span><span class="p">(</span><span class="n">Data</span><span class="p">,</span> <span class="n">xy_binning</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ROI_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ROI_max</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -292,19 +310,28 @@
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Binning currently only supports arrays with exactly 2 dimensions&quot;</span><span class="p">)</span>
 
     <span class="n">data</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">numx</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;numx&#39;</span><span class="p">]</span>
-    <span class="n">numy</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;numy&#39;</span><span class="p">]</span>
-    <span class="n">x_binning_old</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;x_bin&#39;</span><span class="p">]</span>
-    <span class="n">y_binning_old</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;y_bin&#39;</span><span class="p">]</span>
+    <span class="n">numx</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;numx&quot;</span><span class="p">]</span>
+    <span class="n">numy</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;numy&quot;</span><span class="p">]</span>
+    <span class="n">x_binning_old</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;x_bin&quot;</span><span class="p">]</span>
+    <span class="n">y_binning_old</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;y_bin&quot;</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">x_binning_old</span> <span class="o">&gt;</span> <span class="n">x_binning</span> <span class="ow">or</span> <span class="n">y_binning_old</span> <span class="o">&gt;</span> <span class="n">y_binning</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;Cannot bin to larger sizes</span><span class="se">\n</span><span class="s2">(Attempted </span><span class="si">{}</span><span class="s2">x</span><span class="si">{}</span><span class="s2"> -&gt; </span><span class="si">{}</span><span class="s2">x</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_binning_old</span><span class="p">,</span> <span class="n">y_binning_old</span><span class="p">,</span>
-                                                                                <span class="n">x_binning</span><span class="p">,</span> <span class="n">y_binning</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">x_binning</span> <span class="o">/</span> <span class="n">x_binning_old</span> <span class="o">%</span> <span class="mi">1</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">y_binning</span> <span class="o">/</span> <span class="n">y_binning_old</span> <span class="o">%</span> <span class="mi">1</span> <span class="o">!=</span> <span class="mi">0</span> \
-            <span class="ow">or</span> <span class="n">x_binning</span> <span class="o">%</span> <span class="mi">1</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">y_binning</span> <span class="o">%</span> <span class="mi">1</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot bin by non-integer amounts</span><span class="se">\n</span><span class="s2">(Attempted </span><span class="si">{}</span><span class="s2">x</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_binning</span> <span class="o">/</span> <span class="n">x_binning_old</span><span class="p">,</span>
-                                                                                       <span class="n">y_binning</span> <span class="o">/</span> <span class="n">y_binning_old</span><span class="p">))</span>
+            <span class="s2">&quot;Cannot bin to larger sizes</span><span class="se">\n</span><span class="s2">(Attempted </span><span class="si">{}</span><span class="s2">x</span><span class="si">{}</span><span class="s2"> -&gt; </span><span class="si">{}</span><span class="s2">x</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">x_binning_old</span><span class="p">,</span> <span class="n">y_binning_old</span><span class="p">,</span> <span class="n">x_binning</span><span class="p">,</span> <span class="n">y_binning</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="n">x_binning</span> <span class="o">/</span> <span class="n">x_binning_old</span> <span class="o">%</span> <span class="mi">1</span> <span class="o">!=</span> <span class="mi">0</span>
+        <span class="ow">or</span> <span class="n">y_binning</span> <span class="o">/</span> <span class="n">y_binning_old</span> <span class="o">%</span> <span class="mi">1</span> <span class="o">!=</span> <span class="mi">0</span>
+        <span class="ow">or</span> <span class="n">x_binning</span> <span class="o">%</span> <span class="mi">1</span> <span class="o">!=</span> <span class="mi">0</span>
+        <span class="ow">or</span> <span class="n">y_binning</span> <span class="o">%</span> <span class="mi">1</span> <span class="o">!=</span> <span class="mi">0</span>
+    <span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Cannot bin by non-integer amounts</span><span class="se">\n</span><span class="s2">(Attempted </span><span class="si">{}</span><span class="s2">x</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">x_binning</span> <span class="o">/</span> <span class="n">x_binning_old</span><span class="p">,</span> <span class="n">y_binning</span> <span class="o">/</span> <span class="n">y_binning_old</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
 
     <span class="n">x_step</span> <span class="o">=</span> <span class="n">x_binning</span> <span class="o">//</span> <span class="n">x_binning_old</span>
     <span class="n">y_step</span> <span class="o">=</span> <span class="n">y_binning</span> <span class="o">//</span> <span class="n">y_binning_old</span>
@@ -318,10 +345,10 @@
         <span class="n">binned_data</span> <span class="o">+=</span> <span class="n">xbinned_data</span><span class="p">[:,</span> <span class="n">j</span><span class="p">::</span><span class="n">y_step</span><span class="p">]</span>
 
     <span class="n">Data</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">binned_data</span>
-    <span class="n">Data</span><span class="o">.</span><span class="n">update_header</span><span class="p">(</span><span class="s1">&#39;numx&#39;</span><span class="p">,</span> <span class="n">numx</span> <span class="o">//</span> <span class="n">x_step</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">Data</span><span class="o">.</span><span class="n">update_header</span><span class="p">(</span><span class="s1">&#39;numy&#39;</span><span class="p">,</span> <span class="n">numy</span> <span class="o">//</span> <span class="n">y_step</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">Data</span><span class="o">.</span><span class="n">update_header</span><span class="p">(</span><span class="s1">&#39;x_bin&#39;</span><span class="p">,</span> <span class="n">x_binning</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">Data</span><span class="o">.</span><span class="n">update_header</span><span class="p">(</span><span class="s1">&#39;y_bin&#39;</span><span class="p">,</span> <span class="n">y_binning</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">Data</span><span class="o">.</span><span class="n">update_header</span><span class="p">(</span><span class="s2">&quot;numx&quot;</span><span class="p">,</span> <span class="n">numx</span> <span class="o">//</span> <span class="n">x_step</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">Data</span><span class="o">.</span><span class="n">update_header</span><span class="p">(</span><span class="s2">&quot;numy&quot;</span><span class="p">,</span> <span class="n">numy</span> <span class="o">//</span> <span class="n">y_step</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">Data</span><span class="o">.</span><span class="n">update_header</span><span class="p">(</span><span class="s2">&quot;x_bin&quot;</span><span class="p">,</span> <span class="n">x_binning</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">Data</span><span class="o">.</span><span class="n">update_header</span><span class="p">(</span><span class="s2">&quot;y_bin&quot;</span><span class="p">,</span> <span class="n">y_binning</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">return</span></div>
 
@@ -332,28 +359,26 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">ROI_max</span><span class="p">:</span>
         <span class="n">ROI_max</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
-    <span class="n">Data</span><span class="o">.</span><span class="n">update_header</span><span class="p">(</span><span class="s1">&#39;numx&#39;</span><span class="p">,</span> <span class="n">ROI_max</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">ROI_min</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">Data</span><span class="o">.</span><span class="n">update_header</span><span class="p">(</span><span class="s1">&#39;numy&#39;</span><span class="p">,</span> <span class="n">ROI_max</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ROI_min</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">Data</span><span class="o">.</span><span class="n">update_header</span><span class="p">(</span><span class="s1">&#39;ROI_min&#39;</span><span class="p">,</span> <span class="n">ROI_min</span><span class="p">)</span>
-    <span class="n">Data</span><span class="o">.</span><span class="n">update_header</span><span class="p">(</span><span class="s1">&#39;ROI_max&#39;</span><span class="p">,</span> <span class="n">ROI_max</span><span class="p">)</span>
+    <span class="n">Data</span><span class="o">.</span><span class="n">update_header</span><span class="p">(</span><span class="s2">&quot;numx&quot;</span><span class="p">,</span> <span class="n">ROI_max</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">ROI_min</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">Data</span><span class="o">.</span><span class="n">update_header</span><span class="p">(</span><span class="s2">&quot;numy&quot;</span><span class="p">,</span> <span class="n">ROI_max</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ROI_min</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">Data</span><span class="o">.</span><span class="n">update_header</span><span class="p">(</span><span class="s2">&quot;ROI_min&quot;</span><span class="p">,</span> <span class="n">ROI_min</span><span class="p">)</span>
+    <span class="n">Data</span><span class="o">.</span><span class="n">update_header</span><span class="p">(</span><span class="s2">&quot;ROI_max&quot;</span><span class="p">,</span> <span class="n">ROI_max</span><span class="p">)</span>
 
-    <span class="n">Data</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">ROI_min</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">ROI_max</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ROI_min</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="n">ROI_max</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="n">Data</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">Data</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">ROI_min</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">:</span> <span class="n">ROI_max</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ROI_min</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">:</span> <span class="n">ROI_max</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
 
     <span class="k">return</span></div>
 
 
 <div class="viewcode-block" id="strip_fits"><a class="viewcode-back" href="../../api/VBI_Pipeline.generic.strip_fits.html#VBI_Pipeline.generic.strip_fits">[docs]</a><span class="k">def</span> <span class="nf">strip_fits</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Strip the &#39;.fits&#39; extension from a filename</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Strip the &#39;.fits&#39; extension from a filename&quot;&quot;&quot;</span>
 
-    <span class="k">return</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">CONSTANTS</span><span class="p">[</span><span class="s1">&#39;common&#39;</span><span class="p">][</span><span class="s1">&#39;suffix&#39;</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span></div>
+    <span class="k">return</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">CONSTANTS</span><span class="p">[</span><span class="s2">&quot;common&quot;</span><span class="p">][</span><span class="s2">&quot;suffix&quot;</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="ensure_fits"><a class="viewcode-back" href="../../api/VBI_Pipeline.generic.ensure_fits.html#VBI_Pipeline.generic.ensure_fits">[docs]</a><span class="k">def</span> <span class="nf">ensure_fits</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Make sure that a string has only one &#39;.fits&#39; on the end of it</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Make sure that a string has only one &#39;.fits&#39; on the end of it&quot;&quot;&quot;</span>
 
-    <span class="k">return</span> <span class="n">strip_fits</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="s1">&#39;common&#39;</span><span class="p">][</span><span class="s1">&#39;suffix&#39;</span><span class="p">]</span></div>
+    <span class="k">return</span> <span class="n">strip_fits</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">CONSTANTS</span><span class="p">[</span><span class="s2">&quot;common&quot;</span><span class="p">][</span><span class="s2">&quot;suffix&quot;</span><span class="p">]</span></div>
 </pre></div>
 
     </div>
@@ -363,15 +388,15 @@
 <footer class="footer">
   <div class="container">
     <div class="left-footer">
-         &copy; 2020, Arthur Eigenbrot
+         &copy; 2021, Arthur Eigenbrot
        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
     </div>
    
     <div class="right-footer">
-      Last updated on 30 Sep 2020.
+      Last updated on 19 Oct 2021.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.2.0
     </div>
   </div>
 </footer>

@@ -4,18 +4,19 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Instrument Partner Testing Access &#8212; VBI_Pipeline v0.10.0</title>
-    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Instrument Partner Testing Access &#8212; VBI_Pipeline v1.0.0</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/bootstrap-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" type="text/css" />
     <link rel="stylesheet" href="_static/dkist.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <link rel="shortcut icon" href="_static/favico.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -124,9 +125,6 @@
           
             <ul class="nav navbar-nav navbar-left">
               <li><a href="http://dkist.nso.edu/">DKIST</a></li>
-              <li><a href="http://docs.cadair.com/devdocs">DC Developer Guide</a></li>
-              <li><a href="http://docs.cadair.com/datarate">DKIST Data Rate</a></li>
-              <li><a href="http://docs.cadair.com/datamodel">DKIST Data Model</a></li>
             </ul>
           
           
@@ -190,7 +188,7 @@
 
     <div class="body col-md-9 content" role="main">
       
-  <div class="section" id="instrument-partner-testing-access">
+  <section id="instrument-partner-testing-access">
 <h1>Instrument Partner Testing Access<a class="headerlink" href="#instrument-partner-testing-access" title="Permalink to this headline">¶</a></h1>
 <p>As of version 0.7.1 the pipeline also provides command-line level access to the individual modules of the VBI Pipeline.
 These scripts are useful for testing and debugging each step of the VBI Pipeline individually. In each case they provide
@@ -198,9 +196,9 @@ complete access to each step’s <code class="xref py py-obj docutils literal no
 set by the user the optional parameters fall back on the package defaults (the same as when running the main
 <code class="docutils literal notranslate"><span class="pre">vbi_pipeline</span></code> program).</p>
 <p>The outputs of these scripts are suitable for use in the <code class="docutils literal notranslate"><span class="pre">Main</span></code> section of the standard configuration file.</p>
-<div class="section" id="dark-calibration">
+<section id="dark-calibration">
 <h2>Dark Calibration<a class="headerlink" href="#dark-calibration" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="usage">
+<section id="usage">
 <h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: vbi_dark [-h] [-f] [-L LOW_THRESH] [-H HIGH_THRESH] dark_dir output</span>
 
@@ -218,19 +216,21 @@ set by the user the optional parameters fall back on the package defaults (the s
 <span class="go">                        Low acceptance threshold</span>
 <span class="go">  -H HIGH_THRESH, --high-thresh HIGH_THRESH</span>
 <span class="go">                        High acceptance threshold</span>
+<span class="go">  -S SUFFIX, --suffix SUFFIX</span>
+<span class="go">                        Only load files with this extension. Default is &quot;FITS&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="example">
+</section>
+<section id="example">
 <h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> vbi_dark ../input_data DC.FITS
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>vbi_dark ../input_data DC.FITS
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="gain-calibration">
+</section>
+</section>
+<section id="gain-calibration">
 <h2>Gain Calibration<a class="headerlink" href="#gain-calibration" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id1">
+<section id="id1">
 <h3>Usage<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: vbi_gain [-h] [-f] [-D DARK_CAL] [-L LOW_THRESH] [-H HIGH_THRESH]</span>
 <span class="go">                gain_dir output</span>
@@ -252,17 +252,19 @@ set by the user the optional parameters fall back on the package defaults (the s
 <span class="go">                        Low acceptance threshold</span>
 <span class="go">  -H HIGH_THRESH, --high-thresh HIGH_THRESH</span>
 <span class="go">                        High acceptance threshold</span>
+<span class="go">  -S SUFFIX, --suffix SUFFIX</span>
+<span class="go">                        Only load files with this extension. Default is &quot;FITS&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id2">
+</section>
+<section id="id2">
 <h3>Example<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> vbi_gain ../input_data GC.FITS -D DC.FITS
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>vbi_gain ../input_data GC.FITS -D DC.FITS
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="target-calibration">
+</section>
+</section>
+<section id="target-calibration">
 <h2>Target Calibration<a class="headerlink" href="#target-calibration" title="Permalink to this headline">¶</a></h2>
 <p>There are a lot of options here that should probably be left alone. Many of the defaults are critically important to
 a successful TargetCal run.</p>
@@ -271,7 +273,7 @@ a successful TargetCal run.</p>
 <p>Target Calibration will likely fail if you do not provide both Dark Calibration (<code class="docutils literal notranslate"><span class="pre">-D</span></code>) and Gain Calibration
 (<code class="docutils literal notranslate"><span class="pre">-G</span></code>) objects.</p>
 </div>
-<div class="section" id="id3">
+<section id="id3">
 <h3>Usage<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: vbi_target [-h] [-f] [-D DARK_CAL] [-G GAIN_CAL] [-g GAUSS_SIGMA]</span>
 <span class="go">                  [-d DMAX] [-r RHO_MIN_DIST] [-i REFIDX] [-R RHO_SMOOTH]</span>
@@ -304,9 +306,8 @@ a successful TargetCal run.</p>
 <span class="go">                        Minimum distance (in Hough space coordinates) allowed</span>
 <span class="go">                        between peaks in rho. This parameter is highly</span>
 <span class="go">                        dependent on the pixel scale of the grid lines.</span>
-<span class="go">  -i REFIDX, --refidx REFIDX</span>
-<span class="go">                        Index of the reference hdu to use. Index corresponds</span>
-<span class="go">                        to the location in both intsects and pos_list</span>
+<span class="go">  -i REF_POS, --ref_pos REF_POS</span>
+<span class="go">                        Camera position to use as reference</span>
 <span class="go">  -R RHO_SMOOTH, --rho-smooth RHO_SMOOTH</span>
 <span class="go">                        Sigma of smoothing kernel used to remove noise from</span>
 <span class="go">                        the rho rss. Something b/t 5 and 10 is probably good.</span>
@@ -316,6 +317,14 @@ a successful TargetCal run.</p>
 <span class="go">                        percentage of pixels above the threshold is outside</span>
 <span class="go">                        the range (binary_threshold, 1 - binary_threshold),</span>
 <span class="go">                        then some cleaning of outlying pixels is performed.</span>
+<span class="go">  -P PEAK_THRESHOLD, --peak-threshold PEAK_THRESHOLD</span>
+<span class="go">                        Relative cutoff for detecting peaks in the Hough transform</span>
+<span class="go">                        [0 - 1]. Larger numbers will exclude shorter lines, but can</span>
+<span class="go">                        help if spurious lines are being detected.</span>
+<span class="go">  -w THETA_WINDOW, --theta-window THETA_WINDOW</span>
+<span class="go">                        Size of region (in radians) around the peak angles to include</span>
+<span class="go">                        when looking for peaks in the Hough rho dimension. Smaller numbers</span>
+<span class="go">                        can improve the centering of rho peaks.</span>
 <span class="go">  -s SIGCLIP, --sigclip SIGCLIP</span>
 <span class="go">                        Any pixels beyond sigclip standard deviations from the</span>
 <span class="go">                        mean are excluded from the binary thresholding</span>
@@ -325,21 +334,23 @@ a successful TargetCal run.</p>
 <span class="go">                        the computed lines and grid intersections.</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id4">
+</section>
+<section id="id4">
 <h3>Example<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> vbi_target ../input_data TC.FITS -D DC.FITS -G GC.FITS
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>vbi_target ../input_data TC.FITS -D DC.FITS -G GC.FITS
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="science-calibration">
+</section>
+</section>
+<section id="science-calibration">
 <h2>Science Calibration<a class="headerlink" href="#science-calibration" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id5">
+<section id="id5">
 <h3>Usage<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: vbi_science [-h] [-f] [-a] [-D DARK_CAL] [-G GAIN_CAL] [-T TARGET_CAL] [-S SUFFIX] [-I DATASET_ID] data_dir output</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: vbi_science [-h] [-f] [-a] [-D DARK_CAL] [-G GAIN_CAL] [-T TARGET_CAL]</span>
+<span class="go">                   [-S SUFFIX] [-I DATASET_ID] data_dir output</span>
 
-<span class="go">Run the VBI Pipeline&#39;s Science Calibration module. This is a direct hook into ScienceCalibration.main()and all kwargs are exposed as command line options</span>
+<span class="go">Run the VBI Pipeline&#39;s Science Calibration module. This is a direct hook into</span>
+<span class="go">ScienceCalibration.main()and all kwargs are exposed as command line options</span>
 
 <span class="go">positional arguments:</span>
 <span class="go">  data_dir              Directory containing raw observation images</span>
@@ -350,26 +361,32 @@ a successful TargetCal run.</p>
 <span class="go">  -f, --force           Overwrite output</span>
 <span class="go">  -a, --average         Average all exposures from the same spatial positions together</span>
 <span class="go">  -D DARK_CAL, --dark-cal DARK_CAL</span>
-<span class="go">                        Location of Dark Calibration object FITS file. If none is provided then no dark correction will be done.</span>
+<span class="go">                        Location of Dark Calibration object FITS file. If none is</span>
+<span class="go">                        provided then no dark correction will be done.</span>
 <span class="go">  -G GAIN_CAL, --gain-cal GAIN_CAL</span>
-<span class="go">                        Location of Gain Calibration object FITS file. If none is provided then no gain correction will be done.</span>
+<span class="go">                        Location of Gain Calibration object FITS file. If none is</span>
+<span class="go">                        provided then no gain correction will be done.</span>
 <span class="go">  -T TARGET_CAL, --target-cal TARGET_CAL</span>
-<span class="go">                        Location of Target Calibration object FITS file. If none is provided then no target calibration will be done.</span>
+<span class="go">                        Location of Target Calibration object FITS file. If none is</span>
+<span class="go">                        provided then no target calibration will be done.</span>
 <span class="go">  -S SUFFIX, --suffix SUFFIX</span>
 <span class="go">                        Only load files with this extension. Default is &quot;FITS&quot;</span>
 <span class="go">  -I DATASET_ID, --dataset-ID DATASET_ID</span>
-<span class="go">                        Only reduce observation data that have ID___003 equal to dataset-ID. If blank, reduce all data found.</span>
+<span class="go">                        Only reduce observation data that have ID___003 equal to dataset-ID.</span>
+<span class="go">                        If blank, reduce all data found (sorting by DATASET_ID).</span>
+<span class="go">  -K, --skip-cal-verification</span>
+<span class="go">                        Skip verification of Cal objects</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id6">
+</section>
+<section id="id6">
 <h3>Example<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> vbi_science ../input_data Sci -D DC.FITS -G GC.FITS -T TC.FITS -I <span class="s1">&#39;sunspot 1&#39;</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>vbi_science ../input_data Sci -D DC.FITS -G GC.FITS -T TC.FITS -I <span class="s1">&#39;sunspot 1&#39;</span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
     </div>
@@ -379,15 +396,15 @@ a successful TargetCal run.</p>
 <footer class="footer">
   <div class="container">
     <div class="left-footer">
-         &copy; 2020, Arthur Eigenbrot
+         &copy; 2021, Arthur Eigenbrot
        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
     </div>
    
     <div class="right-footer">
-      Last updated on 30 Sep 2020.
+      Last updated on 19 Oct 2021.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.2.0
     </div>
   </div>
 </footer>

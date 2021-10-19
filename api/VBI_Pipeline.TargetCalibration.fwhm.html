@@ -4,18 +4,19 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>fwhm &#8212; VBI_Pipeline v0.10.0</title>
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>fwhm &#8212; VBI_Pipeline v1.0.0</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/bootstrap-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" type="text/css" />
     <link rel="stylesheet" href="../_static/dkist.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <link rel="shortcut icon" href="../_static/favico.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -102,9 +103,6 @@
           
             <ul class="nav navbar-nav navbar-left">
               <li><a href="http://dkist.nso.edu/">DKIST</a></li>
-              <li><a href="http://docs.cadair.com/devdocs">DC Developer Guide</a></li>
-              <li><a href="http://docs.cadair.com/datarate">DKIST Data Rate</a></li>
-              <li><a href="http://docs.cadair.com/datamodel">DKIST Data Model</a></li>
             </ul>
           
           
@@ -172,17 +170,17 @@
 
     <div class="body col-md-9 content" role="main">
       
-  <div class="section" id="fwhm">
+  <section id="fwhm">
 <h1>fwhm<a class="headerlink" href="#fwhm" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
-<dt id="VBI_Pipeline.TargetCalibration.fwhm">
-<code class="sig-prename descclassname">VBI_Pipeline.TargetCalibration.</code><code class="sig-name descname">fwhm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/TargetCalibration.html#fwhm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.TargetCalibration.fwhm" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="VBI_Pipeline.TargetCalibration.fwhm">
+<span class="sig-prename descclassname"><span class="pre">VBI_Pipeline.TargetCalibration.</span></span><span class="sig-name descname"><span class="pre">fwhm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/TargetCalibration.html#fwhm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#VBI_Pipeline.TargetCalibration.fwhm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Simple function to fit Hough peaks that have flat tops or are otherwise non-gaussian.</p>
 <p>Very simple: just return the center of the line defined by the FWHM</p>
 <p>Should work well on Gaussian peaks, too.</p>
 </dd></dl>
 
-</div>
+</section>
 
 
     </div>
@@ -192,15 +190,15 @@
 <footer class="footer">
   <div class="container">
     <div class="left-footer">
-         &copy; 2020, Arthur Eigenbrot
+         &copy; 2021, Arthur Eigenbrot
        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
     </div>
    
     <div class="right-footer">
-      Last updated on 30 Sep 2020.
+      Last updated on 19 Oct 2021.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.2.0
     </div>
   </div>
 </footer>

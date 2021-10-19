@@ -4,18 +4,19 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>main &#8212; VBI_Pipeline v0.10.0</title>
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>main &#8212; VBI_Pipeline v1.0.0</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/bootstrap-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" type="text/css" />
     <link rel="stylesheet" href="../_static/dkist.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <link rel="shortcut icon" href="../_static/favico.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -102,9 +103,6 @@
           
             <ul class="nav navbar-nav navbar-left">
               <li><a href="http://dkist.nso.edu/">DKIST</a></li>
-              <li><a href="http://docs.cadair.com/devdocs">DC Developer Guide</a></li>
-              <li><a href="http://docs.cadair.com/datarate">DKIST Data Rate</a></li>
-              <li><a href="http://docs.cadair.com/datamodel">DKIST Data Model</a></li>
             </ul>
           
           
@@ -172,15 +170,15 @@
 
     <div class="body col-md-9 content" role="main">
       
-  <div class="section" id="main">
+  <section id="main">
 <h1>main<a class="headerlink" href="#main" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
-<dt id="VBI_Pipeline.TargetCalibration.main">
-<code class="sig-prename descclassname">VBI_Pipeline.TargetCalibration.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">grid_dir</span></em>, <em class="sig-param"><span class="n">outname</span></em>, <em class="sig-param"><span class="n">suffix</span><span class="o">=</span><span class="default_value">'FITS'</span></em>, <em class="sig-param"><span class="n">dark_cal</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">gain_cal</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">gauss_sigma</span><span class="o">=</span><span class="default_value">30.0</span></em>, <em class="sig-param"><span class="n">dmax</span><span class="o">=</span><span class="default_value">15.0</span></em>, <em class="sig-param"><span class="n">rho_min_dist</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="n">refidx</span><span class="o">=</span><span class="default_value">4</span></em>, <em class="sig-param"><span class="n">rho_smooth</span><span class="o">=</span><span class="default_value">10.0</span></em>, <em class="sig-param"><span class="n">binary_threshold</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">sigclip</span><span class="o">=</span><span class="default_value">3.0</span></em>, <em class="sig-param"><span class="n">peak_threshold</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">theta_window</span><span class="o">=</span><span class="default_value">0.008726646259971648</span></em>, <em class="sig-param"><span class="n">bimode_choice</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">debug</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/TargetCalibration.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.TargetCalibration.main" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="VBI_Pipeline.TargetCalibration.main">
+<span class="sig-prename descclassname"><span class="pre">VBI_Pipeline.TargetCalibration.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'FITS'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dark_cal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gain_cal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gauss_sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_min_dist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_smooth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigclip</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">peak_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta_window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.008726646259971648</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bimode_choice</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/TargetCalibration.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#VBI_Pipeline.TargetCalibration.main" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute a TargetCalibration (i.e., wcs sub-pixel offsets) given an input linegrid image.</p>
 <p>Pre-processing by dark and gain Calibration products can be induced by specifying the corresponding FitsData
 objects. The gain calibration, in particular, is extremely necessary for good analysis.</p>
-<p>The 4 special parameters exposed here (gauss_sigma, dmax, rho_min_dist, and refidx) vary greatly whether considering
+<p>The 4 special parameters exposed here (gauss_sigma, dmax, rho_min_dist, and ref_pos) vary greatly whether considering
 Blue or Red camera data. Watch out!</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -201,7 +199,7 @@ the pixel width of the grid lines.</p>
 <dt><strong>rho_min_dist</strong><span class="classifier">float</span></dt><dd><p>Minimum distance (in Hough space coordinates) allowed between peaks in rho. This parameter is highly dependent
 on the pixel scale of the grid lines.</p>
 </dd>
-<dt><strong>refidx</strong><span class="classifier">int</span></dt><dd><p>Index of the reference hdu to use. Index corresponds to the location in both intsects and pos_list</p>
+<dt><strong>ref_pos</strong><span class="classifier">int</span></dt><dd><p>The camera position to use as reference</p>
 </dd>
 <dt><strong>rho_smooth</strong><span class="classifier">float</span></dt><dd><p>Sigma of smoothing kernel used to remove noise from the rho rss. Something b/t 5 and 10 is probably good.</p>
 </dd>
@@ -237,7 +235,7 @@ computed lines and grid intersections.</p>
 </dl>
 </dd></dl>
 
-</div>
+</section>
 
 
     </div>
@@ -247,15 +245,15 @@ computed lines and grid intersections.</p>
 <footer class="footer">
   <div class="container">
     <div class="left-footer">
-         &copy; 2020, Arthur Eigenbrot
+         &copy; 2021, Arthur Eigenbrot
        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
     </div>
    
     <div class="right-footer">
-      Last updated on 30 Sep 2020.
+      Last updated on 19 Oct 2021.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.2.0
     </div>
   </div>
 </footer>

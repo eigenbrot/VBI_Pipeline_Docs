@@ -4,18 +4,19 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>generate_target_calibration &#8212; VBI_Pipeline v0.10.0</title>
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>generate_target_calibration &#8212; VBI_Pipeline v1.0.0</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/bootstrap-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" type="text/css" />
     <link rel="stylesheet" href="../_static/dkist.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <link rel="shortcut icon" href="../_static/favico.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -102,9 +103,6 @@
           
             <ul class="nav navbar-nav navbar-left">
               <li><a href="http://dkist.nso.edu/">DKIST</a></li>
-              <li><a href="http://docs.cadair.com/devdocs">DC Developer Guide</a></li>
-              <li><a href="http://docs.cadair.com/datarate">DKIST Data Rate</a></li>
-              <li><a href="http://docs.cadair.com/datamodel">DKIST Data Model</a></li>
             </ul>
           
           
@@ -172,11 +170,11 @@
 
     <div class="body col-md-9 content" role="main">
       
-  <div class="section" id="generate-target-calibration">
+  <section id="generate-target-calibration">
 <h1>generate_target_calibration<a class="headerlink" href="#generate-target-calibration" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
-<dt id="VBI_Pipeline.TargetCalibration.generate_target_calibration">
-<code class="sig-prename descclassname">VBI_Pipeline.TargetCalibration.</code><code class="sig-name descname">generate_target_calibration</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">intsects</span></em>, <em class="sig-param"><span class="n">pos_list</span></em>, <em class="sig-param"><span class="n">refidx</span></em>, <em class="sig-param"><span class="n">dmax</span></em>, <em class="sig-param"><span class="n">header</span></em>, <em class="sig-param"><span class="n">output</span><span class="o">=</span><span class="default_value">'Target_Calibration.FITS'</span></em>, <em class="sig-param"><span class="n">bimode_choice</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">debug</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/TargetCalibration.html#generate_target_calibration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.TargetCalibration.generate_target_calibration" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="VBI_Pipeline.TargetCalibration.generate_target_calibration">
+<span class="sig-prename descclassname"><span class="pre">VBI_Pipeline.TargetCalibration.</span></span><span class="sig-name descname"><span class="pre">generate_target_calibration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">intsects</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dmax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Target_Calibration.FITS'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bimode_choice</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/TargetCalibration.html#generate_target_calibration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#VBI_Pipeline.TargetCalibration.generate_target_calibration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find overlapping intersections and use them to compute sub-pixel offsets between pairs of hdus.</p>
 <p>The resulting offsets are then saved separate HDUs of a Data.FitsData object.</p>
 <p>As of right now this algorithm is a little dumb; it only finds the offsets relative to a single, reference hdu.
@@ -191,7 +189,7 @@ collect_intersections()</p>
 <dt><strong>pos_list</strong><span class="classifier">list</span></dt><dd><p>A list containing the camera positions (VBI__005) of each corresponding hdu. Probably the output of
 collect_intersections()</p>
 </dd>
-<dt><strong>refidx</strong><span class="classifier">int</span></dt><dd><p>Index of the reference hdu to use. Index corresponds to the location in both intsects and pos_list</p>
+<dt><strong>ref_pos</strong><span class="classifier">int</span></dt><dd><p>The camera position to use as reference</p>
 </dd>
 <dt><strong>dmax</strong><span class="classifier">float</span></dt><dd><p>Any intersections with pixel locations less than dmax apart are considered to be the same intersection.</p>
 </dd>
@@ -217,7 +215,7 @@ the shifts circled in red.</p>
 </dl>
 </dd></dl>
 
-</div>
+</section>
 
 
     </div>
@@ -227,15 +225,15 @@ the shifts circled in red.</p>
 <footer class="footer">
   <div class="container">
     <div class="left-footer">
-         &copy; 2020, Arthur Eigenbrot
+         &copy; 2021, Arthur Eigenbrot
        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
     </div>
    
     <div class="right-footer">
-      Last updated on 30 Sep 2020.
+      Last updated on 19 Oct 2021.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.2.0
     </div>
   </div>
 </footer>

@@ -4,18 +4,19 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FitsData &#8212; VBI_Pipeline v0.10.0</title>
-    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>FitsData &#8212; VBI_Pipeline v1.0.0</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/bootstrap-sphinx.css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" type="text/css" />
     <link rel="stylesheet" href="../_static/dkist.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <link rel="shortcut icon" href="../_static/favico.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -102,9 +103,6 @@
           
             <ul class="nav navbar-nav navbar-left">
               <li><a href="http://dkist.nso.edu/">DKIST</a></li>
-              <li><a href="http://docs.cadair.com/devdocs">DC Developer Guide</a></li>
-              <li><a href="http://docs.cadair.com/datarate">DKIST Data Rate</a></li>
-              <li><a href="http://docs.cadair.com/datamodel">DKIST Data Model</a></li>
             </ul>
           
           
@@ -166,12 +164,12 @@
 
     <div class="body col-md-9 content" role="main">
       
-  <div class="section" id="fitsdata">
+  <section id="fitsdata">
 <h1>FitsData<a class="headerlink" href="#fitsdata" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="VBI_Pipeline.Data.FitsData">
-<em class="property">class </em><code class="sig-prename descclassname">VBI_Pipeline.Data.</code><code class="sig-name descname">FitsData</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fitsfile</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#FitsData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.Data.FitsData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dt class="sig sig-object py" id="VBI_Pipeline.Data.FitsData">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">VBI_Pipeline.Data.</span></span><span class="sig-name descname"><span class="pre">FitsData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fitsfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#FitsData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#VBI_Pipeline.Data.FitsData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>FitsData is a basically a wrapper for astropy.io.fits, with some extra methods and properties to aid the
 reduction of DKIST data.</p>
 <p>At its heart, this class is just a list of astropy.io.fits HDU objects. If creating an object from an array
@@ -233,7 +231,7 @@ permanently save the data use the .write_out() method.</p>
 <td><p>Flush the current data from memory and reload memmap from the disk</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#VBI_Pipeline.Data.FitsData.get_stacked_data" title="VBI_Pipeline.Data.FitsData.get_stacked_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stacked_data</span></code></a>()</p></td>
-<td><p>Return a ndarray stack containing data from all ImageHDU’s</p></td>
+<td><p>Return a ndarray stack containing data from all ImageHDU's</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#VBI_Pipeline.Data.FitsData.init_with_ndarray" title="VBI_Pipeline.Data.FitsData.init_with_ndarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_with_ndarray</span></code></a>(array[, outputfile, overwrite])</p></td>
 <td><p>Load data from a numpy.ndarray and construct an astropy.io.fits HDU list</p></td>
@@ -244,7 +242,7 @@ permanently save the data use the .write_out() method.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#VBI_Pipeline.Data.FitsData.load_from_filelist" title="VBI_Pipeline.Data.FitsData.load_from_filelist"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_from_filelist</span></code></a>(file_list)</p></td>
 <td><p>Load files from a list of file names</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#VBI_Pipeline.Data.FitsData.update_header" title="VBI_Pipeline.Data.FitsData.update_header"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_header</span></code></a>(keyword, value[, hdu, …])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#VBI_Pipeline.Data.FitsData.update_header" title="VBI_Pipeline.Data.FitsData.update_header"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_header</span></code></a>(keyword, value[, hdu, ...])</p></td>
 <td><p>Update one of the header objects with a keyword, value pair.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#VBI_Pipeline.Data.FitsData.write_out" title="VBI_Pipeline.Data.FitsData.write_out"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_out</span></code></a>(filename[, overwrite])</p></td>
@@ -254,37 +252,37 @@ permanently save the data use the .write_out() method.</p>
 </table>
 <p class="rubric">Attributes Documentation</p>
 <dl class="py attribute">
-<dt id="VBI_Pipeline.Data.FitsData.data">
-<code class="sig-name descname">data</code><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.data" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="VBI_Pipeline.Data.FitsData.data">
+<span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make sure the _DataList object is up to date and return it</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="VBI_Pipeline.Data.FitsData.hdulist">
-<code class="sig-name descname">hdulist</code><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.hdulist" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="VBI_Pipeline.Data.FitsData.hdulist">
+<span class="sig-name descname"><span class="pre">hdulist</span></span><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.hdulist" title="Permalink to this definition">¶</a></dt>
 <dd><p>Just return the internal property</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="VBI_Pipeline.Data.FitsData.headers">
-<code class="sig-name descname">headers</code><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.headers" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="VBI_Pipeline.Data.FitsData.headers">
+<span class="sig-name descname"><span class="pre">headers</span></span><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.headers" title="Permalink to this definition">¶</a></dt>
 <dd><p>A very nice convenience property to quickly access a list of the header objects</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="VBI_Pipeline.Data.FitsData.num_steps">
-<code class="sig-name descname">num_steps</code><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.num_steps" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="VBI_Pipeline.Data.FitsData.num_steps">
+<span class="sig-name descname"><span class="pre">num_steps</span></span><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.num_steps" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="VBI_Pipeline.Data.FitsData.unique_step_list">
-<code class="sig-name descname">unique_step_list</code><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.unique_step_list" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="VBI_Pipeline.Data.FitsData.unique_step_list">
+<span class="sig-name descname"><span class="pre">unique_step_list</span></span><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.unique_step_list" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p class="rubric">Methods Documentation</p>
 <dl class="py method">
-<dt id="VBI_Pipeline.Data.FitsData.convert_to_float32">
-<code class="sig-name descname">convert_to_float32</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nomem</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">overwrite</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#FitsData.convert_to_float32"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.convert_to_float32" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="VBI_Pipeline.Data.FitsData.convert_to_float32">
+<span class="sig-name descname"><span class="pre">convert_to_float32</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nomem</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#FitsData.convert_to_float32"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.convert_to_float32" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert all of the data to numpy.float32</p>
 <p>In the default form this results in a new file with a “_flt32” suffix, which is the read into this object to
 keep the data out of memory.</p>
@@ -308,8 +306,8 @@ method. Importantly, this method will NEVER overwrite the original FITS file.</p
 </dd></dl>
 
 <dl class="py method">
-<dt id="VBI_Pipeline.Data.FitsData.find_data_keyword_idx">
-<code class="sig-name descname">find_data_keyword_idx</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">keyword</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#FitsData.find_data_keyword_idx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.find_data_keyword_idx" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="VBI_Pipeline.Data.FitsData.find_data_keyword_idx">
+<span class="sig-name descname"><span class="pre">find_data_keyword_idx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keyword</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#FitsData.find_data_keyword_idx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.find_data_keyword_idx" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the index of just the ImageHDUs that have a specific header keyword value</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -330,8 +328,8 @@ method. Importantly, this method will NEVER overwrite the original FITS file.</p
 </dd></dl>
 
 <dl class="py method">
-<dt id="VBI_Pipeline.Data.FitsData.find_keyword_idx">
-<code class="sig-name descname">find_keyword_idx</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">keyword</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#FitsData.find_keyword_idx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.find_keyword_idx" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="VBI_Pipeline.Data.FitsData.find_keyword_idx">
+<span class="sig-name descname"><span class="pre">find_keyword_idx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keyword</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#FitsData.find_keyword_idx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.find_keyword_idx" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the index of the HDUs (including the PrimaryHDU) that have a specific header keyword value</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -350,14 +348,14 @@ method. Importantly, this method will NEVER overwrite the original FITS file.</p
 </dd></dl>
 
 <dl class="py method">
-<dt id="VBI_Pipeline.Data.FitsData.flush">
-<code class="sig-name descname">flush</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#FitsData.flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.flush" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="VBI_Pipeline.Data.FitsData.flush">
+<span class="sig-name descname"><span class="pre">flush</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#FitsData.flush"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.flush" title="Permalink to this definition">¶</a></dt>
 <dd><p>Flush the current data from memory and reload memmap from the disk</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="VBI_Pipeline.Data.FitsData.get_stacked_data">
-<code class="sig-name descname">get_stacked_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#FitsData.get_stacked_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.get_stacked_data" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="VBI_Pipeline.Data.FitsData.get_stacked_data">
+<span class="sig-name descname"><span class="pre">get_stacked_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#FitsData.get_stacked_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.get_stacked_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a ndarray stack containing data from all ImageHDU’s</p>
 <p>If there are a lot of ImageHDU’s the resulting array might be very large. Watch out!</p>
 <p>If the dimensionality of the data in the individual ImageHDU’s is not the same bad things will happen.</p>
@@ -372,8 +370,8 @@ method. Importantly, this method will NEVER overwrite the original FITS file.</p
 </dd></dl>
 
 <dl class="py method">
-<dt id="VBI_Pipeline.Data.FitsData.init_with_ndarray">
-<code class="sig-name descname">init_with_ndarray</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">array</span></em>, <em class="sig-param"><span class="n">outputfile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">overwrite</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#FitsData.init_with_ndarray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.init_with_ndarray" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="VBI_Pipeline.Data.FitsData.init_with_ndarray">
+<span class="sig-name descname"><span class="pre">init_with_ndarray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#FitsData.init_with_ndarray"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.init_with_ndarray" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load data from a numpy.ndarray and construct an astropy.io.fits HDU list</p>
 <p>To provide a uniform data type for all DKIST instruments the follow conventions are enforced:</p>
 <ol class="arabic simple">
@@ -402,8 +400,8 @@ will be created.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="VBI_Pipeline.Data.FitsData.load_from_file">
-<code class="sig-name descname">load_from_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fitsfile</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#FitsData.load_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.load_from_file" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="VBI_Pipeline.Data.FitsData.load_from_file">
+<span class="sig-name descname"><span class="pre">load_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fitsfile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#FitsData.load_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.load_from_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load data/metadata from a FITS file and make the resulting HDU list accessible to the rest of the class</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -416,8 +414,8 @@ will be created.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="VBI_Pipeline.Data.FitsData.load_from_filelist">
-<code class="sig-name descname">load_from_filelist</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_list</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#FitsData.load_from_filelist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.load_from_filelist" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="VBI_Pipeline.Data.FitsData.load_from_filelist">
+<span class="sig-name descname"><span class="pre">load_from_filelist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#FitsData.load_from_filelist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.load_from_filelist" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load files from a list of file names</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -430,8 +428,8 @@ will be created.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="VBI_Pipeline.Data.FitsData.update_header">
-<code class="sig-name descname">update_header</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">keyword</span></em>, <em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">hdu</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">comment</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">overwrite</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#FitsData.update_header"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.update_header" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="VBI_Pipeline.Data.FitsData.update_header">
+<span class="sig-name descname"><span class="pre">update_header</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keyword</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hdu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#FitsData.update_header"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.update_header" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update one of the header objects with a keyword, value pair.</p>
 <p>I guess this method exists because, while you could just do .headers[keyword] = value, this prevents
 overwriting existing keywords. iono, use your best judgement.</p>
@@ -460,8 +458,8 @@ overwriting existing keywords. iono, use your best judgement.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="VBI_Pipeline.Data.FitsData.write_out">
-<code class="sig-name descname">write_out</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="n">overwrite</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#FitsData.write_out"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.write_out" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="VBI_Pipeline.Data.FitsData.write_out">
+<span class="sig-name descname"><span class="pre">write_out</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/VBI_Pipeline/Data.html#FitsData.write_out"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#VBI_Pipeline.Data.FitsData.write_out" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save the current object to a FITS file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -477,7 +475,7 @@ overwriting existing keywords. iono, use your best judgement.</p>
 
 </dd></dl>
 
-</div>
+</section>
 
 
     </div>
@@ -487,15 +485,15 @@ overwriting existing keywords. iono, use your best judgement.</p>
 <footer class="footer">
   <div class="container">
     <div class="left-footer">
-         &copy; 2020, Arthur Eigenbrot
+         &copy; 2021, Arthur Eigenbrot
        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
     </div>
    
     <div class="right-footer">
-      Last updated on 30 Sep 2020.
+      Last updated on 19 Oct 2021.
     </div>
     <div class="centre-footer">
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.2.0
     </div>
   </div>
 </footer>
